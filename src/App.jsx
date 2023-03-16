@@ -21,10 +21,10 @@ function App() {
       )
   }
 
-  const startSocket = () => {
+  const startRecorder = () => {
     const socket = io();
     console.log(socket)
-    socket.once('connection', (data) => {
+    socket.on('connection', (data) => {
       console.log(`message from server: ${data}`)
        console.log(`connection established`)
        socket.emit('message', 'hello from client')
@@ -79,7 +79,7 @@ function App() {
               mediaRecorder.ondataavailable = sendRecorderDataWhenAvailable;
 
               //temporarily disabled for testing
-              socket.once("close_media_recorder", (data) => {
+              socket.on("close_media_recorder", (data) => {
                 console.log(`close media recorder message received ${data}`);
                 mediaRecorder.stop();
                 console.log(`media recorder stopped`);
@@ -95,7 +95,7 @@ function App() {
 
       startRecorder();
 
-      socket.once("results_processed", (data) => {
+      socket.on("results_processed", (data) => {
         console.log("speech results received from server: ", data);
 
         //here, update sessionState
@@ -120,7 +120,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1 className="text-3xl font-bold underline">Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
@@ -129,7 +129,7 @@ function App() {
           get that data
         </button>
         <div ref={messageRef}></div>
-        <button onClick={startSocket}>
+        <button onClick={startRecorder}>
           check google speech
         </button>
         <p>

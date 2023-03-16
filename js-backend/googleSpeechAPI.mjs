@@ -21,16 +21,6 @@ const request = {
 let recognizeStream;
 
 
-
-
-  const speechCallback2 = (stream) => {
-    console.log("SPEECH CALLBACK CALLED!!!!!!!");}
-
-
-
-
-
-
 //////////////////////////  EXPORTS  //////////////////////////
 
 

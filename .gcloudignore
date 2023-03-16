@@ -1,0 +1,11 @@
+.git
+.gitignore
+
+
+
+/index.html
+
+src
+
+#incllude dist foler
+\!dist

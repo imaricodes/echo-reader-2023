@@ -1,0 +1,18 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+#name points to the image that will be used for the build
+#in this case, we are pointing to docker image stored at gcr.io
+#the image could also be on Docker, or your own custom image
+#even though gcr.io is the old target for google cloud repository, it will work for artifact registry
+
+
+  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23:${_TAG}', '.' ]
+
+  
+images:
+- 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23:${_TAG}'
+
+
+#example command
+# $ gcloud builds submit . --config cloudbuild.yaml --substitutions _SOMEVARIABLE=blue,_SOMEOTHERVARIABLE=10
+# $ gcloud builds submit --config cloudbuild.yaml --substitutions _TAG=sometage

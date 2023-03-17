@@ -77,6 +77,9 @@ const Stage = (props) => {
 
 
       ///////////////////////////// RECORDER VARIABLES /////////////////////////////
+
+      let mimeType;
+
       const getUserMediaConstraints = {
         audio: {
           channelCount: 1,
@@ -85,13 +88,17 @@ const Stage = (props) => {
         video: false,
       };
 
-      const mediaRecorderOptions = {
-        mimeType: "audio/webm; codecs=opus",
-      };
+    
 
       const reader = new FileReader();
 
       let base64data;
+
+
+      //ffmpeg convert stream to flac?
+      // const ffmpeg = require("ffmpeg");
+      // const process = new ffmpeg("input.mp4");
+      // process.then(function (video) {    }, function (err) {    });
 
 
       ///////////////////////////// RECORDER FUNCTIONS /////////////////////////////
@@ -105,6 +112,15 @@ const Stage = (props) => {
       }
 
       async function startRecorder() {
+
+        let mediaRecorderOptions = {};
+
+        if (MediaRecorder.isTypeSupported('audio/webm; codecs=opus')) {
+          mediaRecorderOptions = {mimeType: 'audio/webm; codecs=opus'};
+      } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+          mediaRecorderOptions = {mimeType: 'video/mp4'};
+      } 
+
         try {
           console.log("starting recorder");
           await navigator.mediaDevices

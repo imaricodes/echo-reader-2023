@@ -18,7 +18,12 @@ const io = new Server(server);
 io.on("connection", (socket) => {
   console.log('server side socket id: ', socket.id)
   socket.emit("connection", "connection established")
-  socket.on("message", (message) => {
+
+  socket.on("send_cueData", (data) => {
+    let cueData = {}
+    console.log(`cueData received: `, data);
+    cueData = { ...data };
+    console.log(`cueData spread ${cueData.display}`)
   });
 
   handleStream(socket);

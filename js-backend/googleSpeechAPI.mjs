@@ -26,6 +26,8 @@ let recognizeStream;
 
 export function handleStream (socket) {
 
+  let cueData = {};
+
     const speechCallback = (stream) => {
         //TODO: set timeout in case final transcript does not arrive
         console.log("SPEECH CALLBACK CALLED");
@@ -40,6 +42,17 @@ export function handleStream (socket) {
           recognizeStream.removeListener('data', speechCallback);
           recognizeStream = null;
           socket.emit("close_media_recorder", "close_media_recorder")
+
+          let processedResponse = processResponse(words, cueData.cueLength);
+
+          console.log(`processedResult evaluate ${processedResponse.evaluate}`);
+          console.log(`processedResult display ${processedResponse.display}`);
+    
+          //evaluate cue, response and return session result object
+    
+          let sessionResult = evaluateSession(cueData, processedResponse);
+    
+          socket.emit("results_processed", sessionResult);
     
         }
       };
@@ -56,6 +69,13 @@ export function handleStream (socket) {
     })
     .on("data", speechCallback);
 
+  //////////////////////////  SOCKET LISTENERS  //////////////////////////
+
+  socket.on("send_cueData", (data) => {
+    console.log(`cueData received: `, data);
+    cueData = { ...data };
+    console.log(`cueData spread ${cueData.display}`);
+  });
 
   socket.on("incoming_stream", (audio) => {
     // console.log(`stream coming`)
@@ -66,8 +86,6 @@ export function handleStream (socket) {
     } else console.log('no recognize stream')
     
   });
-
- 
 
   socket.on("cancel_session", (data)=> {
     console.log(`say cheese: ${data}`)

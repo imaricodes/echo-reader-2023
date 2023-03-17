@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "server-prod": "node ./server.mjs",
-    "server-dev": "nodemon ./server.mjs"
+    "server-dev": "nodemon ./server.mjs",
+    "buildrun": "npm run build && npm run server-dev"
   },
   "dependencies": {
     "@google-cloud/speech": "^5.4.0",

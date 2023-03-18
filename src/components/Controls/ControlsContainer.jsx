@@ -1,7 +1,7 @@
 import React, {useContext, useRef, useState, useEffect} from 'react'
 
 import SessionButton from '../SessionButton/SessionButton'
-
+import studentIMG from '../../assets/student-reading.svg'
 
 
 
@@ -26,8 +26,9 @@ const ControlsContainer = (props) => {
 
   return (
 
-    <div>
-      {instructionsText}
+    <div className='flex flex-col items-center justify-center gap-10 px-20'>
+      <img className='md:h-96 h-36 inline cursor-pointer ' src={studentIMG} alt="Student reading book"/>
+      {/* {instructionsText} */}
      <SessionButton 
      setSessionState={props.setSessionState}
      currentSessionsState = {props.currentSessionState} 

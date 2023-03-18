@@ -52,15 +52,11 @@ const SessionButton = (props) => {
   return (
     <div>
       <button
-        className={`
-    ${styles["btn"]} 
-    ${styles["btn__sessionbtn--color--green"]}
-    ${styles["btn--circle"]}
-    ${
-      buttonState === "listen" ? `${styles["btn__sessionbtn--color--red"]}` : ""
-    }
-    ${buttonState === "stop" ? `${styles["btn__sessionbtn--color--red"]}` : ""}
-    `}
+        className={`bg-green-500 hover:bg-green-700 text-white font-bold w-20 h-20 rounded-full`}
+
+        //tailwind css round greed button
+        // className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full`}
+
         onClick={handleClick}
       >
         {buttonText}

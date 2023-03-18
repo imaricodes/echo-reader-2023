@@ -4,6 +4,8 @@ import ControlsContainer from '../Controls/ControlsContainer'
 import Stage from '../Stage/Stage'
 // import { SessionContextProvider } from '../../contexts/SessionContext'
 import { SessionContextProvider } from '../../contexts/SessionContext'
+import Header from '../Header'
+
 
 const MainContainer = () => {
 
@@ -16,6 +18,7 @@ const [isListening, setIsListening] = useState(false);
   return (
     <SessionContextProvider>
         <div className='main-container'>
+          <Header />
       
           <ControlsContainer 
           setSessionState = {setSessionState} 

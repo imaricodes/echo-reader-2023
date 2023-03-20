@@ -5,6 +5,7 @@ import Stage from '../Stage/Stage'
 // import { SessionContextProvider } from '../../contexts/SessionContext'
 import { SessionContextProvider } from '../../contexts/SessionContext'
 import Header from '../Header'
+import Card from '../../../Card'
 
 
 const MainContainer = () => {
@@ -31,6 +32,10 @@ const [isListening, setIsListening] = useState(false);
           currentSessionState = {sessionState} 
           isListengingState = {isListening}
           />
+
+      <Card>
+        <h1>Card</h1>
+        </Card>
 
         </div>
 </SessionContextProvider>

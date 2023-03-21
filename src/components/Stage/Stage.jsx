@@ -6,7 +6,7 @@ import { processCue } from "../../js/processCue";
 
 // import { SessionContext } from "../../contexts/SessionContext";
 import CueSentenceCard from "../StageComponents/CueSentenceCard";
-import StageStartCard from "../StageComponents/StageStartCard";
+import StartCard from "../StageComponents/StartCard";
 import ResultsCard from "../StageComponents/ResultsCard";
 
 const Stage = (props) => {
@@ -175,12 +175,12 @@ const Stage = (props) => {
 
 
   const COMPONENT_STATES = {
-    go: <StageStartCard />,
+    go: <StartCard />,
     start: <CueSentenceCard cue={cueRef.current} />,
     listen: <CueSentenceCard cue={cueRef.current} />,
     results: <ResultsCard sessionResult={sessionResult} />,
     restart: <ResultsCard sessionResult={sessionResult} />,
-    cancel: <StageStartCard />,
+    cancel: <StartCard />,
   };
 
   return COMPONENT_STATES[props.currentSessionState];

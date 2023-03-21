@@ -1,12 +1,12 @@
 import React from 'react'
 import Card from '../../../Card'
 
-const StageStartCard = () => {
+const StartCard = () => {
   return (
 
-    <div className='card'>
+    <div className='card card--bg-gray card--shadow card__start-card card__start-card--text'>
 
-      <p className='text-3xl'>
+      <p >
         Echo Reader is a reading app that uses speech recognition to help you practice reading aloud.
       </p>
     </div>
@@ -16,4 +16,4 @@ const StageStartCard = () => {
   )
 }
 
-export default StageStartCard
+export default StartCard

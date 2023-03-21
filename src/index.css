@@ -69,19 +69,42 @@ button:focus-visible {
 }
  */
 
-
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
+  /* Card */
   .card {
-    @apply bg-gray-50 rounded-lg shadow-lg overflow-hidden px-10 py-10;
+    @apply rounded-lg overflow-hidden px-8 py-8 mb-10;
   }
 
-  .card-text {
-    @apply text-gray-800 font-bold;
+  .card--bg-gray {
+    @apply bg-gray-50;
+  }
+
+  .card--shadow {
+    @apply shadow-lg;
+  }
+
+  /* Controls Container */
+  .card__controls-container {
+    @apply bg-red-50;
+  }
+  .card__controls-container--text {
+    @apply text-lg;
+  }
+  .card__controls-container--padding {
+    @apply py-2;
+  }
+
+  /* Stage Card */
+  .card__stage {
+    @apply bg-white shadow-lg border-4;
+  }
+
+  /* Start Card */
+  .card__start-card--text {
+    @apply text-2xl;
   }
 }

@@ -21,17 +21,19 @@ const [isListening, setIsListening] = useState(false);
         <div className='main-container px-10'>
           <Header />
       
-          <ControlsContainer 
-          setSessionState = {setSessionState} 
-          currentSessionState={sessionState} 
-          setIsListening = {setIsListening}
+      
+
+          <Stage
+            setSession = {setSessionState}
+            currentSessionState = {sessionState}
+            isListengingState = {isListening}
           />
 
-          <Stage 
-          setSession = {setSessionState} 
-          currentSessionState = {sessionState} 
-          isListengingState = {isListening}
-          />
+          <ControlsContainer
+            setSessionState = {setSessionState}
+            currentSessionState={sessionState}
+            setIsListening = {setIsListening}
+          />  
 
 
         </div>

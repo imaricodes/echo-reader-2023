@@ -55,7 +55,7 @@ const Header = () => {
 
      
  
-      <ul ref={menuListRef} className='md:flex md:items-center  md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-0 h-full '>
+      {/* <ul ref={menuListRef} className='md:flex md:items-center  md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-0 h-full '>
         <li className='mx-4 my-6 md:my-0 '>
           <a href='#' className='text-xl hover:text-cyan-500 duration-500'>My Echo</a>
         </li>
@@ -64,7 +64,7 @@ const Header = () => {
         </li>
       
        
-       </ul>
+       </ul> */}
 
     </nav>
   </>

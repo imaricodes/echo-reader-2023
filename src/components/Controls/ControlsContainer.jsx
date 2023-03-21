@@ -26,9 +26,9 @@ const ControlsContainer = (props) => {
 
   return (
 
-    <div className='flex flex-col items-center justify-center gap-10 px-20'>
+    <div className='card card__controls-container card__controls-container--text card__controls-container--padding flex items-center gap-10'>
 
-      {/* {instructionsText} */}
+      {instructionsText}
      <SessionButton 
      setSessionState={props.setSessionState}
      currentSessionsState = {props.currentSessionState} 

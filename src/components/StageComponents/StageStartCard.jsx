@@ -1,12 +1,18 @@
 import React from 'react'
-
+import Card from '../../../Card'
 
 const StageStartCard = () => {
   return (
-    <div className='bg-slate-100 mx-auto flex items-center justify-center font-[Poppins] '>
-      
-      <h1> Echo Reader uses AI technology to improve your reading skills.</h1>
+
+    <div className='card'>
+
+      <p className='text-3xl'>
+        Echo Reader is a reading app that uses speech recognition to help you practice reading aloud.
+      </p>
     </div>
+   
+
+   
   )
 }
 

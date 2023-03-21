@@ -76,6 +76,12 @@ button:focus-visible {
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-white;
+@layer components {
+  .card {
+    @apply bg-gray-50 rounded-lg shadow-lg overflow-hidden px-10 py-10;
+  }
+
+  .card-text {
+    @apply text-gray-800 font-bold;
+  }
 }

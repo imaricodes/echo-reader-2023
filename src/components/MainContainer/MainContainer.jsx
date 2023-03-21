@@ -18,7 +18,7 @@ const [isListening, setIsListening] = useState(false);
 
   return (
     <SessionContextProvider>
-        <div className='main-container'>
+        <div className='main-container px-10'>
           <Header />
       
           <ControlsContainer 
@@ -33,9 +33,6 @@ const [isListening, setIsListening] = useState(false);
           isListengingState = {isListening}
           />
 
-      <Card>
-        <h1>Card</h1>
-        </Card>
 
         </div>
 </SessionContextProvider>

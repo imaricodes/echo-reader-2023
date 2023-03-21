@@ -183,7 +183,12 @@ const Stage = (props) => {
     cancel: <StartCard />,
   };
 
-  return COMPONENT_STATES[props.currentSessionState];
+  return (
+    <div className="stage stage--height">
+      {COMPONENT_STATES[props.currentSessionState]}
+    </div>
+    
+    );
 };
 
 export default Stage;

@@ -18,7 +18,7 @@ const CueSentenceCard = (props) => {
 
 
   return (
-    <div ref={cuePresentationContainerRef}></div>
+    <div ref={cuePresentationContainerRef} className= 'card card--bg-gray card--shadow card__stage--height card__stage--text'></div>
   )
 }
 

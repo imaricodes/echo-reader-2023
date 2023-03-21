@@ -76,7 +76,7 @@ button:focus-visible {
 @layer components {
   /* Card */
   .card {
-    @apply rounded-lg overflow-hidden px-8 py-8 mb-10;
+    @apply flex items-center justify-center rounded-lg overflow-hidden px-8 py-8;
   }
 
   .card--bg-gray {
@@ -89,22 +89,37 @@ button:focus-visible {
 
   /* Controls Container */
   .card__controls-container {
-    @apply bg-red-50;
+
   }
   .card__controls-container--text {
-    @apply text-lg;
+    @apply text-sm;
   }
   .card__controls-container--padding {
     @apply py-2;
   }
 
+/* Stage */
+  .stage {
+    @apply mb-10;
+  }
+  .stage--height {
+    @apply min-h-52;
+  }
+
+
   /* Stage Card */
   .card__stage {
-    @apply bg-white shadow-lg border-4;
+    @apply bg-white shadow-lg ;
+  }
+
+  .card__stage--text {
+    @apply text-2xl;
+  }
+
+  .card__stage--height {
+    @apply min-h-52;
   }
 
   /* Start Card */
-  .card__start-card--text {
-    @apply text-2xl;
-  }
+
 }

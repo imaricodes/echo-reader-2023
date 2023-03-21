@@ -5,7 +5,12 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      minHeight: (theme) => ({
+      ...theme('spacing'),
+    }),
+
+    },
   },
   plugins: [],
 }

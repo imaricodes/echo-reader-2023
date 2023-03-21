@@ -8,6 +8,7 @@ import {closeOutline} from 'ionicons/icons'
 
 
 
+
 const Header = () => {
 
   const menuToggleRef = useRef(null)
@@ -38,10 +39,15 @@ const Header = () => {
     <>
     <nav className='p-5 bg-white md:flex md:items-center md:justify-between'>
       <div className='flex justify-between items-center'>
-        <span className='text-2xl font-[Poppins]'>
-          
-          Echo Reader
-        </span>
+        <div className='flex gap-16 items-center'>
+          <span>
+          <img className='md:h-96 h-16 inline cursor-pointer ' src={studentIMG} alt="Student reading book"/>
+          </span>
+          <span className='text-2xl font-[Poppins]'>
+            Echo Reader
+          </span>
+        </div>
+       
         <span className='text-3xl cursor-pointer md:hidden block z-[100]' >
         <IonIcon  icon={menuOutline} onClick={handleMenu} ref={menuToggleRef} />
       </span>

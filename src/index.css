@@ -122,4 +122,11 @@ button:focus-visible {
 
   /* Start Card */
 
+  /* Cue Sentence Card */
+
+.card__display--flex-column {
+  @apply flex flex-col;
+
+}
+
 }

@@ -18,11 +18,8 @@ const [isListening, setIsListening] = useState(false);
 
   return (
     <SessionContextProvider>
-        <div className='main-container px-10'>
-          <Header />
+        <div className='main-container px-10 mt-14'>
       
-      
-
           <Stage
             setSession = {setSessionState}
             currentSessionState = {sessionState}

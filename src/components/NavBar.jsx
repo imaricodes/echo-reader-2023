@@ -6,9 +6,6 @@ import {closeOutline} from 'ionicons/icons'
 
 
 
-
-
-
 const NavBar
  = () => {
 
@@ -21,16 +18,12 @@ const NavBar
     ?
     (
       menuToggleRef.current.icon = closeOutline,
-    
-      menuListRef.current.classList.add('opacity-100')
-      // menuListRef.current.classList.add('z-[100]')
+      menuListRef.current.classList.remove('hidden')
     )
     :
     (
       menuToggleRef.current.icon = menuOutline,
-   
-      menuListRef.current.classList.remove('opacity-100'),
-      menuListRef.current.classList.remove('z-50')
+      menuListRef.current.classList.add('hidden')
     )
 
 
@@ -57,8 +50,8 @@ const NavBar
       </div>
 
     {/* Links */}
-    <div className=' w-full bg-yellow-200 h-screen absolute md:h-auto  md:relative md:w-auto md:text-right '>
-        <ul ref={menuListRef} className=' flex flex-col text-center md:flex md:flex-row md:items-center '>
+    <div ref={menuListRef} className='  hidden w-full bg-yellow-200 h-screen absolute md:h-auto  md:relative md:w-auto md:text-right '>
+        <ul  className=' flex flex-col text-center md:flex md:flex-row md:items-center '>
         <li className='mx-4 my-6 md:my-0 '>
           <a href='#' className='text-xl hover:text-cyan-500 duration-500'>My Echo</a>
         </li>

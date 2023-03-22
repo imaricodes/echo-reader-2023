@@ -26,8 +26,7 @@ const [isListening, setIsListening] = useState(false);
             setSessionState = {setSessionState}
             currentSessionState={sessionState}
             setIsListening = {setIsListening}
-          />  
-
+          />
 
         </div>
 </SessionContextProvider>

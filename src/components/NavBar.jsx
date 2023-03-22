@@ -50,7 +50,7 @@ const NavBar
       </div>
 
     {/* Links */}
-    <div ref={menuListRef} className='  hidden w-full bg-yellow-200 h-screen absolute md:h-auto  md:relative md:w-auto md:text-right '>
+    <div ref={menuListRef} className='  hidden w-full bg-yellow-200 h-screen absolute md:flex md:h-auto  md:relative md:w-auto md:text-right '>
         <ul  className=' flex flex-col text-center md:flex md:flex-row md:items-center '>
         <li className='mx-4 my-6 md:my-0 '>
           <a href='#' className='text-xl hover:text-cyan-500 duration-500'>My Echo</a>

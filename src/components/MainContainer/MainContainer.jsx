@@ -1,11 +1,8 @@
 import React, {useState, useRef} from 'react'
-// import Header from '../Header'
 import ControlsContainer from '../Controls/ControlsContainer'
 import Stage from '../Stage/Stage'
-// import { SessionContextProvider } from '../../contexts/SessionContext'
 import { SessionContextProvider } from '../../contexts/SessionContext'
-import Header from '../Header'
-import Card from '../../../Card'
+
 
 
 const MainContainer = () => {
@@ -13,7 +10,6 @@ const MainContainer = () => {
 const [sessionState, setSessionState] = useState('go');
 const [isListening, setIsListening] = useState(false);
 // console.log('current parent session sate ', sessionState)
-
 
 
   return (

@@ -9,7 +9,8 @@ import {closeOutline} from 'ionicons/icons'
 
 
 
-const Header = () => {
+const NavBar
+ = () => {
 
   const menuToggleRef = useRef(null)
   const menuListRef = useRef(null)
@@ -37,38 +38,40 @@ const Header = () => {
 
   return (
     <>
-    <nav className='p-5 bg-white md:flex md:items-center md:justify-between'>
-      <div className='flex justify-between items-center'>
+    <nav className=' bg-white flex flex-col justify-start relative md:items-center md:flex md:flex-row md:justify-between'>
+    {/* Logo */}
+      <div className='flex justify-between items-center ml-2'>
         <div className='flex gap-16 items-center'>
           <span>
-          <img className='md:h-96 h-16 inline cursor-pointer ' src={studentIMG} alt="Student reading book"/>
+          <img className='md:h-20 h-16 inline cursor-pointer ' src={studentIMG} alt="Student reading book"/>
           </span>
           <span className='text-2xl font-[Poppins]'>
             Echo Reader
           </span>
         </div>
-       
-        <span className='text-3xl cursor-pointer md:hidden block z-[100]' >
-        <IonIcon  icon={menuOutline} onClick={handleMenu} ref={menuToggleRef} />
-      </span>
       </div>
 
-     
- 
-      {/* <ul ref={menuListRef} className='md:flex md:items-center  md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-0 h-full '>
+    {/* Hanburger Menu */}
+      <div className='text-3xl cursor-pointer absolute right-0 z-10 md:hidden block' >
+        <IonIcon  icon={menuOutline} onClick={handleMenu} ref={menuToggleRef} />
+      </div>
+
+    {/* Links */}
+    <div className=' w-full bg-yellow-200 h-screen absolute md:h-auto  md:relative md:w-auto md:text-right '>
+        <ul ref={menuListRef} className=' flex flex-col text-center md:flex md:flex-row md:items-center '>
         <li className='mx-4 my-6 md:my-0 '>
           <a href='#' className='text-xl hover:text-cyan-500 duration-500'>My Echo</a>
         </li>
         <li className=' mx-4 my-6 md:my-0'>
           <a href='#' className='text-xl hover:text-cyan-500 duration-500'>Instructions</a>
         </li>
-      
-       
-       </ul> */}
+        </ul>
+    </div>
+     
 
     </nav>
   </>
   )
 }
 
-export default Header
+export default NavBar

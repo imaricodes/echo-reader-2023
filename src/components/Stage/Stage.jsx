@@ -1,4 +1,4 @@
-//TODO: handled display of returned speech
+
 import React, { useContext, useState, useEffect, useRef } from "react";
 // import styles from "./Stage.module.css";
 import { io } from "socket.io-client";

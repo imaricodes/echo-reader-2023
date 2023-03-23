@@ -2,6 +2,7 @@ import React, {useState, useRef} from 'react'
 import ControlsContainer from '../Controls/ControlsContainer'
 import Stage from '../Stage/Stage'
 import { SessionContextProvider } from '../../contexts/SessionContext'
+import CountDown from '../CountDown'
 
 
 
@@ -27,6 +28,9 @@ const [isListening, setIsListening] = useState(false);
             currentSessionState={sessionState}
             setIsListening = {setIsListening}
           />
+          <CountDown/>
+
+
 
         </div>
 </SessionContextProvider>

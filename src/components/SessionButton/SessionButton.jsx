@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from "react";
 import { SessionContext } from "../../contexts/SessionContext";
 
 const SessionButton = (props) => {
-  const [sessionState, setSessionState] = useContext(SessionContext);
+  const {sessionState, setSessionState} = useContext(SessionContext);
   const [buttonText, setButtonText] = useState("Go");
 
   useEffect(() => {

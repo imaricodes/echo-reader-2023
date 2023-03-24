@@ -5,7 +5,7 @@ import MicIcon from '../MicIcon'
 
 
 const CueSentenceCard = (props) => {
-  const [sessionState, setSessionState] = useContext(SessionContext);
+  const {sessionState, setSessionState} = useContext(SessionContext);
   
   const cuePresentationContainerRef = useRef();
   const micOutter = useRef(null);

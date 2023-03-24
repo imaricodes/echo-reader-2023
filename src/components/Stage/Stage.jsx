@@ -23,10 +23,10 @@ const Stage = (props) => {
   ];
 
   const [sessionResult, setSessionResult] = useState(null);
-  const [sessionState, setSessionState] = useContext(SessionContext);
-  const [socketState, setSocketState] = useState(null);
-  const cueRef = useRef("");
+  const {sessionState, setSessionState, socket, setSocket} = useContext(SessionContext);
+  const value = useContext(SessionContext);
 
+  const cueRef = useRef("");
 
   //this effect selects a random cue and stores as cueRef
   useEffect(() => {
@@ -43,32 +43,34 @@ const Stage = (props) => {
   useEffect(() => {
 
     //if current session state is listen, create socket connection
-    if (sessionState === "listen") {
+    if (sessionState === "start") {
       console.log(`current session state is listen, creating socket connection`)
-      const socket = io();
+      let sockets = io();
+      sockets.on('connection', (data) => { console.log(`connection established`)})
 
+      setSocket(sockets);
+      console.log('global socket: ',socket)
       //confirm connection
-      socket.on('connection', (data) => { console.log(`connection established`)})
 
-      setSocketState(socket);
+      // setsocket(socket);
     }
 
     if (sessionState === "cancel") {
-      if(socketState) {
-        socketState.emit('cancel_session')
+      if(socket) {
+        socket.emit('cancel_session')
       }
     }
   }, [sessionState]);
 
 
-  //run this effect when socketState !null
+  //run this effect when socket !null
   useEffect(() => {
-    if (socketState) {
-      console.log(`current socketState ${socketState}`);
+    if (socket) {
+      console.log(`current socket ${socket}`);
       //send cue data to server
       console.log('sending cue data to server')
       let processedCue = processCue(cueRef.current);
-      socketState.emit("send_cueData", processedCue);
+      socket.emit("send_cueData", processedCue);
 
 
       ///////////////////////////// RECORDER VARIABLES /////////////////////////////
@@ -96,7 +98,7 @@ const Stage = (props) => {
         reader.onload = () => {
           base64data = reader.result.split("base64,")[1];
           // console.log(`base64 ${base64data}`)
-          socketState.emit("incoming_stream", base64data);
+          socket.emit("incoming_stream", base64data);
         };
       }
 
@@ -126,7 +128,7 @@ const Stage = (props) => {
 
               mediaRecorder.ondataavailable = sendRecorderDataWhenAvailable;
 
-              socketState.on("close_media_recorder", (data) => {
+              socket.on("close_media_recorder", (data) => {
                 console.log(`close media recorder message received ${data}`);
                 mediaRecorder.stop();
                 console.log(`media recorder stopped`);
@@ -141,22 +143,22 @@ const Stage = (props) => {
       }
 
       ///////////////////////// SOCKET LISTENERS /////////////////////////
-      socketState.on("results_processed", (data) => {
+      socket.on("results_processed", (data) => {
         console.log("speech results received from server: ", data);
 
         //here, update sessionState
         setSessionResult(data);
         setSessionState("results");
 
-        socketState.disconnect();
-        setSocketState(null)
+        socket.disconnect();
+        setSocket(null)
       });
 
       //start recorder
       startRecorder();
 
     }
-  }, [socketState]);
+  }, [socket]);
 
 
   const COMPONENT_STATES = {

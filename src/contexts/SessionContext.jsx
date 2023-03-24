@@ -1,16 +1,24 @@
 import React, {createContext, useState} from "react";
 
 
+
 export const SessionContext = createContext();
 
 export const SessionContextProvider = (props) => {
-// possible sessionStates: start, go, stop, reset
   const [sessionState, setSessionState] = useState('go')
+  const [isRecordingState, setIsRecordingState] = useState(false)
+  const [socket, setSocket] = useState(null)
 
   
 
     return (
-      <SessionContext.Provider value={[sessionState, setSessionState]}>
+      <SessionContext.Provider value={{
+          sessionState: sessionState,
+          setSessionState: setSessionState,
+          isRecordingState: isRecordingState,
+          setIsRecordingState: setIsRecordingState,
+          socket: socket,
+          setSocket: setSocket}}>
         {props.children}
       </SessionContext.Provider>
     );

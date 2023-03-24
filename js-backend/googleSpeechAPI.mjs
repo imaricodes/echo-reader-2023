@@ -81,7 +81,7 @@ export function handleStream (socket) {
     // console.log(`stream coming`)
     // console.log('recognize stream: ', recognizeStream)
     if (recognizeStream) {
-    //   console.log(audio)
+      console.log(audio)
       recognizeStream.write(audio);
     } else console.log('no recognize stream')
     

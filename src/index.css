@@ -64,5 +64,10 @@
 
 }
 
+.animation-pulse {
+  /* @apply pulse 2s infinite; */
+}
+
+
 
 }

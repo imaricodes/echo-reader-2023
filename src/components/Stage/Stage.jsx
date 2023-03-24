@@ -117,17 +117,14 @@ const Stage = (props) => {
 
         if (MediaRecorder.isTypeSupported('audio/webm; codecs=opus')) {
           mediaRecorderOptions = {mimeType: 'audio/webm; codecs=opus'};
-      } else if (MediaRecorder.isTypeSupported('video/mp4')) {
-          mediaRecorderOptions = {mimeType: 'video/mp4'};
-      } 
+          } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+            mediaRecorderOptions = {mimeType: 'video/mp4'};
+        }
 
         try {
           console.log("starting recorder");
           await navigator.mediaDevices
             .getUserMedia(getUserMediaConstraints)
-
-            // let track = stream.getAudioTracks()[0];
-            // console.log(track.getCapabilities());
             .then((stream) => {
               let mediaRecorder = new MediaRecorder(
                 stream,
@@ -140,7 +137,6 @@ const Stage = (props) => {
 
               mediaRecorder.ondataavailable = sendRecorderDataWhenAvailable;
 
-              //temporarily disabled for testing
               socketState.on("close_media_recorder", (data) => {
                 console.log(`close media recorder message received ${data}`);
                 mediaRecorder.stop();
@@ -177,7 +173,7 @@ const Stage = (props) => {
   const COMPONENT_STATES = {
     go: <StartCard />,
     start: <CueSentenceCard cue={cueRef.current} />,
-    listen: <CueSentenceCard cue={cueRef.current} />,
+    listen: <CueSentenceCard cue={cueRef.current} currentSessionState={currentSessionState} />,
     results: <ResultsCard sessionResult={sessionResult} />,
     restart: <ResultsCard sessionResult={sessionResult} />,
     cancel: <StartCard />,

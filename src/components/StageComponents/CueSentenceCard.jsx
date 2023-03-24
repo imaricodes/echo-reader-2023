@@ -1,37 +1,37 @@
 import React, {useRef, useEffect} from 'react'
-import {IonIcon} from '@ionic/react'
-import {micOutline} from 'ionicons/icons'
+import MicIcon from '../MicIcon'
 
 
 
 const CueSentenceCard = (props) => {
-
+  const currentSessionState = props.currentSessionState;
   const cuePresentationContainerRef = useRef();
+  const micOutter = useRef(null);
 
   useEffect(()=> {
-
     cuePresentationContainerRef.current.innerText = props.cue;
-
-    // if (cuePresentationContainerRef.current.childNodes.length===0) {
-    // let newDiv = document.createElement("div");
-    //   newDiv.classList.add("cue");
-    //   newDiv.innerText = props.cue;
-    //   cuePresentationContainerRef.current.appendChild(newDiv);
-    // }
-   
   },[])
+
+  useEffect(()=> {
+  if (currentSessionState === 'listen') {
+      micOutter.current.classList.add('animate-pulse');
+    } else {
+      micOutter.current.classList.remove('animate-pulse');
+    }
+  },[currentSessionState])
 
 
   return (
 
     <div className= 'card card--bg-gray card--shadow card__stage--height card__stage--text card__display--flex-column relative '>
-      <div className='items-end w-full absolute top-0 bg-yellow-100'> 
-        <div className='flex w-full justify-between items-center px-4 py-2'> <p>timer</p> <IonIcon  icon={micOutline}/> </div>
+      <div className='w-full absolute top-0'> 
+        <div className='flex w-full justify-end items-center pt-5 px-4'> 
+          <div ref={micOutter} className='w-8 opacity-95 animate-pulse'>
+            <MicIcon currentSessionState={currentSessionState}/>
+          </div>
+        </div>
       </div>
-       
       <div ref={cuePresentationContainerRef}></div>
-        
-     
     </div>
   )
 }

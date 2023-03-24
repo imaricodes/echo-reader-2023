@@ -1,19 +1,21 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect, useContext} from 'react'
+import { SessionContext } from "../contexts/SessionContext";
 
 
 
 
-const MicIcon = (props) => {
-    const currentSessionState = props.currentSessionState;
+const MicIcon = () => {
+    console.log('mic icon called')
+    const [sessionState, setSessionState] = useContext(SessionContext);
     const [micState, setMicState] = useState("#c5c7c5");
     const pathFill = micState;
     useEffect(()=> {
-        if (currentSessionState === 'listen') {
+        if (sessionState === 'listen') {
             setMicState("#F83F3E");
         } else {
             return
         }
-    },[currentSessionState])
+    },[sessionState])
 
   return (
     <div >

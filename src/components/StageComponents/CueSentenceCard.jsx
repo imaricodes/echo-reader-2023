@@ -1,10 +1,12 @@
-import React, {useRef, useEffect} from 'react'
+import React, {useRef, useEffect, useContext} from 'react'
+import { SessionContext } from '../../contexts/SessionContext'
 import MicIcon from '../MicIcon'
 
 
 
 const CueSentenceCard = (props) => {
-  const currentSessionState = props.currentSessionState;
+  const [sessionState, setSessionState] = useContext(SessionContext);
+  
   const cuePresentationContainerRef = useRef();
   const micOutter = useRef(null);
 
@@ -13,12 +15,12 @@ const CueSentenceCard = (props) => {
   },[])
 
   useEffect(()=> {
-  if (currentSessionState === 'listen') {
+  if (sessionState === 'listen') {
       micOutter.current.classList.add('animate-pulse');
     } else {
       micOutter.current.classList.remove('animate-pulse');
     }
-  },[currentSessionState])
+  },[sessionState])
 
 
   return (
@@ -27,7 +29,7 @@ const CueSentenceCard = (props) => {
       <div className='w-full absolute top-0'> 
         <div className='flex w-full justify-end items-center pt-5 px-4'> 
           <div ref={micOutter} className='w-8 opacity-95 animate-pulse'>
-            <MicIcon currentSessionState={currentSessionState}/>
+            <MicIcon/>
           </div>
         </div>
       </div>

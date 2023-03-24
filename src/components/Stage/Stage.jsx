@@ -1,16 +1,15 @@
 
 import React, { useContext, useState, useEffect, useRef } from "react";
-// import styles from "./Stage.module.css";
+
 import { io } from "socket.io-client";
 import { processCue } from "../../js/processCue";
-
-// import { SessionContext } from "../../contexts/SessionContext";
+import { SessionContext } from "../../contexts/SessionContext";
 import CueSentenceCard from "../StageComponents/CueSentenceCard";
 import StartCard from "../StageComponents/StartCard";
 import ResultsCard from "../StageComponents/ResultsCard";
 
 const Stage = (props) => {
-  console.log(`current session state ${props.currentSessionState}`);
+  
   const CUE_PHRASES = [
     "The truth hurts my feet.",
     "Those are beautiful shoes.",
@@ -23,32 +22,28 @@ const Stage = (props) => {
     "I like peanuts in my cereal.",
   ];
 
-  // const [cue, setCue] = useState(null);
   const [sessionResult, setSessionResult] = useState(null);
+  const [sessionState, setSessionState] = useContext(SessionContext);
+  const [socketState, setSocketState] = useState(null);
   const cueRef = useRef("");
-  const setSessionState = props.setSession;
-  const currentSessionState = props.currentSessionState;
+
 
   //this effect selects a random cue and stores as cueRef
   useEffect(() => {
-    console.log(`stage current state ${currentSessionState}`);
 
-    if (props.currentSessionState === "go") {
-      let selectedCue =
-        CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
+    if (sessionState === "go") {
+      let selectedCue = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
 
       cueRef.current = selectedCue;
-      // cueRef.current = "I like peanuts in my cereal.";
       console.log(`cueRef ${cueRef.current}`);
     }
-  }, [currentSessionState]);
+  }, [sessionState]);
 
-  const [socketState, setSocketState] = useState(null);
 
   useEffect(() => {
 
     //if current session state is listen, create socket connection
-    if (currentSessionState === "listen") {
+    if (sessionState === "listen") {
       console.log(`current session state is listen, creating socket connection`)
       const socket = io();
 
@@ -58,12 +53,12 @@ const Stage = (props) => {
       setSocketState(socket);
     }
 
-    if (currentSessionState === "cancel") {
+    if (sessionState === "cancel") {
       if(socketState) {
         socketState.emit('cancel_session')
       }
     }
-  }, [currentSessionState]);
+  }, [sessionState]);
 
 
   //run this effect when socketState !null
@@ -93,12 +88,6 @@ const Stage = (props) => {
       const reader = new FileReader();
 
       let base64data;
-
-
-      //ffmpeg convert stream to flac?
-      // const ffmpeg = require("ffmpeg");
-      // const process = new ffmpeg("input.mp4");
-      // process.then(function (video) {    }, function (err) {    });
 
 
       ///////////////////////////// RECORDER FUNCTIONS /////////////////////////////
@@ -173,7 +162,7 @@ const Stage = (props) => {
   const COMPONENT_STATES = {
     go: <StartCard />,
     start: <CueSentenceCard cue={cueRef.current} />,
-    listen: <CueSentenceCard cue={cueRef.current} currentSessionState={currentSessionState} />,
+    listen: <CueSentenceCard cue={cueRef.current} />,
     results: <ResultsCard sessionResult={sessionResult} />,
     restart: <ResultsCard sessionResult={sessionResult} />,
     cancel: <StartCard />,
@@ -181,7 +170,7 @@ const Stage = (props) => {
 
   return (
     <div className="stage stage--height">
-      {COMPONENT_STATES[props.currentSessionState]}
+      {COMPONENT_STATES[sessionState]}
     </div>
     
     );

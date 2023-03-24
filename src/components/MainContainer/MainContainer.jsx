@@ -19,8 +19,8 @@ const [isListening, setIsListening] = useState(false);
         <div className='main-container px-10 mt-14'>
       
           <Stage
-            setSession = {setSessionState}
-            currentSessionState = {sessionState}
+            // setSession = {setSessionState}
+            // currentSessionState = {sessionState}
             isListengingState = {isListening}
           />
 

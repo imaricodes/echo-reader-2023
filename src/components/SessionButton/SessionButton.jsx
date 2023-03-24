@@ -1,20 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
+import { SessionContext } from "../../contexts/SessionContext";
 
 const SessionButton = (props) => {
-
-  const setSessionState = props.setSessionState
-  const currentSessionsState = props.currentSessionsState
-  const setIsListening = props.setIsListening
-
-  const [buttonState, setButtonState] = useState("go");
+  const [sessionState, setSessionState] = useContext(SessionContext);
   const [buttonText, setButtonText] = useState("Go");
 
-  let updateButtonText = () => {
-
-  };
-
   useEffect(() => {
-    if (currentSessionsState==="results") {
+    if (sessionState==="results") {
       setButtonText("Restart")
       setSessionState('restart')
     }
@@ -22,26 +14,27 @@ const SessionButton = (props) => {
     return () => {
       
     }
-  }, [currentSessionsState])
+  }, [sessionState])
   
 
   let handleClick = () => {
-    if (currentSessionsState==="go" || currentSessionsState ==="cancel") {
+    if (sessionState==="go" || sessionState ==="cancel") {
       setButtonText("Start")
       setSessionState('start')
+      console.log('go button clicked')
     }
     
-   if (currentSessionsState==="start") {
+   if (sessionState==="start") {
       setButtonText("Cancel")
       setSessionState('listen')
     }
  
 
-    if (currentSessionsState==="listen") {
+    if (sessionState==="listen") {
       setButtonText("Go")
       setSessionState('cancel')
     }
-    if (currentSessionsState==="restart") {
+    if (sessionState==="restart") {
       setButtonText("Go")
       setSessionState('go')
     }

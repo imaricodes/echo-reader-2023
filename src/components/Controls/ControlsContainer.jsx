@@ -1,4 +1,5 @@
 import React, {useContext, useRef, useState, useEffect} from 'react'
+import { SessionContext } from '../../contexts/SessionContext'
 
 import SessionButton from '../SessionButton/SessionButton'
 
@@ -8,19 +9,21 @@ import SessionButton from '../SessionButton/SessionButton'
 const ControlsContainer = (props) => {
   // let currentSessionState = {...props.currentSessionState}
 
-  const setSession = props.setSession;
-  const setListeningState = props.setIsListening;
+  // const setSession = props.setSession;
+  // const setListeningState = props.setIsListening;
+
+  const {sessionState, setSessionState} = useContext(SessionContext);
 
   const [instructionsText, setInstructionsText] =useState('Click \'Go\' to load a sentence for reading.')
 
   useEffect (()=> {
-    props.currentSessionState ==='start' && setInstructionsText('When you are ready to read aloud, click \'Start\' ');
-    props.currentSessionState ==='listen' && setInstructionsText('Click Cancel to end the session');
-    props.currentSessionState ==='cancel' && setInstructionsText('Click Go to load a sentence for reading.');
-    props.currentSessionState ==='restart' && setInstructionsText('Click restart for another sentence to read.');
-    props.currentSessionState ==='go' && setInstructionsText('Click Go to load a sentence.');
+    sessionState ==='start' && setInstructionsText('When you are ready to read aloud, click \'Start\' ');
+    sessionState ==='listen' && setInstructionsText('Click Cancel to end the session');
+    sessionState ==='cancel' && setInstructionsText('Click Go to load a sentence for reading.');
+    sessionState ==='restart' && setInstructionsText('Click restart for another sentence to read.');
+    sessionState ==='go' && setInstructionsText('Click Go to load a sentence.');
 
-  },[props.currentSessionState])
+  },[sessionState])
 
 
 

@@ -15,8 +15,8 @@ export const SessionContextProvider = (props) => {
       <SessionContext.Provider value={{
           sessionState: sessionState,
           setSessionState: setSessionState,
-          isRecordingState: isRecordingState,
-          setIsRecordingState: setIsRecordingState,
+          isRecording: isRecording,
+          setIsRecording: setIsRecording,
           socket: socket,
           setSocket: setSocket}}>
         {props.children}

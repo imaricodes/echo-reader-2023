@@ -6,7 +6,7 @@ import {evaluateSession} from './utility.mjs';
 import speech from "@google-cloud/speech";
 const client = new speech.SpeechClient();
 
-
+//called RecognitionConfig in google docs
 const config = {
   encoding: "WEBM_OPUS",
   sampleRateHertz: 16000,
@@ -15,7 +15,12 @@ const config = {
 
 const request = {
   config,
-  interimResults: true,
+  interimResults: false,
+  single_utterance: true,
+  enable_spoken_punctuation: false,
+  microphone_distance: "NEARFIELD",
+  interaction_type: "DICTATION",
+  enable_voice_activity_events: true, //wait for speech acitivity to start
 };
 
 let recognizeStream;
@@ -34,6 +39,10 @@ export function handleStream (socket) {
         let words = stream.results[0].alternatives[0].transcript;
         let wordsArray = words.split(" ");
         console.log(`wordsArray: ${wordsArray}`);
+
+        if (stream === undefined) {
+          console.log('stream undefined')
+        } else console.log('stream defined')
     
         if (stream.results[0].isFinal === true) {
           //TODO: where in this process do I close the api connection?
@@ -88,7 +97,6 @@ export function handleStream (socket) {
   });
 
   socket.on("cancel_session", (data)=> {
-    console.log(`say cheese: ${data}`)
     console.log('closing speech api...')
       if(recognizeStream) {
         recognizeStream.end()

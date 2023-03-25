@@ -14,14 +14,14 @@ const ControlsContainer = (props) => {
 
   const {sessionState, setSessionState} = useContext(SessionContext);
 
-  const [instructionsText, setInstructionsText] =useState('Click \'Go\' to load a sentence for reading.')
+  const [instructionsText, setInstructionsText] =useState('Click \'Go\' to load a sentence.')
 
   useEffect (()=> {
     sessionState ==='start' && setInstructionsText('When you are ready to read aloud, click \'Start\' ');
     sessionState ==='listen' && setInstructionsText('Click Cancel to end the session');
-    sessionState ==='cancel' && setInstructionsText('Click Go to load a sentence for reading.');
+    sessionState ==='cancel' && setInstructionsText('Click \'Go\' to load a sentence.');
     sessionState ==='restart' && setInstructionsText('Click restart for another sentence to read.');
-    sessionState ==='go' && setInstructionsText('Click Go to load a sentence.');
+    sessionState ==='go' && setInstructionsText('Click \'Go\' to load a sentence.');
 
   },[sessionState])
 

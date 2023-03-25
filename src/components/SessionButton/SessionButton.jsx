@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from "react";
 import { SessionContext } from "../../contexts/SessionContext";
 
 const SessionButton = (props) => {
-  const {sessionState, setSessionState} = useContext(SessionContext);
+  const {sessionState, setSessionState, isRecording, setIsRecording} = useContext(SessionContext);
   const [buttonText, setButtonText] = useState("Go");
 
   useEffect(() => {
@@ -18,22 +18,24 @@ const SessionButton = (props) => {
   
 
   let handleClick = () => {
-    if (sessionState==="go" || sessionState ==="cancel") {
+    if (sessionState==="go") {
       setButtonText("Start")
       setSessionState('start')
-      console.log('go button clicked')
     }
     
    if (sessionState==="start") {
       setButtonText("Cancel")
       setSessionState('listen')
+      setIsRecording(true)
     }
  
 
-    if (sessionState==="listen") {
-      setButtonText("Go")
-      setSessionState('cancel')
+    if (sessionState==="cancel") {
+      setButtonText("Start")
+      setSessionState('start')
+      setIsRecording(false)
     }
+
     if (sessionState==="restart") {
       setButtonText("Go")
       setSessionState('go')

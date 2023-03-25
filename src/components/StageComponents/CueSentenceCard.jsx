@@ -1,26 +1,53 @@
 import React, {useRef, useEffect, useContext} from 'react'
+import { processCue } from "../../js/processCue";
 import { SessionContext } from '../../contexts/SessionContext'
 import MicIcon from '../MicIcon'
 
 
 
 const CueSentenceCard = (props) => {
-  const {sessionState, setSessionState} = useContext(SessionContext);
-  
-  const cuePresentationContainerRef = useRef();
-  const micOutter = useRef(null);
+  console.log('rendering CueSentenceCard')
 
-  useEffect(()=> {
-    cuePresentationContainerRef.current.innerText = props.cue;
+
+  const CUE_PHRASES = [
+    "The truth hurts my feet.",
+    "Those are beautiful shoes.",
+    "I want candy.",
+    "More people eat chicken now.",
+    "Salamanders are slimy creatuers.",
+    "Nobody likes rotten candy.",
+    "Math is fun.",
+    "A sunny day is a great day.",
+    "I like peanuts in my cereal.",
+  ];
+  
+ 
+  const {sessionState, setSessionState,socket} = useContext(SessionContext);
+
+  const micOutter = useRef(null);
+  const cueRef = useRef(null);
+
+
+  useEffect(() => {
+    let selectedCue = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
+    cueRef.current.innerText = selectedCue;
+   
+      console.log(`current socket ${socket}`);
+        //send cue data to server
+        console.log('sending cue data to server')
+        let processedCue = processCue(selectedCue);
+        console.log('processedCue: ',processedCue)
+        socket.emit("send_cueData", processedCue);
   },[])
 
-  useEffect(()=> {
-  if (sessionState === 'listen') {
-      micOutter.current.classList.add('animate-pulse');
-    } else {
-      micOutter.current.classList.remove('animate-pulse');
-    }
-  },[sessionState])
+
+  // useEffect(()=> {
+  // if (sessionState === 'listen') {
+  //     micOutter.current.classList.add('animate-pulse');
+  //   } else {
+  //     micOutter.current.classList.remove('animate-pulse');
+  //   }
+  // },[sessionState])
 
 
   return (
@@ -33,7 +60,7 @@ const CueSentenceCard = (props) => {
           </div>
         </div>
       </div>
-      <div ref={cuePresentationContainerRef}></div>
+      <div ref={cueRef}></div>
     </div>
   )
 }

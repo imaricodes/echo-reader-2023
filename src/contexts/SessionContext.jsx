@@ -6,7 +6,7 @@ export const SessionContext = createContext();
 
 export const SessionContextProvider = (props) => {
   const [sessionState, setSessionState] = useState('go')
-  const [isRecordingState, setIsRecordingState] = useState(false)
+  const [isRecording, setIsRecording] = useState(false)
   const [socket, setSocket] = useState(null)
 
   

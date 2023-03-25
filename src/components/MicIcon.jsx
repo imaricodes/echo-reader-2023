@@ -5,7 +5,6 @@ import { SessionContext } from "../contexts/SessionContext";
 
 
 const MicIcon = () => {
-    console.log('mic icon called')
     const {sessionState, setSessionState} = useContext(SessionContext);
     const [micState, setMicState] = useState("#c5c7c5");
     const pathFill = micState;

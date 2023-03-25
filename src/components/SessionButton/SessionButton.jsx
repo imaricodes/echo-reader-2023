@@ -24,17 +24,25 @@ const SessionButton = (props) => {
     }
     
    if (sessionState==="start") {
-      setButtonText("Cancel")
+      setButtonText("Restart")
       setSessionState('listen')
       setIsRecording(true)
     }
  
 
-    if (sessionState==="cancel") {
+    if (sessionState==="listen") {
       setButtonText("Start")
       setSessionState('start')
       setIsRecording(false)
     }
+
+    if (sessionState==="results") {
+      setButtonText("Start")
+      setSessionState('start')
+      setIsRecording(false)
+    }
+
+
 
     if (sessionState==="restart") {
       setButtonText("Go")

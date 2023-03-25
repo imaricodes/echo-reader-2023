@@ -39,18 +39,24 @@ const Stage = (props) => {
 
     ///////////////////////////// STATE: START /////////////////////////////
     if (sessionState === "start") {
+      const getMicAccess = async () => {
+        try {
+          await navigator.mediaDevices.getUserMedia({ audio: true });
+          console.log(`mic access granted`);
+        } catch (error) {
+          console.log(`mic access denied`);
+        }
+      }
 
-      //if socket is null, create socket connection
-  
+      getMicAccess();
     }
+
 
     ///////////////////////////// STATE: LISTEN /////////////////////////////
     if (sessionState==='listen') {
       console.log('global socket: ',socket)
       if (socket) {
-        
-  
-  
+      
         ///////////////////////////// RECORDER VARIABLES /////////////////////////////
   
         const getUserMediaConstraints = {
@@ -78,6 +84,7 @@ const Stage = (props) => {
         async function startRecorder() {
   
           let mediaRecorderOptions = {};
+          let mediaRecorder = null;
   
           if (MediaRecorder.isTypeSupported('audio/webm; codecs=opus')) {
             mediaRecorderOptions = {mimeType: 'audio/webm; codecs=opus'};
@@ -90,22 +97,24 @@ const Stage = (props) => {
             await navigator.mediaDevices
               .getUserMedia(getUserMediaConstraints)
               .then((stream) => {
-                let mediaRecorder = new MediaRecorder(
-                  stream,
-                  mediaRecorderOptions
-                ); //pass in options
-  
-                if (mediaRecorder) {
-                  mediaRecorder.start(250);
-                }
+                if (mediaRecorder === null) {
+                  mediaRecorder = new MediaRecorder(
+                    stream,
+                    mediaRecorderOptions
+                    );
+
+                    mediaRecorder.start(250)
+                } else { mediaRecorder.start(250)}
+
   
                 mediaRecorder.ondataavailable = sendRecorderDataWhenAvailable;
-  
+                
                 socket.on("close_media_recorder", (data) => {
                   console.log(`close media recorder message received ${data}`);
                   mediaRecorder.stop();
                   console.log(`media recorder stopped`);
-                  mediaRecorder = null;
+                //TODO: KEEP MEDIA RECORDER OPEN UNTIL SESSION IS CANCELLED OR COMPLETED
+                  // mediaRecorder = null;
                   console.log(`media recorder: ${mediaRecorder}`);
                 });
   
@@ -122,7 +131,7 @@ const Stage = (props) => {
           //here, update sessionState
           setSessionResult(data);
           setSessionState("restart");
-  
+          //TODO: DO NOT DISCONNECT SOCKET HERE 
           socket.disconnect();
           setSocket(null)
           });

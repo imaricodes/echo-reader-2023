@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState, useEffect} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import { SessionContext } from '../../contexts/SessionContext'
 
 import SessionButton from '../SessionButton/SessionButton'
@@ -7,10 +7,6 @@ import SessionButton from '../SessionButton/SessionButton'
 
 
 const ControlsContainer = (props) => {
-  // let currentSessionState = {...props.currentSessionState}
-
-  // const setSession = props.setSession;
-  // const setListeningState = props.setIsListening;
 
   const {sessionState, setSessionState} = useContext(SessionContext);
 
@@ -18,9 +14,9 @@ const ControlsContainer = (props) => {
 
   useEffect (()=> {
     sessionState ==='start' && setInstructionsText('When you are ready to read aloud, click \'Start\' ');
-    sessionState ==='listen' && setInstructionsText('Click Cancel to end the session');
+    sessionState ==='listen' && setInstructionsText('Click Restart to end the session');
     sessionState ==='cancel' && setInstructionsText('Click \'Go\' to load a sentence.');
-    sessionState ==='restart' && setInstructionsText('Click restart for another sentence to read.');
+    sessionState ==='restart' && setInstructionsText('Click \'Restart\' for another sentence.');
     sessionState ==='go' && setInstructionsText('Click \'Go\' to load a sentence.');
 
   },[sessionState])
@@ -34,11 +30,7 @@ const ControlsContainer = (props) => {
         {instructionsText}
       </div>
       <div>
-        <SessionButton 
-          setSessionState={props.setSessionState}
-          currentSessionsState = {props.currentSessionState} 
-          setIsListening={props.setIsListening}
-        />
+        <SessionButton/>
       </div>
    
 

@@ -7,17 +7,15 @@ import { SessionContext } from "../../contexts/SessionContext";
 import CueSentenceCard from "../StageComponents/CueSentenceCard";
 import StartCard from "../StageComponents/StartCard";
 import ResultsCard from "../StageComponents/ResultsCard";
-import { browserDeviceDetection } from "../../utilities/browserDeviceDetection.mjs";
 
 const Stage = (props) => {
   
-
-
   const [sessionResult, setSessionResult] = useState(null);
   const {sessionState, setSessionState, socket, setSocket} = useContext(SessionContext);
   const value = useContext(SessionContext);
-
+  
   const cueRef = useRef("");
+  console.log(`sessionState is ${sessionState}`)
 
 
   useEffect(() => {

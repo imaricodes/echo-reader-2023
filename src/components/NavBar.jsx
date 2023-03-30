@@ -45,12 +45,12 @@ const NavBar
       </div>
 
     {/* Hanburger Menu */}
-      <div className='text-3xl cursor-pointer absolute right-0 z-10 md:hidden block' >
+      <div className='text-3xl cursor-pointer fixed right-0 z-10 md:hidden block' >
         <IonIcon  icon={menuOutline} onClick={handleMenu} ref={menuToggleRef} />
       </div>
 
     {/* Links */}
-    <div ref={menuListRef} className='  hidden w-full bg-yellow-200 h-screen absolute md:flex md:h-auto  md:relative md:w-auto md:text-right '>
+    <div ref={menuListRef} className='  hidden w-full bg-white h-screen absolute md:flex md:h-auto  md:relative md:w-auto md:text-right '>
         <ul  className=' flex flex-col text-center md:flex md:flex-row md:items-center '>
         <li className='mx-4 my-6 md:my-0 '>
           <a href='#' className='text-xl hover:text-cyan-500 duration-500'>My Echo</a>

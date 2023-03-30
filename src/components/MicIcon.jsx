@@ -1,4 +1,4 @@
-import React, {useState,useEffect, useContext} from 'react'
+import React, {useState,useEffect, useContext, useRef} from 'react'
 import { SessionContext } from "../contexts/SessionContext";
 
 
@@ -8,16 +8,19 @@ const MicIcon = () => {
     const {sessionState, setSessionState} = useContext(SessionContext);
     const [micState, setMicState] = useState("#c5c7c5");
     const pathFill = micState;
+    const micIconContainterRef = useRef(null);
     useEffect(()=> {
         if (sessionState === 'listen') {
             setMicState("#F83F3E");
+            micIconContainterRef.current.classList.add('animate-pulse');
         } else {
-            return
+            micIconContainterRef.current.classList.remove('animate-pulse');
+            setMicState("#c5c7c5")
         }
     },[sessionState])
 
   return (
-    <div >
+    <div ref={micIconContainterRef} className='w-8 opacity-95' >
         <svg  
             width="100%" 
             version="1.1" id="_x32_" 

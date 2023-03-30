@@ -18,6 +18,11 @@ module.exports = {
       },
     },
 
+    colors: {
+      "primary-coolor": "var(--primary-color)",
+      "secondary-coolor": "var(--secondary-color)"
+    },
+
     },
   },
   plugins: [],

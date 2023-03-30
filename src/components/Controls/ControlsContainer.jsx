@@ -25,8 +25,8 @@ const ControlsContainer = (props) => {
 
   return (
 
-    <div className='card card__controls-container card__controls-container--text card__controls-container--padding flex items-center justify-end gap-6 min-h-20 '>
-      <div className='flex grow justify-center text-lg'>
+    <div className='card card__controls-container card__controls-container--flex card__controls-container--text card__controls-container--padding card__controls-container--margin bg-yellow-100'>
+      <div className='flex grow justify-center'>
         {instructionsText}
       </div>
       <div>

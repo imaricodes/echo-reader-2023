@@ -8,7 +8,7 @@ const MainContainer = () => {
     
 
  
-        <div className='main-container px-14 mt-14'>
+        <div className='main-container px-14'>
           <ControlsContainer/>
           <Stage/>
         </div>

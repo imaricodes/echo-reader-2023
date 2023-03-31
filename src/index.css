@@ -10,6 +10,10 @@
   --secondary-coolor: #000;
 }
 
+body {
+  @apply bg-gray-100;
+}
+
 
 
 
@@ -34,7 +38,7 @@
 
   /* Controls Container */
   .card__controls-container {
-
+    @apply shadow-lg
   }
   .card__controls-container--text {
     @apply text-xl;
@@ -44,7 +48,7 @@
   }
 
   .card__controls-container--padding {
-    @apply py-4;
+    @apply py-3 px-4;
   }
 
   .card__controls-container--margin {
@@ -80,6 +84,14 @@
 .card__display--flex-column {
   @apply flex flex-col;
 
+}
+
+.navbar {
+
+}
+
+.navbar--padding {
+ @apply py-4
 }
 
 .animation-pulse {

@@ -11,7 +11,7 @@
 }
 
 body {
-  @apply bg-gray-100;
+  /* @apply bg-orange-600; */
 }
 
 
@@ -52,7 +52,7 @@ body {
   }
 
   .card__controls-container--margin {
-    @apply mb-5;
+    @apply mb-7;
   }
 
 /* Stage */
@@ -87,11 +87,12 @@ body {
 }
 
 .navbar {
+  @apply bg-white
 
 }
 
 .navbar--padding {
- @apply py-4
+
 }
 
 .animation-pulse {

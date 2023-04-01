@@ -64,7 +64,7 @@ const BrowserWarningModal = () => {
 
   return (
     <div ref={modalRef} className={`fixed inset-0 hidden w-full bg-black bg-opacity-30 h-screen backdrop-blur-sm  justify-center items-center z-50`}>
-        <div className='flex flex-col  items-center w-96  pt-7 pb-8 px-4 bg-white rounded-md shadow-md '>
+        <div className='flex flex-col  items-center w-96  pt-7 pb-8 px-4 m-4 bg-white rounded-md shadow-md '>
        
             <div className='flex flex-col items-center  gap-2 px-4 mb-6'>
                 <p>Echo Reader works best on a desktop or laptop computer using Chrome, Firefox, or Brave browsers.</p>

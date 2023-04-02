@@ -25,7 +25,7 @@ body {
 
   /* Card */
   .card {
-    @apply flex items-center justify-center rounded-lg overflow-hidden px-8 py-8 ;
+    @apply flex items-center rounded-lg overflow-hidden px-8 py-8 shadow-lg;
   }
 
   .card--bg-gray {
@@ -33,7 +33,7 @@ body {
   }
 
   .card--shadow {
-    @apply shadow-lg;
+    /* @apply shadow-lg; */
   }
 
   /* Controls Container */
@@ -44,11 +44,11 @@ body {
     @apply text-xl;
   }
   .card__controls-container--flex {
-    @apply flex items-center justify-end gap-6;
+    @apply  justify-between  ;
   }
 
   .card__controls-container--padding {
-    @apply py-3 px-4;
+    @apply py-3 ;
   }
 
   .card__controls-container--margin {

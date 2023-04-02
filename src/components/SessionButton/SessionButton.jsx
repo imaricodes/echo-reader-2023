@@ -54,7 +54,7 @@ const SessionButton = (props) => {
   return (
     <div>
       <button
-        className={ `btn bg-green-500 hover:bg-green-700`}
+        className={ `btn bg-green-500 hover:bg-green-700 xl:text-l`}
         onClick={handleClick}
       >
         {buttonText}

@@ -161,7 +161,7 @@ const Stage = (props) => {
   };
   console.log(`session state: ${sessionState}`)
   return (
-    <div className="stage stage--height">
+    <div className="stage stage--height lg:mb-0 lg:h-[300px] ">
       {COMPONENT_STATES[sessionState]}
     </div>
     

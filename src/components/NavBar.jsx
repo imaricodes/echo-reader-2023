@@ -32,19 +32,12 @@ const NavBar
 
   return (
     <>
-    <nav className='navbar navbar--padding  mb-10 relative  md:flex md:justify-between '>
+    <nav className='navbar mb-10 relative  md:flex md:justify-between '>
     {/* Logo */}
-      <div className='flex px-4 items-center pt-4 md:px-14'>
-      <span className='flex shrink-0 text-4xl font-bold  '>
+ 
+      <span className='pt-4  px-4 flex items-center text-4xl font-bold md:px-14 '>
             Echo Reader
-          </span>
-          <span className='  hidden md:flex justify-start pl-4 container'>
-          <img className=' h-12 shrink-0 md:shrink-0 lg:hidden lg:shrink-0 md:h-8 lg:h-14 cursor-pointer ' src={studentIMGCropped} alt="Student reading book"/>
-          {/* <img className=' h-14 shrink-0 md:shrink-0 lg:hidden lg:shrink-0 md:h-14 lg:h-14 cursor-pointer ' src={studentIMG} alt="Student reading book"/> */}
-          </span>
-      </div>
-         
-     
+        </span>
 
     {/* Hanburger Menu */}
       <div className='text-3xl cursor-pointer fixed right-3 top-5 z-10 md:hidden block' >
@@ -53,12 +46,12 @@ const NavBar
 
     {/* Links */}
     <div ref={menuListRef} className=' top-0  hidden w-full h-screen absolute md:flex  pt-4 bg-white md:h-auto   md:relative md:w-auto md:pr-0'>
-        <ul  className=' flex flex-col text-center md:flex md:flex-row md:items-center md:pr-14 '>
+        <ul  className=' flex flex-col text-center font-semibold md:flex md:flex-row md:items-center md:pr-14 '>
         <li className='mx-4 my-6 md:my-0 '>
-          <a href='#' className='text-xl hover:text-cyan-500 duration-500'>My Echo</a>
+          <a href='#' className='text-xl  hover:text-green-700 duration-200'>About</a>
         </li>
         <li className=' mx-4 my-6 md:my-0'>
-          <a href='#' className='text-xl hover:text-cyan-500 duration-500'>Instructions</a>
+          <a href='#' className='text-xl hover:text-green-700 duration-200'>Instructions</a>
         </li>
         </ul>
     </div>

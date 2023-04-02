@@ -22,7 +22,7 @@ const [displayData, setDisplayData]=useState(sessionResult)
       const word = displayData[0 + 1][i];
       elements.push(
         React.createElement("div", { 
-          className: `${styles['grid-item']} ${styles['word-cue']}`,
+          className: `card__results-card__grid-item`,
           key: i
         },word)
         
@@ -32,11 +32,13 @@ const [displayData, setDisplayData]=useState(sessionResult)
     //append res to result card ref
     for (let i = 0; i < length; i++) {
       let word = "";
-      let matchStatus = "true";
+      let matchStatus = "";
 
       if (displayData[i + 2].match === "false") {
-        matchStatus = "false";
-      }
+        matchStatus = "card__results-card__response-word--color-error";
+       
+      } else matchStatus = "card__results-card__response-word--color-correct"
+      
 
       word = displayData[i + 2].responseDisplayWord;
 
@@ -44,7 +46,7 @@ const [displayData, setDisplayData]=useState(sessionResult)
         React.createElement(
           "div",
           { 
-            className: `${styles['grid-item']} ${styles['word-res']} ${styles[`${matchStatus}`]}`,
+            className: `card__results-card__grid-item ${matchStatus}`,
             key: i + length
            },
           word
@@ -58,7 +60,7 @@ const [displayData, setDisplayData]=useState(sessionResult)
   
  
   return (
-    <div className='result-card'>
+    <div className='result-card card card__stage card__results-card card__stage--text xl:card__stage--text-screen-2xl'>
         <div style={{
         display: 'grid', 
         gridTemplateColumns:`repeat(${length}, auto)` }}

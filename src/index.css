@@ -17,10 +17,10 @@ body {
 
 
 
-@layer components {
+@layer utilities {
   /* Button */
   .btn {
-    @apply text-white font-bold py-2 px-4 text-lg rounded-full;
+    @apply text-white font-bold py-2 px-4 text-base rounded-full;
   }
 
   /* Card */
@@ -32,19 +32,14 @@ body {
     @apply bg-gray-50;
   }
 
-  .card--shadow {
-    /* @apply shadow-lg; */
-  }
 
   /* Controls Container */
-  .card__controls-container {
-    @apply shadow-lg
-  }
+ 
   .card__controls-container--text {
     @apply text-xl;
   }
   .card__controls-container--flex {
-    @apply  justify-between  ;
+    @apply  justify-between ;
   }
 
   .card__controls-container--padding {
@@ -60,21 +55,22 @@ body {
     @apply mb-10;
   }
   .stage--height {
-    @apply min-h-52;
+    @apply h-52;
   }
 
 
   /* Stage Card */
-  .card__stage {
-    @apply bg-white shadow-lg ;
-  }
+
 
   .card__stage--text {
     @apply text-2xl;
   }
+  .card__stage--text-screen-2xl {
+    @apply text-3xl;
+  }
 
-  .card__stage--height {
-    @apply min-h-52;
+  .card__stage {
+    @apply h-full bg-white;
   }
 
   /* Start Card */
@@ -86,13 +82,26 @@ body {
 
 }
 
-.navbar {
-  @apply bg-white
+/* Results Card */
 
+.card__results-card {
+  @apply flex justify-center;
 }
 
-.navbar--padding {
+.card__results-card__response-word--color-error {
+  @apply text-red-600;
+}
+.card__results-card__response-word--color-correct {
+  @apply text-green-600;
+}
+.card__results-card__grid-item {
+  @apply mx-2 text-center ;
+}
 
+
+ /* Navbar */
+.navbar {
+  @apply bg-white
 }
 
 .animation-pulse {

@@ -1,8 +1,7 @@
 import React from 'react'
 import ControlsContainer from '../Controls/ControlsContainer'
 import Stage from '../Stage/Stage'
-// import StudentReadLogo from '../../StudentReadLogo/StudentReadLogo'
-import studentIMG from '../../assets/student-reading.svg'
+import ResponseAnalysisCard from '../ResponseAnalysisCard/ResponseAnalysisCard'
 
 const MainContainer = () => {
 
@@ -16,9 +15,7 @@ const MainContainer = () => {
           <ControlsContainer/>
           <Stage/>
           </div>
-          <div className='hidden bg-white card  lg:flex lg:shrink-0 lg:w-[383px] lg:items-center lg:justify-center xl:w-[450px] '>
-            <img className=' ' src={studentIMG} alt="Student reading book"/>
-          </div>
+          <ResponseAnalysisCard/>
         </div>
 
   )

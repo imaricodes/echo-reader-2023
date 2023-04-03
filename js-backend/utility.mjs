@@ -13,7 +13,7 @@ export const checkForMaxWords = (arr, maxWords) => {
 };
 
 //this function returns an array of objects
-export const evaluateSession = (cueObj, responseObj) => {
+export const evaluateSession = async (cueObj, responseObj) => {
   //compare strings index and return t/f for match
   const compareStrings = (a, b) => {
     let result;
@@ -35,6 +35,8 @@ export const evaluateSession = (cueObj, responseObj) => {
   let responseDisplay = responseObj.display.map((item) => item);
 
   let arr = [];
+  // arr.push("This will be chat gpt")
+
   arr.push(responseDisplay);
   arr.push(cueDisplay);
 
@@ -56,7 +58,7 @@ export const evaluateSession = (cueObj, responseObj) => {
       responseDisplayWord: responseDisplay[index],
     });
   }
-  // console.log(`evaluated array of objects!: ${JSON.stringify(arr)}`);
+  console.log(`final sesion result array on server!: ${JSON.stringify(arr)}`);
   return arr;
 };
 

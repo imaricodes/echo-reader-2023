@@ -1,5 +1,6 @@
 import { processResponse } from "./processTranscription.mjs";
 import {evaluateSession} from './utility.mjs';
+import { chatGPTData } from "./ChatGPT.mjs";
 
 
 // Imports the Google Cloud client library
@@ -33,7 +34,7 @@ export function handleStream (socket) {
 
   let cueData = {};
 
-    const speechCallback = (stream) => {
+    const speechCallback = async (stream) => {
         //TODO: set timeout in case final transcript does not arrive
         console.log("SPEECH CALLBACK CALLED");
         let words = stream.results[0].alternatives[0].transcript;
@@ -59,9 +60,22 @@ export function handleStream (socket) {
     
           //evaluate cue, response and return session result object
     
-          let sessionResult = evaluateSession(cueData, processedResponse);
+          let sessionResult = await evaluateSession(cueData, processedResponse);
+
+
+          let chatGPTAnalysis = await chatGPTData(sessionResult);
+          console.log(`chatGPTAnalysis: ${chatGPTAnalysis.content}`);
+
+          // chatGPTData().then(data => { 
+              //this is the response from the GPT-3 API
+              //emit it to the client
+          // });
     
+          socket.emit("chatGPT_response", chatGPTAnalysis);
+          
           socket.emit("results_processed", sessionResult);
+
+          //also emit openai response here?
     
         }
       };

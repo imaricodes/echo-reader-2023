@@ -71,7 +71,7 @@ export function handleStream (socket) {
               //emit it to the client
           // });
     
-          socket.emit("chatGPT_response", chatGPTAnalysis);
+          socket.emit("chatGPT_response", {chatGPTAnalysis});
           
           socket.emit("results_processed", sessionResult);
 

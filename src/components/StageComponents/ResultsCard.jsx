@@ -37,8 +37,8 @@ const [displayData, setDisplayData]=useState(sessionResult)
 
       if (displayData[i + 2].match === "false") {
         matchStatus = "card__results-card__response-word--color-error";
-       
-      } else matchStatus = "card__results-card__response-word--color-correct"
+      
+      } else if (displayData[i + 2].match === "true") {matchStatus = "card__results-card__response-word--color-correct"} else if (displayData[i + 2].match === "false-true") {matchStatus = "card__results-card__response-word--color-wrong-position"}
       
 
       word = displayData[i + 2].responseDisplayWord;

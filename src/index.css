@@ -94,6 +94,10 @@ body {
 .card__results-card__response-word--color-correct {
   @apply text-green-600;
 }
+
+.card__results-card__response-word--color-wrong-position {
+  @apply text-yellow-400;
+}
 .card__results-card__grid-item {
   @apply mx-2 text-center ;
 }

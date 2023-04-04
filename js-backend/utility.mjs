@@ -51,6 +51,15 @@ export const evaluateSession = async (cueObj, responseObj) => {
     let evaluation = compareStrings(cue, response);
     evaluation ? (match = "true") : (match = "false");
 
+    if (match === "false") {
+      if (cueEvaluate.includes(response)) {
+        match = "false-true";
+      }
+    }
+
+    //here, check whether reposnse is contained in cueEvaluate
+  
+
     arr.push({
       cueWord: cue,
       responseWord: response,

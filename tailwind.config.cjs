@@ -23,6 +23,15 @@ module.exports = {
       "secondary-coolor": "var(--secondary-color)"
     },
 
+    gridTemplateColumns: {
+      'analysis-grid': 'min-content 200px',
+      
+    },
+    gridTemplateRows: {
+      'analysis-grid': '1fr 1fr 1fr',
+    },
+
+
     },
   },
   plugins: [],

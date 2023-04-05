@@ -1,7 +1,7 @@
 import React from 'react'
 import ControlsContainer from '../Controls/ControlsContainer'
 import Stage from '../Stage/Stage'
-import ResponseAnalysisCard from '../ResponseAnalysisCard/ResponseAnalysisCard'
+import ResponseAnalysisCard from '../ResponseAnalysis/ResponseAnalysisCard'
 
 const MainContainer = () => {
 

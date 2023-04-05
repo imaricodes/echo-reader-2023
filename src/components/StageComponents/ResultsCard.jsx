@@ -61,7 +61,7 @@ const [displayData, setDisplayData]=useState(sessionResult)
   
  
   return (
-    <div className='result-card card card__stage card__results-card card__stage--text xl:card__stage--text-screen-2xl'>
+    <div className='result-card card card__stage card__results-card card__stage--text'>
         <div style={{
         display: 'grid', 
         gridTemplateColumns:`repeat(${length}, auto)` }}

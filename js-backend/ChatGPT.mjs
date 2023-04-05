@@ -49,10 +49,10 @@ export async function chatGPTData (sessionResult) {
                 model: "gpt-3.5-turbo",
                 messages: [{
                     "role": "user", 
-                    "content": `Given, \"${cueAndResponseStrings.cueSentence}\", the student read \"${cueAndResponseStrings.responseSentence}\". List the reading errors if the student made any. `
+                    "content": `I was given the sentence: “\"${cueAndResponseStrings.cueSentence}\" to read. I read it as \"${cueAndResponseStrings.responseSentence}\", what reading errors did I make? Exclude punctuation and capitalization errors in the explanation. Synonyms are substitutions Do not mention synomyms.`
                     }],
                 temperature: 0,
-                max_tokens: 46,
+                max_tokens: 80,
             },
             {
                 timeout:3000

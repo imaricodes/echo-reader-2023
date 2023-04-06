@@ -29,7 +29,7 @@ const CueSentenceCard = (props) => {
   ];
   
  
-  const {sessionState, setSessionState,socket} = useContext(SessionContext);
+  const {sessionState, setSessionState, socket} = useContext(SessionContext);
   const cueRef = useRef(null);
   const micIconRef = useRef(null);
   const micIconPulseRef = useRef(null);
@@ -58,6 +58,16 @@ const CueSentenceCard = (props) => {
 
     }
   },[sessionState])
+
+
+useEffect(() => {
+  if (socket) {
+    socket.on('speech_processing_started', (data) => {
+      console.log('speech_processing_started RECEIVED: ', data);
+    })
+  }
+
+},[socket])
 
 
   return (

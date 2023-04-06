@@ -16,7 +16,7 @@ const config = {
 
 const request = {
   config,
-  interimResults: false,
+  interimResults: true,
   single_utterance: true,
   enable_spoken_punctuation: false,
   microphone_distance: "NEARFIELD",
@@ -33,6 +33,7 @@ let recognizeStream;
 export function handleStream (socket) {
 
   let cueData = {};
+  let streamingTranscriptionResults = false;
 
     const speechCallback = async (stream) => {
         //TODO: set timeout in case final transcript does not arrive
@@ -40,6 +41,13 @@ export function handleStream (socket) {
         let words = stream.results[0].alternatives[0].transcript;
         let wordsArray = words.split(" ");
         console.log(`wordsArray: ${wordsArray}`);
+        console.log('isFinal state: ', stream.results[0].isFinal)
+
+        if (stream.results[0].isFinal === false && streamingTranscriptionResults === false) {
+          streamingTranscriptionResults = true;
+          socket.emit('speech_processing_started', 'speech_processing_started')
+
+        }
 
         if (stream === undefined) {
           console.log('stream undefined')

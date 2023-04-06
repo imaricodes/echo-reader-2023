@@ -13,7 +13,7 @@ module.exports = {
     keyframes: {
       'pulse-fade-grow': {
         '0%': { transform: 'scale(1)', opacity: '1' },
-        '100%': { transform: 'scale(1.3)', opacity: '0'},
+        '100%': { transform: 'scale(1.4)', opacity: '0'},
       },
     },
 

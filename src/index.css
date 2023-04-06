@@ -34,10 +34,6 @@ body {
     @apply flex items-center rounded-lg overflow-hidden px-8 py-8 shadow-lg;
   }
 
-  .card--bg-gray {
-    @apply bg-gray-50;
-  }
-
 
   /* Controls Container */
   .card__controls-container {

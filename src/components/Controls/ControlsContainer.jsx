@@ -1,9 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react'
 import { SessionContext } from '../../contexts/SessionContext'
-
 import SessionButton from '../SessionButton/SessionButton'
-
-
 
 
 const ControlsContainer = (props) => {
@@ -21,8 +18,6 @@ const ControlsContainer = (props) => {
 
   },[sessionState])
 
-
-
   return (
 
     <div className='card card__controls-container card__controls-container--flex card__controls-container--text card__controls-container--padding card__controls-container--margin gap-7 lg:text-2xl xl:text-2xl bg-yellow-100'>
@@ -32,8 +27,6 @@ const ControlsContainer = (props) => {
       <div>
         <SessionButton/>
       </div>
-   
-
     </div>
   )
 }

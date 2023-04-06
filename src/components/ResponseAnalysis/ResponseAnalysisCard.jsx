@@ -44,7 +44,7 @@ const ResponseAnalysisCard = () => {
         <ResponseAnalysisData/>
       </div>
       
-      <img ref={studentIMGRef} className='' src={studentIMG} alt="Student reading book"/>
+      <img ref={studentIMGRef} className='hidden' src={studentIMG} alt="Student reading book"/>
     </div>
   )
 }

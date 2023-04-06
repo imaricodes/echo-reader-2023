@@ -11,11 +11,14 @@ module.exports = {
     }),
 
     keyframes: {
-      pulse: {
-        '0%': { transform: 'scale(0.95)' },
-        '50%': { transform: 'scale(1.0)' },
-        '100%': { transform: 'scale(0.95)' },
+      'pulse-fade': {
+        '0%': { transform: 'scale(1)', opacity: '1' },
+        '100%': { transform: 'scale(1.3)', opacity: '0'},
       },
+    },
+
+    animation: {
+      'pulse-fade': 'pulse-fade infinite 1.5s'
     },
 
     colors: {
@@ -25,7 +28,6 @@ module.exports = {
 
     gridTemplateColumns: {
       'analysis-grid': 'min-content 200px',
-      
     },
     gridTemplateRows: {
       'analysis-grid': '1fr 1fr 1fr',

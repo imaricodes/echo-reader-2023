@@ -1,7 +1,8 @@
 import React, {useRef, useEffect, useContext} from 'react'
 import { processCue } from "../../js/processCue";
 import { SessionContext } from '../../contexts/SessionContext'
-import MicIcon from '../MicIcon'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMicrophone} from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -29,8 +30,6 @@ const CueSentenceCard = (props) => {
   
  
   const {sessionState, setSessionState,socket} = useContext(SessionContext);
-
-  const micOutter = useRef(null);
   const cueRef = useRef(null);
 
 
@@ -46,16 +45,17 @@ const CueSentenceCard = (props) => {
         socket.emit("send_cueData", processedCue);
   },[])
 
+  
+
 
   return (
 
-    <div className= 'card card__stage card__stage--text lg:width[500px] relative  '>
-      <div className='absolute top-2 right-2'> 
-        <div className='flex w-full justify-end items-center pt-5 px-4'> 
-          <div ref={micOutter}>
-            <MicIcon/>
-          </div>
-        </div>
+    <div className= 'card card__stage card__display--flex-column  card__stage--text lg:width[500px] relative '>
+      <div className='absolute top-5 right-2 w-full'> 
+        <div className='flex  justify-center items-center  relative'>
+              <span className='flex justify-center items-center bg-red-600 w-12 h-12 rounded-full z-50'><FontAwesomeIcon icon={faMicrophone} className='h-[45%]  text-white '  /></span>
+              <span className=' bg-red-600 w-14 h-14 rounded-full animate-pulse-fade absolute'/>
+            </div>
       </div>
       <div className=' w-full text-center ' ref={cueRef}></div>
     </div>

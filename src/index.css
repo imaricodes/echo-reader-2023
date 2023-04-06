@@ -84,7 +84,7 @@ body {
   /* Cue Sentence Card */
 
 .card__display--flex-column {
-  @apply flex flex-col;
+  @apply flex flex-col items-center justify-center;
 
 }
 
@@ -119,8 +119,8 @@ body {
   @apply flex justify-center items-center;
 }
 
-.animation-pulse {
-  /* @apply pulse 2s infinite; */
+.mic-icon--pulse{
+  @apply animate-pulse-fade; ;
 }
 
 

@@ -11,14 +11,14 @@ module.exports = {
     }),
 
     keyframes: {
-      'pulse-fade': {
+      'pulse-fade-grow': {
         '0%': { transform: 'scale(1)', opacity: '1' },
         '100%': { transform: 'scale(1.3)', opacity: '0'},
       },
     },
 
     animation: {
-      'pulse-fade': 'pulse-fade infinite 1.5s'
+      'pulse-fade-grow': 'pulse-fade-grow infinite 1.5s',
     },
 
     colors: {

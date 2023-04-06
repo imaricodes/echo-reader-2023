@@ -8,9 +8,7 @@ const StartCard = () => {
         Echo Reader is a reading app that uses speech recognition to help you practice reading aloud.
       </p>
     </div>
-   
 
-   
   )
 }
 

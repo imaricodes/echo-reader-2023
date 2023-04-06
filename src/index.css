@@ -40,9 +40,11 @@ body {
 
 
   /* Controls Container */
- 
+  .card__controls-container {
+    @apply h-20;
+  }
   .card__controls-container--text {
-    @apply text-xl;
+    @apply text-2xl;
   }
   .card__controls-container--flex {
     @apply  justify-between ;

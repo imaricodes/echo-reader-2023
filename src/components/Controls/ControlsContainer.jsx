@@ -10,11 +10,12 @@ const ControlsContainer = (props) => {
   const [instructionsText, setInstructionsText] =useState('Click \'Go\' to load a sentence.')
 
   useEffect (()=> {
-    sessionState ==='start' && setInstructionsText('When you are ready to read aloud, click \'Start\' ');
+    sessionState ==='start' && setInstructionsText('When you are ready to read aloud, click \'Start\'. Finish reading before the timer ends. ');
     sessionState ==='listen' && setInstructionsText('Click Cancel to end the session');
     sessionState ==='cancel' && setInstructionsText('Click \'Go\' to load a sentence.');
-    sessionState ==='results' && setInstructionsText('Click \'Again\' for another sentence.');
+    sessionState ==='results' && setInstructionsText('Click \'Again\' to read another sentence.');
     sessionState ==='go' && setInstructionsText('Click \'Go\' to load a sentence.');
+    sessionState ==='timeUp' && setInstructionsText('Click \'Again\' to read another sentence.');
 
   },[sessionState])
 

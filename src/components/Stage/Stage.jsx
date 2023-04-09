@@ -7,6 +7,7 @@ import { SessionContext } from "../../contexts/SessionContext";
 import CueSentenceCard from "../StageComponents/CueSentenceCard";
 import StartCard from "../StageComponents/StartCard";
 import ResultsCard from "../StageComponents/ResultsCard";
+import TimeUpCard from "../StageComponents/TimeUpCard";
 
 const Stage = () => {
   
@@ -135,7 +136,7 @@ const Stage = () => {
                   }
 
                   // mediaRecorder = null;
-                  socket.emit('destroy_stream', 'destroy stream');
+                  // socket.emit('destroy_stream', 'destroy stream');
                   
                   // mediaRecorder = null;
                 });
@@ -180,6 +181,7 @@ const Stage = () => {
     results: <ResultsCard sessionResult={sessionResult} />,
     // restart: <ResultsCard sessionResult={sessionResult} />,
     cancel: <StartCard />,
+    timeUp: <TimeUpCard />
   };
 
   console.log(`session state: ${sessionState}`)

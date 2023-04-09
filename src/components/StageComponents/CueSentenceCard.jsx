@@ -90,6 +90,8 @@ const countdownCircleTimerDone = () => {
     console.log('countdownCircleTimerDone')
     // countdownCircleTimerRef.current.classList.remove('text-base')
     countdownCircleTimerRef.current.classList.add('text-gray-200')
+    socket.emit("cancel_session", "cancel_session from countdownCircleTimerDone");
+    setSessionState('timeUp')
 }
 
 

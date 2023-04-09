@@ -12,6 +12,11 @@ const SessionButton = (props) => {
       // setSessionState('restart')
     }
 
+    if (sessionState === "timeUp") {
+      setButtonText("Again")
+
+    }
+
     if (sessionState === "listen") {
       buttonRef.current.classList.remove('bg-green-500', 'hover:bg-green-700')
       buttonRef.current.classList.add('bg-red-500', 'hover:bg-red-700')
@@ -25,6 +30,8 @@ const SessionButton = (props) => {
       :
       null
     }
+
+ 
 
 
     return () => {
@@ -51,7 +58,7 @@ const SessionButton = (props) => {
 
     //this state set when socket.on('results_processed') is triggered in stage component, resultsCard is rendered
     //but, if clicked, cue sentence card is rendered and sessionState is set to 'restart'
-    if (sessionState==="results") {
+    if (sessionState==="results" || sessionState==="timeUp") {
       setButtonText("Start")
       setSessionState('start')
       setIsRecording(false)

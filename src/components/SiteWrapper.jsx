@@ -5,7 +5,7 @@ import BrowserWarningModal from './Modals/BrowserWarningModal';
 
 const SiteWrapper = () => {
   return (
-    <div>
+    <div className='min-w-[320px]'>
       <NavBar />
       <MainContainer />
       <BrowserWarningModal/>

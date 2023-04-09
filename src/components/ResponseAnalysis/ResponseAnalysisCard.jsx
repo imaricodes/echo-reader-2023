@@ -14,13 +14,13 @@ const ResponseAnalysisCard = () => {
   //hide img when state is result and show responseAnalysisData
 
   useEffect(() => { 
-    if (sessionState === 'restart') {
+    if (sessionState === 'results') {
 
       studentIMGRef.current.classList.add('hidden')
       responseAnalysisDataRef.current.classList.remove('hidden')
       responseAnalysisDataRef.current.classList.add('block')
       console.log(`sessionState is result`)
-    } else if (sessionState === 'go') {
+    } else if (sessionState === 'go' || sessionState === 'start') {
       studentIMGRef.current.classList.contains('hidden') ? studentIMGRef.current.classList.remove('hidden') : null
 
       responseAnalysisDataRef.current.classList.contains('block')

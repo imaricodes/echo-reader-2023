@@ -17,22 +17,23 @@ const config = {
 const request = {
   config,
   interimResults: true,
-  single_utterance: true,
+  single_utterance: false,
   enable_spoken_punctuation: false,
   microphone_distance: "NEARFIELD",
-  interaction_type: "DICTATION",
-  enable_voice_activity_events: true, //wait for speech acitivity to start
+  // interaction_type: "DICTATION",
+  // enable_voice_activity_events: true, //wait for speech acitivity to start
 };
 
-let recognizeStream;
+let recognizeStream = null;
+let isListening = false;
 
 
 //////////////////////////  EXPORTS  //////////////////////////
 
 
-export function handleStream (socket) {
+export function handleStream (socket, cueData, audio) {
 
-  let cueData = {};
+  // let cueData = cueData;
   let streamingTranscriptionResults = false;
 
     const speechCallback = async (stream) => {
@@ -45,7 +46,6 @@ export function handleStream (socket) {
 
         if (stream.results[0].isFinal === false && streamingTranscriptionResults === false) {
           streamingTranscriptionResults = true;
-          socket.emit('speech_processing_started', 'speech_processing_started')
 
         }
 
@@ -55,21 +55,26 @@ export function handleStream (socket) {
     
         if (stream.results[0].isFinal === true) {
           //TODO: where in this process do I close the api connection?
-          console.log('closing speech api...')
-          recognizeStream.end()
-          recognizeStream.removeListener('data', speechCallback);
+          // recognizeStream.removeListener('data', speechCallback);
+          // recognizeStream = null;
+          // console.log('ending stream...')
+          // recognizeStream.end()
+          // recognizeStream.removeListener('data', speechCallback);
+          // recognizeStream = null;
+          recognizeStream.end(); 
+          recognizeStream.destroy();
           recognizeStream = null;
           socket.emit("close_media_recorder", "close_media_recorder")
 
           let processedResponse = processResponse(words, cueData.cueLength);
 
-          console.log(`processedResult evaluate ${processedResponse.evaluate}`);
-          console.log(`processedResult display ${processedResponse.display}`);
+          // console.log(`processedResult evaluate ${processedResponse.evaluate}`);
+          // console.log(`processedResult display ${processedResponse.display}`);
     
           //evaluate cue, response and return session result object
     
           let sessionResult = await evaluateSession(cueData, processedResponse);
-
+          console.log(`server sessionResult: ${sessionResult}`);
 
           let chatGPTAnalysis = await chatGPTData(sessionResult);
           console.log(`chatGPTAnalysis: ${chatGPTAnalysis.content}`);
@@ -88,46 +93,49 @@ export function handleStream (socket) {
         }
       };
 
+    console.log('handle stream called')
 
-    recognizeStream = client
-    .streamingRecognize(request)
-    .on("error", (err) => {
-      if (err.code === 11) {
-        console.log(`errorcode 11 ${err}`);
-      } else {
-        console.error("API request error " + err.message);
-      }
-    })
-    .on("data", speechCallback);
+    if (recognizeStream === null) {
+      console.log('stream null making new stream')
+      recognizeStream = client
+      .streamingRecognize(request)
+      .on("error", (err) => {
+        if (err.code === 11) {
+          console.log(`errorcode 11 ${err}`);
+        } else {
+          console.error("API request error in if block " + err.message);
+        }
+      })
+      .on("data", speechCallback);
+    } else console.log('recognizeStream is not null')
+ 
 
   //////////////////////////  SOCKET LISTENERS  //////////////////////////
 
-  socket.on("send_cueData", (data) => {
-    console.log(`cueData received: `, data);
-    cueData = { ...data };
-    console.log(`cueData spread ${cueData.display}`);
-  });
 
-  socket.on("incoming_stream", (audio) => {
+
+  
     // console.log(`stream coming`)
     // console.log('recognize stream: ', recognizeStream)
+  
     if (recognizeStream) {
       // console.log(audio)
+      console.log('audio received attempting to write to recognizeStream: ')
       recognizeStream.write(audio);
-    } else console.log('no recognize stream')
+    } else console.log('no recognize stream: ')
     
-  });
 
-  socket.on("cancel_session", (data)=> {
-    console.log('closing speech api...')
-      if(recognizeStream) {
-        recognizeStream.end()
-      recognizeStream.removeListener('data', speechCallback);
-      recognizeStream = null;
-      }
+
+  // socket.on("cancel_session", (data)=> {
+  //   console.log('closing speech api...')
+  //     // if(recognizeStream) {
+  //     //   recognizeStream.end()
+  //     // recognizeStream.removeListener('data', speechCallback);
+  //     // recognizeStream = null;
+  //     // }
       
-      socket.emit("close_media_recorder", "close_media_recorder")
-  })
+  //     socket.emit("close_media_recorder", "close_media_recorder")
+  // })
 }
 
   

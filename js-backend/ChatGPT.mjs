@@ -1,12 +1,36 @@
 import { Configuration, OpenAIApi } from 'openai';
+import {SecretManagerServiceClient} from '@google-cloud/secret-manager';
+
+const name = 'projects/final-solution-379503/secrets/echo-reader-chatgpt/versions/latest';
+const secretmanagerClient = new SecretManagerServiceClient();
+
+
+const getSecret = async () => {
+  //access the secret
+  const [version] = await secretmanagerClient.accessSecretVersion({name: name});
+  //get the payload
+  const payload = version.payload.data.toString('utf8');
+  //set the environment variable
+  // process.env.CHATGPT_API_KEY = payload;
+  // console.log('from script:',payload)
+  return payload;
+
+}
+
+const CHATGPT_KEY = await getSecret()
+.then((key) => key);
+
+
 
 export async function chatGPTData (sessionResult) {
 
-    const getCueAndResponsStrings = (sessionResult) => {
+  // console.log('chatgptkey', CHATGPT_KEY)
+
+    const getCueAndResponseStrings = (sessionResult) => {
         let responseSentence; //index 0
         let cueSentence //index 1
         let sentences = {}
-         
+
           let cueSentenceArray = sessionResult.map((item, index) => {
             // console.log(index)
             // console.log(item)
@@ -25,19 +49,13 @@ export async function chatGPTData (sessionResult) {
          return sentences;
        };
 
-    const cueAndResponseStrings = getCueAndResponsStrings(sessionResult);
+    const cueAndResponseStrings = getCueAndResponseStrings(sessionResult);
 
     console.log("cueAndResponseStrings=",cueAndResponseStrings);
 
 
-
-
-
-
-
-
     const configuration = new Configuration({
-        apiKey: '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',
+        apiKey: CHATGPT_KEY,
       });
 
       const openai = new OpenAIApi(configuration);

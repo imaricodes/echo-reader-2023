@@ -11,9 +11,9 @@ const ControlsContainer = (props) => {
 
   useEffect (()=> {
     sessionState ==='start' && setInstructionsText('When you are ready to read aloud, click \'Start\' ');
-    sessionState ==='listen' && setInstructionsText('Click Restart to end the session');
+    sessionState ==='listen' && setInstructionsText('Click Cancel to end the session');
     sessionState ==='cancel' && setInstructionsText('Click \'Go\' to load a sentence.');
-    sessionState ==='restart' && setInstructionsText('Click \'Restart\' for another sentence.');
+    sessionState ==='results' && setInstructionsText('Click \'Again\' for another sentence.');
     sessionState ==='go' && setInstructionsText('Click \'Go\' to load a sentence.');
 
   },[sessionState])

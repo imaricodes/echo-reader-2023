@@ -3,6 +3,7 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import { handleStream } from "./js-backend/googleSpeechAPI.mjs";
 
+
 import cors from "cors";
 
 const PORT = process.env.PORT || 8080;
@@ -20,11 +21,21 @@ io.on("connection", (socket) => {
   console.log('server side socket id: ', socket.id)
   socket.emit("connection", "connection established")
 
-  
+  let cueData = {};
 
-  handleStream(socket);
+  socket.on("test", () =>console.log("test received"))
 
+  socket.on("send_cueData", (data) => {
+    // console.log(`cueData received: `, data);
+    cueData = { ...data };
+    // console.log(`cueData spread ${cueData.display}`);
+  });
 
+  socket.on("incoming_stream", (audio) => {
+    console.log("incoming stream received")
+    console.log(audio)
+    handleStream(socket, cueData, audio);
+  })
 
 })
 

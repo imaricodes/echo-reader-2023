@@ -20,8 +20,10 @@ const ResponseAnalysisData = () => {
         // }
     }, [socket])
 
-    useEffect(() => {  
-        if (sessionState === 'go' && analysis !== null) {
+    useEffect(() => {
+      //clear analysis if sessionState is not 'go'
+      //show button if sessionState is 'go'
+        if (sessionState !== 'results' && analysis !== null) {
             setAnalysis(null)
             analysisRef.current.innerHTML = '';
             analysisButttonRef.current.classList.remove('hidden')

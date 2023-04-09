@@ -10,7 +10,7 @@ import { useCountdown } from 'react-countdown-circle-timer'
 const CueSentenceCard = (props) => {
   console.log('rendering CueSentenceCard')
 
-console.log('use countdown: ', useCountdown)
+// console.log('use countdown: ', useCountdown)
   const CUE_PHRASES = [
     "The cat sat on me.",
     "I love to play outside.",
@@ -32,7 +32,7 @@ console.log('use countdown: ', useCountdown)
 
  
   const {sessionState, setSessionState, socket} = useContext(SessionContext);
-  const [isCounterActive, setIsCounterActive] = useState(false);
+  const [counterIsActive, setCounterIsActive] = useState(false);
 
   const cueRef = useRef(null);
   const micIconRef = useRef(null);
@@ -82,9 +82,16 @@ useEffect(() => {
 //start countdown when speech_processing_finished is received
 useEffect(() => {
   console.log('current countdown ref: ', countdownCircleTimerRef.current)
-  sessionState === 'listen' ? setIsCounterActive(true): setIsCounterActive(false)
+  sessionState === 'listen' ? setCounterIsActive(true): setCounterIsActive(false)
 
-}  ,[sessionState])
+} ,[sessionState])
+
+const countdownCircleTimerDone = () => {
+    console.log('countdownCircleTimerDone')
+    // countdownCircleTimerRef.current.classList.remove('text-base')
+    countdownCircleTimerRef.current.classList.add('text-gray-200')
+}
+
 
 
   return (
@@ -92,17 +99,20 @@ useEffect(() => {
     <div className= 'card card__stage card__display--flex-column  card__stage--text bg-green-200 lg:width[500px] relative '>
 
       <div className=' absolute flex pt-4 px-10 top-0 w-full'>
+        {/* TODO: what happens when the countdown is done? */}
         {/* countdown timer */}
         <span ref={countdownCircleTimerRef} className='absolute text-base font-bold'>
         <CountdownCircleTimer
-                isPlaying={isCounterActive}
+                isPlaying={counterIsActive}
                 duration={10}
-                colors={'#ffc559'}
+                colors={'#22C55E'}
+                trailColor={'#E5E7EB'}
                 strokeWidth={5}
                 trailStrokekWidth={5}
                 colorsTime={[7, 5, 2, 0]}
                 size={40}
                 initialRemainingTime={10}
+                onComplete={countdownCircleTimerDone}
               >
                 {({ remainingTime }) => remainingTime}
           </CountdownCircleTimer>

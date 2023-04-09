@@ -8,14 +8,15 @@ import CueSentenceCard from "../StageComponents/CueSentenceCard";
 import StartCard from "../StageComponents/StartCard";
 import ResultsCard from "../StageComponents/ResultsCard";
 
-const Stage = (props) => {
+const Stage = () => {
   
   const [sessionResult, setSessionResult] = useState(null);
-  const {sessionState, setSessionState, socket, setSocket} = useContext(SessionContext);
+  const {sessionState, setSessionState, socket, setSocket, socketIsConnected} = useContext(SessionContext);
   const value = useContext(SessionContext);
-  
-  const cueRef = useRef("");
-  console.log(`sessionState is ${sessionState}`)
+  const mediaRecorderStart = useRef(0);
+
+
+  // console.log(`sessionState is ${sessionState}`)
 
 
   useEffect(() => {
@@ -38,10 +39,12 @@ const Stage = (props) => {
 
     ///////////////////////////// STATE: START /////////////////////////////
     if (sessionState === "start") {
+
       const getMicAccess = async () => {
+        //TODO: only request mic access if user has not already granted it
         try {
           await navigator.mediaDevices.getUserMedia({ audio: true });
-          console.log(`mic access granted`);
+          // console.log(`mic access granted`);
         } catch (error) {
           console.log(`mic access denied`);
         }
@@ -51,9 +54,12 @@ const Stage = (props) => {
     }
 
 
+    //TODO: If in any state other than listen and if media recorder is !null, stop it. There is an issue where the audio stream is not being stopped when the session results have been received from the server. This is causing an error to be thrown by th google speech api because it is tryting to write to a stream that has already been closed/destroyed.
+
     ///////////////////////////// STATE: LISTEN /////////////////////////////
     if (sessionState==='listen') {
-      console.log('global socket: ',socket)
+      console.log('current session state is listen, run media recorder')
+      // console.log('global socket: ',socket)
       if (socket) {
       
         ///////////////////////////// RECORDER VARIABLES /////////////////////////////
@@ -69,21 +75,30 @@ const Stage = (props) => {
         const reader = new FileReader();
   
         let base64data;
+
+        //start new listening session = null media recorder
+        let mediaRecorder = null;
   
         ///////////////////////////// RECORDER FUNCTIONS /////////////////////////////
         function sendRecorderDataWhenAvailable(e) {
-          reader.readAsDataURL(e.data);
-          reader.onload = () => {
-            base64data = reader.result.split("base64,")[1];
-            // console.log(`base64 ${base64data}`)
-            socket.emit("incoming_stream", base64data);
-          };
+          if(mediaRecorder.state !=='inactive'){
+            reader.readAsDataURL(e.data);
+            reader.onload = () => {
+              base64data = reader.result.split("base64,")[1];
+              // console.log(`base64 ${base64data}`)
+              console.log('sending data to server')
+              socket.emit("incoming_stream", base64data);
+            }; 
+          } else {console.log('media recorder is inactive, not sending data to server')}
+      
+
+
         }
   
         async function startRecorder() {
-  
+          console.log('media recorder start = ', mediaRecorderStart.current ++)
           let mediaRecorderOptions = {};
-          let mediaRecorder = null;
+         
   
           if (MediaRecorder.isTypeSupported('audio/webm; codecs=opus')) {
             mediaRecorderOptions = {mimeType: 'audio/webm; codecs=opus'};
@@ -103,18 +118,26 @@ const Stage = (props) => {
                     );
 
                     mediaRecorder.start(250)
-                } else { mediaRecorder.start(250)}
+                    
+                  } else if (mediaRecorder.state === "inactive") { 
+                    console.log(`media recorder state changed: ${mediaRecorder.state}`);
+                    // mediaRecorder.start(250)
+                  }
+                  
+                  mediaRecorder.ondataavailable = sendRecorderDataWhenAvailable;
 
-  
-                mediaRecorder.ondataavailable = sendRecorderDataWhenAvailable;
-                
                 socket.on("close_media_recorder", (data) => {
                   console.log(`close media recorder message received ${data}`);
+
+                  if (mediaRecorder.state !== "inactive") {
                   mediaRecorder.stop();
-                  console.log(`media recorder stopped`);
-                //TODO: KEEP MEDIA RECORDER OPEN UNTIL SESSION IS CANCELLED OR COMPLETED
+                  console.log(`media recorder state changed: ${mediaRecorder.state}`);
+                  }
+
                   // mediaRecorder = null;
-                  console.log(`media recorder: ${mediaRecorder}`);
+                  socket.emit('destroy_stream', 'destroy stream');
+                  
+                  // mediaRecorder = null;
                 });
   
               });
@@ -126,13 +149,12 @@ const Stage = (props) => {
         ///////////////////////// SOCKET LISTENERS /////////////////////////
         socket.on("results_processed", (data) => {
           console.log("speech results received from server: ", data);
-  
           //here, update sessionState
           setSessionResult(data);
-          setSessionState("restart");
+          setSessionState("results");
           //TODO: DO NOT DISCONNECT SOCKET HERE 
-          socket.disconnect();
-          setSocket(null)
+          // socket.disconnect();
+          // setSocket(null)
           });
   
         //start recorder
@@ -142,11 +164,11 @@ const Stage = (props) => {
 
 
     ///////////////////////////// STATE: CANCEL /////////////////////////////
-    if (sessionState === "cancel") {
-      if(socket) {
-        socket.emit('cancel_session')
-      }
-    }
+    // if (sessionState === "cancel") {
+    //   if(socket) {
+    //     socket.emit('cancel_session')
+    //   }
+    // }
   }, [sessionState]);
 
 
@@ -156,10 +178,12 @@ const Stage = (props) => {
     start: <CueSentenceCard/>,
     listen: <CueSentenceCard/>,
     results: <ResultsCard sessionResult={sessionResult} />,
-    restart: <ResultsCard sessionResult={sessionResult} />,
+    // restart: <ResultsCard sessionResult={sessionResult} />,
     cancel: <StartCard />,
   };
+
   console.log(`session state: ${sessionState}`)
+
   return (
     <div className="stage stage--height lg:mb-0 lg:h-[300px] ">
       {COMPONENT_STATES[sessionState]}

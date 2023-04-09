@@ -15,6 +15,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@google-cloud/secret-manager": "^4.2.1",
     "@google-cloud/speech": "^5.4.0",
     "@ionic/react": "^6.6.2",
     "cors": "^2.8.5",

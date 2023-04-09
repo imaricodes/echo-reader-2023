@@ -10,15 +10,11 @@ import ResultsCard from "../StageComponents/ResultsCard";
 import TimeUpCard from "../StageComponents/TimeUpCard";
 
 const Stage = () => {
-  
+
   const [sessionResult, setSessionResult] = useState(null);
   const {sessionState, setSessionState, socket, setSocket, socketIsConnected} = useContext(SessionContext);
   const value = useContext(SessionContext);
   const mediaRecorderStart = useRef(0);
-
-
-  // console.log(`sessionState is ${sessionState}`)
-
 
   useEffect(() => {
 
@@ -29,12 +25,9 @@ const Stage = () => {
           let sockets = io();
           sockets.on('connection', (data) => { console.log(`connection established`)})
           setSocket(sockets);
-         
-          
         } catch (error) {
           console.log(`error creating socket connection: ${error}`)
         }
-        
       }
     }
 
@@ -62,9 +55,9 @@ const Stage = () => {
       console.log('current session state is listen, run media recorder')
       // console.log('global socket: ',socket)
       if (socket) {
-      
+
         ///////////////////////////// RECORDER VARIABLES /////////////////////////////
-  
+
         const getUserMediaConstraints = {
           audio: {
             channelCount: 1,
@@ -72,14 +65,13 @@ const Stage = () => {
           },
           video: false,
         };
-  
+
         const reader = new FileReader();
-  
         let base64data;
 
         //start new listening session = null media recorder
         let mediaRecorder = null;
-  
+
         ///////////////////////////// RECORDER FUNCTIONS /////////////////////////////
         function sendRecorderDataWhenAvailable(e) {
           if(mediaRecorder.state !=='inactive'){
@@ -91,22 +83,18 @@ const Stage = () => {
               socket.emit("incoming_stream", base64data);
             }; 
           } else {console.log('media recorder is inactive, not sending data to server')}
-      
-
-
         }
-  
+
         async function startRecorder() {
           console.log('media recorder start = ', mediaRecorderStart.current ++)
           let mediaRecorderOptions = {};
-         
-  
+
           if (MediaRecorder.isTypeSupported('audio/webm; codecs=opus')) {
             mediaRecorderOptions = {mimeType: 'audio/webm; codecs=opus'};
             } else if (MediaRecorder.isTypeSupported('video/mp4')) {
               mediaRecorderOptions = {mimeType: 'video/mp4'};
           }
-  
+
           try {
             console.log("starting recorder");
             await navigator.mediaDevices
@@ -120,12 +108,12 @@ const Stage = () => {
 
                     mediaRecorder.start(250)
                     
-                  } else if (mediaRecorder.state === "inactive") { 
+                  } else if (mediaRecorder.state === "inactive") {
                     console.log(`media recorder state changed: ${mediaRecorder.state}`);
                     // mediaRecorder.start(250)
                   }
-                  
-                  mediaRecorder.ondataavailable = sendRecorderDataWhenAvailable;
+
+                mediaRecorder.ondataavailable = sendRecorderDataWhenAvailable;
 
                 socket.on("close_media_recorder", (data) => {
                   console.log(`close media recorder message received ${data}`);
@@ -134,42 +122,27 @@ const Stage = () => {
                   mediaRecorder.stop();
                   console.log(`media recorder state changed: ${mediaRecorder.state}`);
                   }
-
-                  // mediaRecorder = null;
-                  // socket.emit('destroy_stream', 'destroy stream');
-                  
-                  // mediaRecorder = null;
                 });
-  
+
               });
           } catch (error) {
             console.log("navigator error:", error.message);
           }
         }
-  
+
         ///////////////////////// SOCKET LISTENERS /////////////////////////
         socket.on("results_processed", (data) => {
           console.log("speech results received from server: ", data);
           //here, update sessionState
           setSessionResult(data);
           setSessionState("results");
-          //TODO: DO NOT DISCONNECT SOCKET HERE 
-          // socket.disconnect();
-          // setSocket(null)
           });
-  
         //start recorder
+        //ISSUE: Is this causing the server to fun endSession repeatedly? This is being called twice (?) once when the session state changes to listen and again when the socket connection is established. This is causing the media recorder to be started twice, which is causing the audio stream to be sent twice to the server. 
         startRecorder();
       }
     }
 
-
-    ///////////////////////////// STATE: CANCEL /////////////////////////////
-    // if (sessionState === "cancel") {
-    //   if(socket) {
-    //     socket.emit('cancel_session')
-    //   }
-    // }
   }, [sessionState]);
 
 
@@ -190,7 +163,6 @@ const Stage = () => {
     <div className="stage stage--height lg:mb-0 lg:h-[300px] ">
       {COMPONENT_STATES[sessionState]}
     </div>
-    
     );
 };
 

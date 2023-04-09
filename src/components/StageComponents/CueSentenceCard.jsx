@@ -4,7 +4,6 @@ import { SessionContext } from '../../contexts/SessionContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone} from '@fortawesome/free-solid-svg-icons'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
-import { useCountdown } from 'react-countdown-circle-timer'
 
 
 const CueSentenceCard = (props) => {
@@ -13,24 +12,23 @@ const CueSentenceCard = (props) => {
 // console.log('use countdown: ', useCountdown)
   const CUE_PHRASES = [
     "The cat sat on me.",
-    "I love to play outside.",
+    "I love to play at parks.",
     "The sun is very hot.",
     "Dogs like to chase squirrels.",
     "She ran very fast today.",
     "He always picks pizza.",
     "I saw a bird fly.",
     "The flowers are so pretty.",
-    "My cat sleeps a lot.",
-    "We are best friends forever.",
+    "My cat sleeps hard.",
+    "We are best friends.",
     "I feel happy and excited.",
-    "The sky is so blue.",
+    "The sky is beautiful.",
     "I want to go swimming.",
-    "I have a toy car.",
+    "John has a toy car.",
     "The beach is very sandy."
   ];
 
 
- 
   const {sessionState, setSessionState, socket} = useContext(SessionContext);
   const [counterIsActive, setCounterIsActive] = useState(false);
 
@@ -73,7 +71,6 @@ useEffect(() => {
   if (socket) {
     socket.on('speech_processing_started', (data) => {
       console.log('speech_processing_started RECEIVED: ', data);
-      
     })
   }
 
@@ -93,8 +90,6 @@ const countdownCircleTimerDone = () => {
     socket.emit("cancel_session", "cancel_session from countdownCircleTimerDone");
     setSessionState('timeUp')
 }
-
-
 
   return (
 

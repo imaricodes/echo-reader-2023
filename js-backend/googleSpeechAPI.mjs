@@ -93,6 +93,7 @@ export function handleStream (socket, cueData, audio) {
           socket.emit("chatGPT_response", {chatGPTAnalysis});
           
         } catch (error) {
+          socket.emit("chatGPT_error", "ChatGPT is busy right now")
           console.log(`chatGPT error: ${error}`)
         }
       

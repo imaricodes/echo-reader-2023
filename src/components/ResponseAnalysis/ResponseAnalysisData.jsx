@@ -15,7 +15,13 @@ const ResponseAnalysisData = () => {
             console.log(`chatGPT_response:`, data.chatGPTAnalysis.content);
             setAnalysis(data.chatGPTAnalysis.content);
           })
+
+          socket.on('chatGPT_error', (data) => {
+            setAnalysis(data)
+          })
         }
+
+
         // return () => {
          
         // }

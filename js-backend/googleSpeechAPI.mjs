@@ -86,15 +86,22 @@ export function handleStream (socket, cueData, audio) {
         let sessionResult = await evaluateSession(cueData, processedResponse);
         console.log(`server sessionResult: ${sessionResult}`);
 
-        let chatGPTAnalysis = await chatGPTData(sessionResult);
-        console.log(`chatGPTAnalysis: ${chatGPTAnalysis.content}`);
+        //TOTO: handle chatGPT timeout
+        try {
+          let chatGPTAnalysis = await chatGPTData(sessionResult);
+          console.log(`chatGPTAnalysis: ${chatGPTAnalysis.content}`);
+          socket.emit("chatGPT_response", {chatGPTAnalysis});
+          
+        } catch (error) {
+          console.log(`chatGPT error: ${error}`)
+        }
+      
 
         // chatGPTData().then(data => { 
             //this is the response from the GPT-3 API
             //emit it to the client
         // });
   
-        socket.emit("chatGPT_response", {chatGPTAnalysis});
         
         socket.emit("results_processed", sessionResult);
 

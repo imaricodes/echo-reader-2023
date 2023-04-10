@@ -8,7 +8,8 @@ const ResponseAnalysisData = () => {
     const analysisRef = useRef()
     const analysisButttonRef = useRef()
 
-    useEffect(() => { 
+    useEffect(() => {
+        //TODO: handle if chatgpt throws error
         if (socket) {
           socket.on('chatGPT_response', (data) => {
             console.log(`chatGPT_response:`, data.chatGPTAnalysis.content);

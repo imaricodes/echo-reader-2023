@@ -31,23 +31,29 @@ const CueSentenceCard = (props) => {
 
 
   const {sessionState, setSessionState, socket} = useContext(SessionContext);
-  const [counterIsActive, setCounterIsActive] = useState(false);
-  const [timerDuration, setTimerDuration] = useState(10);
 
   const cueRef = useRef(null);
   const micIconRef = useRef(null);
   const micIconPulseRef = useRef(null);
-  const countdownCircleTimerRef = useRef(null);
+  const [cueSentence, setCueSentence] = useState('')
+
+  const selectRandomCue = () => {
+    let selectedCue = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
+      cueRef.current.innerText = selectedCue;
+      //send cue data to server
+      console.log('sending cue data to server');
+      let processedCue = processCue(selectedCue);
+      console.log('processedCue: ',processedCue);
+      socket.emit("send_cueData", processedCue);
+      return selectedCue
+  }
 
   useEffect(() => {
-    let selectedCue = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
-    cueRef.current.innerText = selectedCue;
-    //send cue data to server
-    console.log('sending cue data to server');
-    let processedCue = processCue(selectedCue);
-    console.log('processedCue: ',processedCue);
-    socket.emit("send_cueData", processedCue);
-  },[])
+  if (sessionState === 'start') {
+    setCueSentence(selectRandomCue())
+  }
+      
+  },[sessionState])
 
   // turn mic icon recording indicator on and off
   useEffect(() => {
@@ -60,7 +66,6 @@ const CueSentenceCard = (props) => {
       micIconRef.current.classList.remove('bg-red-600')
       micIconRef.current.classList.add('bg-gray-200')
       micIconPulseRef.current.classList.add('hidden')
-
     }
   },[sessionState])
 
@@ -82,7 +87,9 @@ const CueSentenceCard = (props) => {
           <p>waiting dots</p>
         </span> */}
       </div>
-      <div className=' w-full text-center ' ref={cueRef}></div>
+      <div className=' w-full text-center ' ref={cueRef}>
+        {cueSentence}
+      </div>
     </div>
   )
 }

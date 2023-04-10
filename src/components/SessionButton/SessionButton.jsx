@@ -17,6 +17,10 @@ const SessionButton = (props) => {
 
     }
 
+    if (sessionState === "go") {
+      setButtonText("Go")
+    }
+
     if (sessionState === "listen") {
       buttonRef.current.classList.remove('bg-green-500', 'hover:bg-green-700')
       buttonRef.current.classList.add('bg-red-500', 'hover:bg-red-700')

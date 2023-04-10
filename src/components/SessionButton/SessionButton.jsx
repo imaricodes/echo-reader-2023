@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef} from "react";
 import { SessionContext } from "../../contexts/SessionContext";
 
 const SessionButton = (props) => {
-  const {sessionState, setSessionState, isRecording, setIsRecording} = useContext(SessionContext);
+  const {sessionState, setSessionState, isRecording, setIsRecording, socket} = useContext(SessionContext);
   const [buttonText, setButtonText] = useState("Go");
   const buttonRef = useRef(null);
 
@@ -55,10 +55,12 @@ const SessionButton = (props) => {
 
     //if button clicked during listen state, cancel session and reload a new cue sentence card
     if (sessionState==="listen") {
-      setButtonText("Again")
+      setButtonText("Start")
       setSessionState('start')
-      setIsRecording(false)
+      setIsRecording(false);
+      socket.emit("cancel_session", "cancel_session from sessionButton cancel button");
     }
+
 
     //this state set when socket.on('results_processed') is triggered in stage component, resultsCard is rendered
     //but, if clicked, cue sentence card is rendered and sessionState is set to 'restart'

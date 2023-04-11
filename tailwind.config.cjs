@@ -1,3 +1,4 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -9,6 +10,11 @@ module.exports = {
       minHeight: (theme) => ({
       ...theme('spacing'),
     }),
+
+    screens: {
+      'xs': '475px',
+      ...defaultTheme.screens,
+    },
 
     keyframes: {
       'pulse-fade-grow': {

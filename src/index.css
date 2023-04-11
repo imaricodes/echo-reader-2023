@@ -36,14 +36,20 @@ body {
 
 
   /* Controls Container */
-  .card__controls-container {
+  .card__controls-container--height-20 {
     @apply h-20;
   }
   .card__controls-container--text {
     @apply text-2xl;
   }
-  .card__controls-container--flex {
+  .card__controls-container--flex-row {
     @apply  justify-between ;
+  }
+  .card__controls-container--flex-column {
+    @apply  flex-col  ;
+  }
+  .card__controls-container--height-auto {
+    @apply h-auto  ;
   }
 
   .card__controls-container--padding {

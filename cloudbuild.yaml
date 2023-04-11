@@ -3,6 +3,6 @@
 
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', 't', 'gcr.io/final-solution-379503/gcr.io/final-solution-379503/sewerfish:$_SHA', '.']
+  args: ['build', 't', 'gcr.io/final-solution-379503/sewerfish:$_SHA', '.']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push','gcr.io/final-solution-379503/gcr.io/final-solution-379503/sewerfish:$_SHA']

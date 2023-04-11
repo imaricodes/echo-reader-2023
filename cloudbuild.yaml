@@ -8,15 +8,16 @@ steps:
 
   args: [ 'build', '-t', 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23:$SHORT_SHA', '.' ]
 
-images:
-- 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23'
+
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: 
-    [
+  args: [
       'run',
       'deploy',
       'echo23-2023-02-08-a',
       '--image=gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
       '--region=us-central1',
     ]
+
+  images:
+  - 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23'

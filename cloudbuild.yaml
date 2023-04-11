@@ -1,23 +1,8 @@
+# In this directory, run the following command to build this builder.
+# $ gcloud builds submit . --config=cloudbuild.yaml
+
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-#name points to the image that will be used for the build
-#in this case, we are pointing to docker image stored at gcr.io
-#the image could also be on Docker, or your own custom image
-#even though gcr.io is the old target for google cloud repository, it will work for artifact registry
-
-
-  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23:$SHORT_SHA', '.' ]
-
-
-
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: [
-      'run',
-      'deploy',
-      'echo23-2023-02-08-a',
-      '--image=gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
-      '--region=us-central1',
-    ]
-
-  images:
-  - 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23'
+  args: ['build', 't', 'gcr.io/final-solution-379503/gcr.io/final-solution-379503/sewerfish:$_SHA', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push','gcr.io/final-solution-379503/gcr.io/final-solution-379503/sewerfish:$_SHA']

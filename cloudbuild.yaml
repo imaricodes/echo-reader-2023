@@ -11,8 +11,8 @@ steps:
   args: [ 'build', '-t', 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23', '.' ]
 
   
-#images:
-#- 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23'
+images:
+- 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23'
 
 
 #example command

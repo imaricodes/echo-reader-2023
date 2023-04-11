@@ -6,11 +6,11 @@ steps:
 #even though gcr.io is the old target for google cloud repository, it will work for artifact registry
 
 
-  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23:${_TAG}', '.' ]
+  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23', '.' ]
 
   
 images:
-- 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23:${_TAG}'
+- 'us-central1-docker.pkg.dev/final-solution-379503/sewerfish-artifact-1/echo23'
 
 
 #example command

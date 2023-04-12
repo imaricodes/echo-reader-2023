@@ -1,8 +1,5 @@
-# In this directory, run the following command to build this builder.
-# $ gcloud builds submit . --config=cloudbuild.yaml
-
 #format build args
-# 'gcr.io/PROJECT ID/ DESIRED IMAGE NAME : DESIRED TAG (USE $SHORT_SHA base tag on sha id)'
+# 'gcr.io/PROJECT ID/ DESIRED IMAGE NAME OR IMAGE ALREADY EXISTING : DESIRED TAG (USE $SHORT_SHA base tag on sha id)'
 
 #format push args
 # 'gcr.io/PROJECT ID/ IMAGE NAME SAME AS ABOVE : DESIRED TAG (USE $SHORT_SHA base tag on short sha id)'

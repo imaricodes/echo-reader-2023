@@ -22,14 +22,14 @@ steps:
       [
         'build',
         '-t',
-        'gcr.io/final-solution/sewerfish:$SHORT_SHA',
+        'gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
         '.',
       ]
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [
         'push',
-        'gcr.io/final-solution/sewerfish:$SHORT_SHA',
+        'gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
       ]
   # - name: 'gcr.io/cloud-builders/gcloud'
   #   args:

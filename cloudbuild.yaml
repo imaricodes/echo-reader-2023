@@ -7,31 +7,19 @@
 #format push args
 # 'gcr.io/PROJECT ID/ IMAGE NAME SAME AS ABOVE : DESIRED TAG (USE $SHORT_SHA base tag on short sha id)'
 
-# steps:
-#   - name: gcr.io/cloud-builders/docker
-#     args: [
-#       'build',
-#       't',
-#       'gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
-#       '.'
-#     ]
-#   - name: gcr.io/cloud-builders/docker
-#     args: [
-#       'push',
-#       'gcr.io/final-solution-379503/sewerfish:$SHORT_SHA'
-#       ]
+
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [
         'build',
         '-t',
-        'gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
+        'gcr.io/final-solution-379503/sewerfish2:$SHORT_SHA',
         '.',
       ]
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [
         'push',
-        'gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
+        'gcr.io/final-solution-379503/sewerfish2:$SHORT_SHA',
       ]

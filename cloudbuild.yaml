@@ -20,10 +20,10 @@ steps:
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t',
-           'us-central1-docker.pkg.dev/${PROJECT_ID}/sewerfish-artifact-1/myimage',
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/sewerfish-artifact-1/echo23',
            '.']
 
   # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 
-           'us-central1-docker.pkg.dev/${PROJECT_ID}/sewerfish-artifact-1/myimage']
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/sewerfish-artifact-1/echo23']

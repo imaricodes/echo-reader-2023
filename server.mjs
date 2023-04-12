@@ -16,7 +16,6 @@ app.use(cors())
 
 const io = new Server(server);
 
-
 io.on("connection", (socket) => {
   console.log('server side socket id: ', socket.id)
   socket.emit("connection", "connection established")

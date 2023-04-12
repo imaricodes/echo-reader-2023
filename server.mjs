@@ -2,9 +2,13 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { handleStream } from "./js-backend/googleSpeechAPI.mjs";
-
-
 import cors from "cors";
+
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT || 8080;
 

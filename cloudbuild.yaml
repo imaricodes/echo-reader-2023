@@ -17,26 +17,13 @@
 
 
 steps:
+  # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
-    args:
-      [
-        'build',
-        '-t',
-        'gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
-        '.',
-      ]
+    args: ['build', '-t',
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/my-docker-repo/myimage',
+           '.']
+
+  # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
-    args:
-      [
-        'push',
-        'gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
-      ]
-  # - name: 'gcr.io/cloud-builders/gcloud'
-  #   args:
-  #     [
-  #       'run',
-  #       'deploy',
-  #       'sewerfish',
-  #       '--image=gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
-  #       '--region=us-central1',
-  #     ]
+    args: ['push', 
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/my-docker-repo/myimage']

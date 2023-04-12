@@ -9,6 +9,6 @@
 
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', 't', 'gcr.io/final-solution-379503/sewerfish2:$_SHA', '.']
+  args: ['build', 't', 'gcr.io/final-solution-379503/sewerfish2:$SHORT_SHA', '.']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push','gcr.io/final-solution-379503/sewerfish2:$_SHA']
+  args: ['push','gcr.io/final-solution-379503/sewerfish2:$SHORT_SHA']

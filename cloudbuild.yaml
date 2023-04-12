@@ -4,6 +4,17 @@
 #format push args
 # 'gcr.io/PROJECT ID/ IMAGE NAME SAME AS ABOVE : DESIRED TAG (USE $SHORT_SHA base tag on short sha id)'
 
+#name and args for deploy:
+  # - name: 'gcr.io/cloud-builders/gcloud'
+  #   args:
+  #     [
+  #       'run',
+  #       'deploy',
+  #       'IMAGE REP0 NAME',
+  #       '--image=gcr.io/PROJECT ID/IMAGE REPO NAME:$SHORT_SHA',
+  #       '--region=us-central1', (this could be something different must match projec host name)
+  #     ]
+
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
@@ -11,12 +22,21 @@ steps:
       [
         'build',
         '-t',
-        'gcr.io/final-solution-379503/sewerfish2:$SHORT_SHA',
+        'gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
         '.',
       ]
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [
         'push',
-        'gcr.io/final-solution-379503/sewerfish2:$SHORT_SHA',
+        'gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
+      ]
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+        'run',
+        'deploy',
+        'sewerfish',
+        '--image=gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
+        '--region=us-central1',
       ]

@@ -33,5 +33,5 @@ steps:
     args:
       [
         'push',
-        'gcr.io/cloud-run-cd-example/gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
+        'gcr.io/final-solution-379503/sewerfish:$SHORT_SHA',
       ]

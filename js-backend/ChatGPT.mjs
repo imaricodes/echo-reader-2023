@@ -55,7 +55,7 @@ export async function chatGPTData (sessionResult) {
 
 
     const configuration = new Configuration({
-        apiKey: process.env.CHAT_GPT || CHATGPT_KEY
+        apiKey: process.env.CHAT_GPTB || CHATGPT_KEY
       });
 
       const openai = new OpenAIApi(configuration);

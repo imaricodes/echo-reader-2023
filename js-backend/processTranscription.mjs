@@ -8,7 +8,7 @@ let normalizeArrayLength = (maxWords, responseArray) => {
     let difference = maxWords - responseArray.length;
     let index = 0;
     for (index; index < difference; index++) {
-      responseArray.push("x");
+      responseArray.push("");
     }
     return responseArray;
   } else if (maxWords < responseArray.length) {

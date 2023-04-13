@@ -76,7 +76,7 @@ body {
     @apply text-3xl;
   }
   .card__stage--text-screen-2xl {
-    @apply text-3xl;
+    @apply text-2xl;
   }
 
   .card__stage {
@@ -84,6 +84,9 @@ body {
   }
 
   /* Start Card */
+  .card__start-card--text {
+    @apply text-xl leading-7 mb-4;
+  }
 
   /* Cue Sentence Card */
 

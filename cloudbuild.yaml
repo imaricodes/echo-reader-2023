@@ -27,3 +27,18 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 
            'us-central1-docker.pkg.dev/${PROJECT_ID}/sewerfish-artifact-1/echo23:$SHORT_SHA']
+
+
+   # Deploy the Docker image to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'echo23-2023-02-08-a'
+      - '--image'
+      - 'us-central1-docker.pkg.dev/${PROJECT_ID}/sewerfish-artifact-1/echo23:$SHORT_SHA'
+      - '--platform'
+      - 'managed'
+      - '--region'
+      - 'us-central1'
+      - '--allow-unauthenticated'

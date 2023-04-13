@@ -1,6 +1,5 @@
-FROM node:alpine AS builder
+FROM node:alpine
 
-#WORKDIR /usr/src/app/
 WORKDIR /usr/src/app/
 
 COPY package*.json ./
@@ -12,6 +11,6 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["npm", "run", "buildrun"]
+CMD ["npm", "run", "server-prod"]
 
 

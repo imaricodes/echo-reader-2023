@@ -8,9 +8,15 @@ const CountdownTimer = () => {
   const [key, setKey] = useState(0);
   const countdownCircleTimerRef = useRef(null);
 
+  socket.on("google_speech_listening", (data) => {
+    console.log('google_speech_listening: ', data)
+    sessionState === 'listen' ? setCounterIsActive(true): setCounterIsActive(false)
+
+  })
+
   //start countdown when speech_processing_finished is received
 useEffect(() => {
-  sessionState === 'listen' ? setCounterIsActive(true): setCounterIsActive(false)
+  
 
   if (sessionState === 'start') {
     setKey(prev => prev + 1)
@@ -20,10 +26,14 @@ useEffect(() => {
 
 const countdownCircleTimerDone = () => {
   console.log('countdownCircleTimerDone')
-  // countdownCircleTimerRef.current.classList.remove('text-base')
-  countdownCircleTimerRef.current.classList.add('text-gray-200')
-  socket.emit("cancel_session", "cancel_session from CountdownTimer component");
-  setSessionState('timeUp')
+  if (sessionState === 'listen') { 
+    console.log('still in listen state, set state to timeUP')
+    countdownCircleTimerRef.current.classList.add('text-gray-200')
+    socket.emit("cancel_session", "cancel_session from CountdownTimer component");
+    console.group('sent cancel_session from CountdownTimer component to server')
+    setSessionState('timeUp')
+  }
+ 
 }
 
   return (
@@ -41,7 +51,7 @@ const countdownCircleTimerDone = () => {
                 size={40}
                 onComplete={countdownCircleTimerDone}
               >
-                {({ remainingTime }) => remainingTime}
+                {({ remainingTime }) => remainingTime -5}
           </CountdownCircleTimer>
         </span>
     </>

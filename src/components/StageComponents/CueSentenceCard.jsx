@@ -8,7 +8,7 @@ import CountdownTimer from '../CountdownTimer';
 
 
 const CueSentenceCard = (props) => {
-  console.log('rendering CueSentenceCard')
+  console.log('rendering CueSentenceCard now')
 
 // console.log('use countdown: ', useCountdown)
   const CUE_PHRASES = [
@@ -35,9 +35,15 @@ const CueSentenceCard = (props) => {
   const cueRef = useRef(null);
   const micIconRef = useRef(null);
   const micIconPulseRef = useRef(null);
-  const [cueSentence, setCueSentence] = useState('')
+  const [cueSentence, setCueSentence] = useState(null)
+
+  socket.on("processing_results", (data) => {
+    console.log('processing_results: ', data)
+  })
 
   const selectRandomCue = () => {
+    console.log("running selectRandomCue()")
+
 
     //check local storage for cue
   
@@ -58,7 +64,7 @@ const CueSentenceCard = (props) => {
       return selectedCue;
     }
 
-    if (localStorage.getItem('cue') === cueSentence) {
+    if (localStorage.getItem('cue') === cueSentence || localStorage.getItem('cue') === null) {
       let selectedCue = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
       console.log('selectedCueBall: ',selectedCue)
       cueRef.current.innerText = selectedCue;

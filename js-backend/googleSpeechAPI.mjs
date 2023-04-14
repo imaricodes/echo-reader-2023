@@ -48,6 +48,12 @@ export function handleStream (socket, cueData, audio) {
   const speechCallback = async (stream) => {
       //TODO: set timeout in case final transcript does not arrive
       console.log("SPEECH CALLBACK CALLED");
+      console.log(`stream state: ${stream.results[0].isFinal}`);
+      console.log(`stream interim: ${stream.results[0].tanscript}`);
+      if (stream.results[0].isFinal === false) {
+        socket.emit("google_speech_listening", "listening")
+      }
+
       let words = stream.results[0].alternatives[0].transcript;
       let wordsArray = words.split(" ");
       console.log(`wordsArray: ${wordsArray}`);
@@ -63,17 +69,7 @@ export function handleStream (socket, cueData, audio) {
       } else console.log('stream defined')
   
       if (stream.results[0].isFinal === true) {
-        //TODO: where in this process do I close the api connection?
-        // recognizeStream.removeListener('data', speechCallback);
-        // recognizeStream = null;
-        // console.log('ending stream...')
-        // recognizeStream.end()
-        // recognizeStream.removeListener('data', speechCallback);
-        // recognizeStream = null;
-        // recognizeStream.end(); 
-        // recognizeStream.destroy();
-        // recognizeStream = null;
-        // socket.emit("close_media_recorder", "close_media_recorder")
+        socket.emit("processing_results", "processing results")
         endSession()
 
         let processedResponse = processResponse(words, cueData.cueLength);

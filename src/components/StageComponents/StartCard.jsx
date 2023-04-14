@@ -1,6 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 
 const StartCard = () => {
+
+  useEffect(() => {
+    if (localStorage.getItem('cue') !== null) {
+      localStorage.removeItem('cue')
+    }
+  })
+
   return (
 
     <div className='card card__stage  card__display--flex-column '>

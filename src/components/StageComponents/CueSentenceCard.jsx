@@ -38,14 +38,41 @@ const CueSentenceCard = (props) => {
   const [cueSentence, setCueSentence] = useState('')
 
   const selectRandomCue = () => {
-    let selectedCue = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
+
+    //check local storage for cue
+  
+    // console.log('localStorage.getItem(cue): ',localStorage.getItem('cue'));
+
+    if (localStorage.getItem('cue') === null) {
+      let selectedCue = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
+      console.log('selectedCueBall: ',selectedCue)
       cueRef.current.innerText = selectedCue;
+      //set cue in local storage
+      localStorage.setItem('cue', selectedCue);
+
       //send cue data to server
       console.log('sending cue data to server');
       let processedCue = processCue(selectedCue);
       console.log('processedCue: ',processedCue);
       socket.emit("send_cueData", processedCue);
-      return selectedCue
+      return selectedCue;
+    }
+
+    if (localStorage.getItem('cue') === cueSentence) {
+      let selectedCue = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
+      console.log('selectedCueBall: ',selectedCue)
+      cueRef.current.innerText = selectedCue;
+      //set cue in local storage
+      localStorage.setItem('cue', selectedCue);
+
+      //send cue data to server
+      console.log('sending cue data to server');
+      let processedCue = processCue(selectedCue);
+      console.log('processedCue: ',processedCue);
+      socket.emit("send_cueData", processedCue);
+      return selectedCue;
+    }
+
   }
 
   useEffect(() => {

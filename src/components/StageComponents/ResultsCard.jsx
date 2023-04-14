@@ -4,14 +4,12 @@ import { displayResponses, testDisplayAppend } from '../../js/displayUtilities'
 import styles from './ResultsCard.module.css'
 
 const ResultsCard = (props) => {
-const sessionResult = props.sessionResult
+  const sessionResult = props.sessionResult
 
-const [displayData, setDisplayData]=useState(sessionResult)
+  const [displayData, setDisplayData]=useState(sessionResult)
 
 
   const resultDisplayRef = useRef()
-
-
 
   const length = displayData[0].length;
 
@@ -58,8 +56,14 @@ const [displayData, setDisplayData]=useState(sessionResult)
     return elements;
   }
 
-  
- 
+  useEffect(() => {
+    //clear local storage of cue
+    if (localStorage.getItem('cue') !== null) {
+      localStorage.removeItem('cue');
+    }
+
+  }, [])
+
   return (
     <div className=' card card__stage card__display--flex-column  card__results-card result-card card__stage--text'>
         <div style={{

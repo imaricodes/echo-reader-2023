@@ -45,7 +45,7 @@ const NavBar = () => {
 
   return (
     <>
-    <nav className='navbar min-w-[320px] mb-10 relative  md:flex md:justify-between '>
+    <nav className='navbar min-w-[320px] mb-8 sm:mb-10 relative  md:flex md:justify-between '>
     {/* Logo */}
  
       <span className='pt-4  px-4 flex items-center text-4xl font-bold md:px-14 cursor-pointer ' onClick={goHome}>
@@ -53,7 +53,7 @@ const NavBar = () => {
         </span>
 
     {/* Hanburger Menu */}
-      <div className='text-3xl cursor-pointer fixed right-3 top-5 z-10 md:hidden block' >
+      <div className='text-3xl cursor-pointer absolute right-3 top-5 z-10 md:hidden block' >
         <IonIcon  icon={menuOutline} onClick={handleMenu} ref={menuToggleRef} />
       </div>
 

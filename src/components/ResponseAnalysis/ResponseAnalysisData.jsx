@@ -48,6 +48,7 @@ const ResponseAnalysisData = () => {
 
   return (
     <div className='flex flex-col items-center'>
+      
         <h1 className='mb-6 text-center font-bold text-lg'>How to Read Results</h1>
         <div className='grid grid-cols-analysis-grid grid-rows-analysis-grid gap-x-3 gap-y-1 mb-10 text-lg'>
             <div><span className='inline-block bg-green-600 w-10 h-5 rounded-lg shadow'/></div>
@@ -57,9 +58,9 @@ const ResponseAnalysisData = () => {
             <div><span className='inline-block bg-red-600 w-10 h-5 rounded-lg shadow'/></div>
             <div><p>Word not in sentence</p></div>
         </div>
-        <div ref={analysisRef}></div>
-        <div ref={analysisRef} className='text-lg'></div>
         <button ref={analysisButttonRef} className='btn bg-green-500' onClick={getAnalysis}>Ask ChatGPT for Feedback</button>
+        <div ref={analysisRef} className='text-lg'></div>
+        
     </div>
   )
 }

@@ -49,10 +49,10 @@ body {
 
   /* Controls Container */
   .card__controls-container--height {
-    @apply h-44;
+    @apply h-40;
   }
   .card__controls-container--text {
-    @apply text-lg leading-5;
+    @apply text-lg leading-7;
   }
   .card__controls-container--flex-row {
     @apply  justify-between ;

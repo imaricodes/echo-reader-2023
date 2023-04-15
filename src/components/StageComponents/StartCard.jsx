@@ -10,11 +10,11 @@ const StartCard = () => {
 
   return (
 
-    <div className='card card__stage  card__display--flex-column '>
-      <p className='card__start-card--text'>
-        Echo Reader is a reading app that uses speech recognition to help you practice reading aloud.</p>
-        <p className='card__start-card--text'> ChatGPT is also used to generate feedback to your reading. ChatGPT is known to get weird, so beware.
+    <div className='card card__stage card__display--flex-column'>
+      <p className='card__start-card--text sm:text-2xl lg:text-3xl lg:leading-10'>
+        Echo Reader uses speech recognition to help you practice reading aloud. ChatGPT is also used to generate feedback on your reading.
       </p>
+   
     </div>
 
   )

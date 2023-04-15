@@ -107,7 +107,6 @@ const Stage = () => {
                     );
 
                     mediaRecorder.start(250)
-                    
                   } else if (mediaRecorder.state === "inactive") {
                     console.log(`media recorder state changed: ${mediaRecorder.state}`);
                     // mediaRecorder.start(250)

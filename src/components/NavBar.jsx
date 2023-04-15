@@ -45,7 +45,7 @@ const NavBar = () => {
 
   return (
     <>
-    <nav className='navbar mb-10 relative  md:flex md:justify-between '>
+    <nav className='navbar min-w-[320px] mb-10 relative  md:flex md:justify-between '>
     {/* Logo */}
  
       <span className='pt-4  px-4 flex items-center text-4xl font-bold md:px-14 cursor-pointer ' onClick={goHome}>

@@ -48,17 +48,17 @@ body {
 
 
   /* Controls Container */
-  .card__controls-container--height-20 {
-    @apply h-20;
+  .card__controls-container--height {
+    @apply h-44;
   }
   .card__controls-container--text {
-    @apply text-2xl;
+    @apply text-lg leading-5;
   }
   .card__controls-container--flex-row {
     @apply  justify-between ;
   }
   .card__controls-container--flex-column {
-    @apply  flex-col  ;
+    @apply  flex-col items-center justify-center ;
   }
   .card__controls-container--height-auto {
     @apply h-auto  ;
@@ -97,8 +97,9 @@ body {
 
   /* Start Card */
   .card__start-card--text {
-    @apply text-xl leading-7 mb-4;
+    @apply text-lg leading-7;
   }
+
 
   /* Cue Sentence Card */
 

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone} from '@fortawesome/free-solid-svg-icons'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import CountdownTimer from '../CountdownTimer';
-
+import DotAnimation from '../../DotAnimation';
 
 const CueSentenceCard = (props) => {
   console.log('rendering CueSentenceCard now')
@@ -36,18 +36,21 @@ const CueSentenceCard = (props) => {
   const micIconRef = useRef(null);
   const micIconPulseRef = useRef(null);
   const [cueSentence, setCueSentence] = useState(null)
+  const dotAnimationRef = useRef(null);
 
-  socket.on("processing_results", (data) => {
-    console.log('processing_results: ', data)
-  })
+  const addSocketGoogleSpeechListener = () => {
+    socket.on("google_speech_listening", (data) => {
+      // setTimeout(() => {}, 2000)
+      dotAnimationRef.current.classList.remove('hidden')
+      dotAnimationRef.current.classList.add('animate-dot-elastic-fade-in')
+      socket.removeListener("google_speech_listening")
+    })
+  }
+
+  
 
   const selectRandomCue = () => {
     console.log("running selectRandomCue()")
-
-
-    //check local storage for cue
-  
-    // console.log('localStorage.getItem(cue): ',localStorage.getItem('cue'));
 
     if (localStorage.getItem('cue') === null) {
       let selectedCue = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
@@ -83,7 +86,8 @@ const CueSentenceCard = (props) => {
 
   useEffect(() => {
   if (sessionState === 'start') {
-    setCueSentence(selectRandomCue())
+    setCueSentence(selectRandomCue());
+    addSocketGoogleSpeechListener();
   }
       
   },[sessionState])
@@ -107,10 +111,13 @@ const CueSentenceCard = (props) => {
 
     <div className= 'card card__stage card__display--flex-column  card__stage--text bg-green-200 lg:width[500px] relative '>
 
-      <div className=' absolute flex pt-4 px-10 top-0 w-full'>
+      <div className='absolute flex pt-4 px-10 top-0 w-full'>
         {/* TODO: what happens when the countdown is done? */}
         {/* countdown timer */}
-        <CountdownTimer />
+        {/* <CountdownTimer /> */}
+        <span ref={dotAnimationRef} className='absolute hidden top-7 left-12'>
+          <DotAnimation  />
+        </span>
         {/* microphone*/}
         <div className='flex mx-auto'>
               <span ref={micIconRef} className='flex justify-center items-center bg-gray-200 w-10 h-10 rounded-full z-50 '><FontAwesomeIcon icon={faMicrophone} className='h-[45%]  text-white'  /></span>

@@ -48,8 +48,8 @@ export function handleStream (socket, cueData, audio) {
   const speechCallback = async (stream) => {
       //TODO: set timeout in case final transcript does not arrive
       console.log("SPEECH CALLBACK CALLED");
-      console.log(`stream state: ${stream.results[0].isFinal}`);
-      console.log(`stream interim: ${stream.results[0].tanscript}`);
+      // console.log(`stream state: ${stream.results[0].isFinal}`);
+      // console.log(`stream interim: ${stream.results[0].tanscript}`);
       if (stream.results[0].isFinal === false) {
         socket.emit("google_speech_listening", "listening")
       }

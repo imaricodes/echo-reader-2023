@@ -15,16 +15,81 @@ module.exports = {
       'xs': '475px',
       ...defaultTheme.screens,
     },
-
+    //animation for recording mic
     keyframes: {
       'pulse-fade-grow': {
         '0%': { transform: 'scale(1)', opacity: '1' },
         '100%': { transform: 'scale(1.4)', opacity: '0'},
       },
+
+      //dot-elastic keyframes
+      'dot-elastic-before': {
+        '0%': {
+          transform: 'scale(1,1)'
+        },
+        '25%': {
+          transform: 'scale(1,1.5)'
+        },
+        '50%': {
+          transform: 'scale(1,0.67)'
+        },
+        '75%': {
+          transform: 'scale(1,1)'
+        },
+        '100%': {
+          transform: 'scale(1,1)'
+        }
+      },
+
+      'dot-elastic': {
+        '0%': {
+          transform: 'scale(1,1)'
+        },
+        '25%': {
+          transform: 'scale(1,1)'
+        },
+        '50%': {
+          transform: 'scale(1,1.5)'
+        },
+        '75%': {
+          transform: 'scale(1,1)'
+        },
+        '100%': {
+          transform: 'scale(1,1)'
+        }
+      },
+
+      'dot-elastic-after': {
+        '0%': {
+          transform: 'scale(1,1)'
+        },
+        '25%': {
+          transform: 'scale(1,1)'
+        },
+        '50%': {
+          transform: 'scale(1,0.67)'
+        },
+        '75%': {
+          transform: 'scale(1,1.5)'
+        },
+        '100%': {
+          transform: 'scale(1,1)'
+        }
+      },
+      'dot-elastic-fade-in': {
+        '0%': {opacity: '0'},
+        '100%': {opacity: '1'},
+      },
     },
 
     animation: {
       'pulse-fade-grow': 'pulse-fade-grow infinite 1.5s',
+
+      //dot-elastic animations
+      'dot-elatsic': 'dot-elastic 1s infinite linear',
+      'dot-elastic-before': 'dot-elastic-before 1s infinite linear',
+      'dot-elastic-after': 'dot-elastic-after 1s infinite linear',
+      'dot-elastic-fade-in': 'dot-elastic-fade-in 2s ease',
     },
 
     colors: {

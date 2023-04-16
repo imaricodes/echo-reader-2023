@@ -151,7 +151,6 @@ const Stage = () => {
     start: <CueSentenceCard/>,
     listen: <CueSentenceCard/>,
     results: <ResultsCard sessionResult={sessionResult} />,
-    // restart: <ResultsCard sessionResult={sessionResult} />,
     cancel: <StartCard />,
     timeUp: <TimeUpCard />
   };

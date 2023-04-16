@@ -86,7 +86,7 @@ module.exports = {
       'pulse-fade-grow': 'pulse-fade-grow infinite 1.5s',
 
       //dot-elastic animations
-      'dot-elatsic': 'dot-elastic 1s infinite linear',
+      'dot-elatsic-center': 'dot-elastic 1s infinite linear',
       'dot-elastic-before': 'dot-elastic-before 1s infinite linear',
       'dot-elastic-after': 'dot-elastic-after 1s infinite linear',
       'dot-elastic-fade-in': 'dot-elastic-fade-in 2s ease',

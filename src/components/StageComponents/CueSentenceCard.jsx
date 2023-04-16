@@ -36,18 +36,8 @@ const CueSentenceCard = (props) => {
   const micIconRef = useRef(null);
   const micIconPulseRef = useRef(null);
   const [cueSentence, setCueSentence] = useState(null)
-  const dotAnimationRef = useRef(null);
 
-  const addSocketGoogleSpeechListener = () => {
-    socket.on("google_speech_listening", (data) => {
-      // setTimeout(() => {}, 2000)
-      dotAnimationRef.current.classList.remove('hidden')
-      dotAnimationRef.current.classList.add('animate-dot-elastic-fade-in')
-      socket.removeListener("google_speech_listening")
-    })
-  }
 
-  
 
   const selectRandomCue = () => {
     console.log("running selectRandomCue()")
@@ -87,7 +77,6 @@ const CueSentenceCard = (props) => {
   useEffect(() => {
   if (sessionState === 'start') {
     setCueSentence(selectRandomCue());
-    addSocketGoogleSpeechListener();
   }
       
   },[sessionState])
@@ -115,9 +104,9 @@ const CueSentenceCard = (props) => {
         {/* TODO: what happens when the countdown is done? */}
         {/* countdown timer */}
         {/* <CountdownTimer /> */}
-        <span ref={dotAnimationRef} className='absolute hidden top-7 left-12'>
-          <DotAnimation  />
-        </span>
+       
+          <DotAnimation/>
+   
         {/* microphone*/}
         <div className='flex mx-auto'>
               <span ref={micIconRef} className='flex justify-center items-center bg-gray-200 w-10 h-10 rounded-full z-50 '><FontAwesomeIcon icon={faMicrophone} className='h-[45%]  text-white'  /></span>

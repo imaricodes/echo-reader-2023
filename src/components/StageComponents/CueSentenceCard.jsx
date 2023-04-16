@@ -1,16 +1,16 @@
-import React, {useRef, useEffect, useContext, useState} from 'react'
+import React, { useRef, useEffect, useContext, useState } from "react";
 import { processCue } from "../../js/processCue";
-import { SessionContext } from '../../contexts/SessionContext'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMicrophone} from '@fortawesome/free-solid-svg-icons'
-import { CountdownCircleTimer } from 'react-countdown-circle-timer'
-import CountdownTimer from '../CountdownTimer';
-import DotAnimation from '../../DotAnimation';
+import { SessionContext } from "../../contexts/SessionContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import CountdownTimer from "../CountdownTimer";
+import DotAnimation from "../../DotAnimation";
 
 const CueSentenceCard = (props) => {
-  console.log('rendering CueSentenceCard now')
+  console.log("rendering CueSentenceCard now");
 
-// console.log('use countdown: ', useCountdown)
+  // console.log('use countdown: ', useCountdown)
   const CUE_PHRASES = [
     "The cat sat on me.",
     "I love to play at parks.",
@@ -26,101 +26,108 @@ const CueSentenceCard = (props) => {
     "The sky is beautiful.",
     "I want to go swimming.",
     "John has a toy car.",
-    "The beach is very sandy."
+    "The beach is very sandy.",
   ];
 
-
-  const {sessionState, setSessionState, socket} = useContext(SessionContext);
+  const { sessionState, setSessionState, socket } = useContext(SessionContext);
 
   const cueRef = useRef(null);
   const micIconRef = useRef(null);
   const micIconPulseRef = useRef(null);
-  const [cueSentence, setCueSentence] = useState(null)
-
-
+  const [cueSentence, setCueSentence] = useState(null);
 
   const selectRandomCue = () => {
-    console.log("running selectRandomCue()")
+    console.log("running selectRandomCue()");
 
-    if (localStorage.getItem('cue') === null) {
-      let selectedCue = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
-      console.log('selectedCueBall: ',selectedCue)
+    if (localStorage.getItem("cue") === null) {
+      let selectedCue =
+        CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
+      console.log("selectedCueBall: ", selectedCue);
       cueRef.current.innerText = selectedCue;
       //set cue in local storage
-      localStorage.setItem('cue', selectedCue);
+      localStorage.setItem("cue", selectedCue);
 
       //send cue data to server
-      console.log('sending cue data to server');
+      console.log("sending cue data to server");
       let processedCue = processCue(selectedCue);
-      console.log('processedCue: ',processedCue);
+      console.log("processedCue: ", processedCue);
       socket.emit("send_cueData", processedCue);
       return selectedCue;
     }
 
-    if (localStorage.getItem('cue') === cueSentence || localStorage.getItem('cue') === null) {
-      let selectedCue = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
-      console.log('selectedCueBall: ',selectedCue)
+    if (
+      localStorage.getItem("cue") === cueSentence ||
+      localStorage.getItem("cue") === null
+    ) {
+      let selectedCue =
+        CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
+      console.log("selectedCueBall: ", selectedCue);
       cueRef.current.innerText = selectedCue;
       //set cue in local storage
-      localStorage.setItem('cue', selectedCue);
+      localStorage.setItem("cue", selectedCue);
 
       //send cue data to server
-      console.log('sending cue data to server');
+      console.log("sending cue data to server");
       let processedCue = processCue(selectedCue);
-      console.log('processedCue: ',processedCue);
+      console.log("processedCue: ", processedCue);
       socket.emit("send_cueData", processedCue);
       return selectedCue;
     }
-
-  }
+  };
 
   useEffect(() => {
-  if (sessionState === 'start') {
-    setCueSentence(selectRandomCue());
-  }
-      
-  },[sessionState])
+    if (sessionState === "start") {
+      setCueSentence(selectRandomCue());
+    }
+  }, [sessionState]);
 
   // turn mic icon recording indicator on and off
   useEffect(() => {
-    if (sessionState === 'listen') {
-      micIconRef.current.classList.remove('bg-gray-200')
-      micIconRef.current.classList.add('bg-red-600')
-      micIconPulseRef.current.classList.remove('hidden')
+    if (sessionState === "listen") {
+      micIconRef.current.classList.remove("bg-gray-200");
+      micIconRef.current.classList.add("bg-red-600");
+      micIconPulseRef.current.classList.remove("hidden");
+    } else if (micIconRef.current.classList.contains("bg-red-600")) {
+      micIconRef.current.classList.remove("bg-red-600");
+      micIconRef.current.classList.add("bg-gray-200");
+      micIconPulseRef.current.classList.add("hidden");
     }
-    else if (micIconRef.current.classList.contains('bg-red-600')) {
-      micIconRef.current.classList.remove('bg-red-600')
-      micIconRef.current.classList.add('bg-gray-200')
-      micIconPulseRef.current.classList.add('hidden')
-    }
-  },[sessionState])
-
+  }, [sessionState]);
 
   return (
-
-    <div className= 'card card__stage card__display--flex-column  card__stage--text bg-green-200 lg:width[500px] relative '>
-
-      <div className='absolute flex pt-4 px-10 top-0 w-full'>
+    <div className="card card__stage card__display--flex-column  card__stage--text lg:width[500px] relative bg-green-200 ">
+      <div className="absolute top-0 flex w-full px-10 pt-4">
         {/* TODO: what happens when the countdown is done? */}
         {/* countdown timer */}
         {/* <CountdownTimer /> */}
-       
-          <DotAnimation/>
-   
+
+        <DotAnimation />
+
         {/* microphone*/}
-        <div className='flex mx-auto'>
-              <span ref={micIconRef} className='flex justify-center items-center bg-gray-200 w-10 h-10 rounded-full z-50 '><FontAwesomeIcon icon={faMicrophone} className='h-[45%]  text-white'  /></span>
-              <span ref={micIconPulseRef} className='hidden bg-red-600 w-10 h-10 rounded-full  animate-pulse-fade-grow absolute '/>
+        <div className="mx-auto flex">
+          <span
+            ref={micIconRef}
+            className="z-50 flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 "
+          >
+            <FontAwesomeIcon
+              icon={faMicrophone}
+              className="h-[45%]  text-white"
+            />
+          </span>
+          <span
+            ref={micIconPulseRef}
+            className="absolute hidden h-10 w-10 animate-pulse-fade-grow  rounded-full bg-red-600 "
+          />
         </div>
         {/* <span className='inline-block bg-purple-300'>
           <p>waiting dots</p>
         </span> */}
       </div>
-      <div className=' w-full text-center ' ref={cueRef}>
+      <div className=" w-full text-center " ref={cueRef}>
         {cueSentence}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CueSentenceCard
+export default CueSentenceCard;

@@ -1,6 +1,6 @@
 import React from 'react'
 import goScreenComputer from '../../assets/go-screen-computer.png'
-import goScreenComputerNoFrame from '../../assets/instructionsImg/go-screen-no-frame.png'
+import goScreenComputerNoFrame from '../../assets/go-screen-no-frame.png'
 
 const Instructions = () => {
   return (

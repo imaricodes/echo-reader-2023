@@ -81,6 +81,12 @@ const CueSentenceCard = (props) => {
     }
   }, [sessionState]);
 
+useEffect(()=>{
+  if(localStorage.getItem('cue') !== null){
+    cueRef.current.innerText = localStorage.getItem('cue')
+  }
+})
+
   // turn mic icon recording indicator on and off
   useEffect(() => {
     if (sessionState === "listen") {

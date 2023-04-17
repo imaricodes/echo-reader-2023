@@ -10,6 +10,7 @@ const NavBar = () => {
   const { sessionState, setSessionState, socket } = useContext(SessionContext);
 
   const menuToggleRef = useRef(null);
+  
   const menuListRef = useRef(null);
 
   const handleMenu = () => {

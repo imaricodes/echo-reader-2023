@@ -1,11 +1,10 @@
+.gcloudignore
 .git
 .gitignore
+node_modules
+#!include:.gitignore
+
+!dist
 
 
 
-/index.html
-
-src
-
-#incllude dist foler
-\!dist

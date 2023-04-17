@@ -4,7 +4,7 @@ import { browserName, isMobile, isIOS, isAndroid} from 'react-device-detect';
 
 
 const BrowserWarningModal = () => {
-
+    console.log('browser name: ', browserName)
     const checkForBrowserSupport = () => {
         if (!isMobile && (browserName === 'Chrome' || browserName === 'Firefox')) {
             return true
@@ -67,7 +67,7 @@ const BrowserWarningModal = () => {
         <div className='flex flex-col  items-center w-96  pt-7 pb-8 px-4 m-4 bg-white rounded-md shadow-md '>
        
             <div className='flex flex-col items-center  gap-2 px-4 mb-6'>
-                <p>Echo Reader works best on a desktop or laptop computer using Chrome, Firefox, or Brave browsers.</p>
+                <p>Echo Reader works best on a desktop or laptop computer using Chrome or Firefox browsers.</p>
                 <p>Using other browsers or Apple mobile devices may provide an unpredicatable experience.</p>
             </div>
             <div className='flex gap-7'>

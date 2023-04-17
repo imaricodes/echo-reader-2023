@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import BrowserWarningModal from "../components/Modals/BrowserWarningModal";
+
 import NavBar from "../components/NavBar";
 
 
@@ -11,7 +11,7 @@ const RootLayout = () => {
         <main>
           <Outlet />
         </main>
-        <BrowserWarningModal />
+       
       </div>
 
   );

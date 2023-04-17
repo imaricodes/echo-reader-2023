@@ -4,13 +4,13 @@ import { IonIcon } from "@ionic/react";
 import { menuOutline } from "ionicons/icons";
 import { closeOutline } from "ionicons/icons";
 import { SessionContext } from "../contexts/SessionContext";
-import {NavLink} from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   const { sessionState, setSessionState, socket } = useContext(SessionContext);
 
   const menuToggleRef = useRef(null);
-  
+
   const menuListRef = useRef(null);
 
   const handleMenu = () => {
@@ -33,14 +33,15 @@ const NavBar = () => {
 
   return (
     <header>
-      <nav className="navbar relative mb-8 min-w-[320px] sm:mb-10  md:flex md:justify-between ">
+      <nav className="navbar relative mb-8 min-w-[320px] sm:mb-10 md:mb-12 md:flex md:justify-between lg:mb-16 xl:mb-20 ">
         {/* Logo */}
 
-        <NavLink to="/"
+        <NavLink
+          to="/"
           className="flex  cursor-pointer items-center px-4 pt-4 text-4xl font-bold md:px-14 "
           onClick={goHome}
         >
-          Echo Reader
+          Echo Reader<sup className="text-sm font-normal ml-2">beta</sup>
         </NavLink>
 
         {/* Hanburger Menu */}
@@ -58,7 +59,7 @@ const NavBar = () => {
           className=" absolute  top-0 hidden h-screen w-full bg-white  pt-4 md:relative md:flex   md:h-auto md:w-auto md:pr-0"
         >
           <ul className=" flex flex-col text-center font-semibold md:flex md:flex-row md:items-center md:pr-14 ">
-          <li className="mx-4 my-6 md:my-0 ">
+            <li className="mx-4 my-6 md:my-0 ">
               <NavLink
                 to="/"
                 className="text-xl  duration-200 hover:text-green-700"
@@ -75,7 +76,12 @@ const NavBar = () => {
               </a>
             </li>
             <li className=" mx-4 my-6 md:my-0">
-            <NavLink to="instructions" className="text-xl duration-200 hover:text-green-700">Instructions</NavLink>
+              <NavLink
+                to="instructions"
+                className="text-xl duration-200 hover:text-green-700"
+              >
+                Instructions
+              </NavLink>
               {/* <a href="#" className="text-xl duration-200 hover:text-green-700">
                 Instructions
               </a> */}

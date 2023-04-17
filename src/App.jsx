@@ -1,5 +1,6 @@
 
 import "./App.css";
+import BrowserWarningModal from "./components/Modals/BrowserWarningModal";
 import { SessionContextProvider } from "./contexts/SessionContext";
 
 import {
@@ -29,7 +30,9 @@ function App() {
   return (
     <SessionContextProvider>
       <RouterProvider router={router} />
+      <BrowserWarningModal/>
     </SessionContextProvider>
+    
   );
 }
 

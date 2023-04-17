@@ -50,7 +50,11 @@ body {
 /* CSS for Instructions Componenet Elements */
 @layer components {
   .instructions-container {
-    @apply mx-6 md:mx-28 lg:mx-14 lg:mt-[10%] lg:flex lg:flex-col lg:justify-center lg:gap-16;
+    @apply mx-6 items-center md:mx-28 lg:mx-14  lg:flex lg:flex-col lg:justify-center lg:gap-16;
+  }
+
+  .instructions-container h1 {
+    @apply text-center text-3xl font-bold text-gray-800 lg:text-5xl;
   }
   .instruction-container {
     @apply lg:flex lg:justify-center lg:gap-16;
@@ -71,6 +75,11 @@ body {
     lg:leading-10 
     xl:leading-relaxed;
   }
+}
+
+/* CSS for Main Container Component */
+.main-container {
+  @apply mx-6 md:mx-28  lg:mx-14 lg:flex lg:justify-center lg:gap-16;
 }
 
 @layer components {

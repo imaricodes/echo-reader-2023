@@ -10,9 +10,13 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+// import { useHistory } from "react-router-dom"
+
+
 //pages
 import MainContainer from "./components/MainContainer/MainContainer";
 import Instructions from "./components/Instructions/Instructions";
+import About from "./components/About/About";
 
 //layout
 import RootLayout from "./layouts/RootLayout";
@@ -22,6 +26,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<MainContainer />} />
       <Route path="instructions" element={<Instructions />} />
+      <Route path="about" element={<About />} />
     </Route>
   )
 );

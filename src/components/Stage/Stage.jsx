@@ -17,6 +17,10 @@ const Stage = () => {
   const mediaRecorderStart = useRef(0);
 
   useEffect(() => {
+    localStorage.setItem("currentSessionState", JSON.stringify(sessionState));
+  }, [sessionState]);
+
+  useEffect(() => {
 
     if (sessionState === "go") {
       if (!socket) {

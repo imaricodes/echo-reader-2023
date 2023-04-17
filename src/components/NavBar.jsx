@@ -1,17 +1,41 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useEffect, useState } from "react";
 import { IonIcon } from "@ionic/react";
 //TODO: UPDATE to use react-icons instead of ionicons
 import { menuOutline } from "ionicons/icons";
 import { closeOutline } from "ionicons/icons";
 import { SessionContext } from "../contexts/SessionContext";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 
 const NavBar = () => {
   const { sessionState, setSessionState, socket } = useContext(SessionContext);
 
-  const menuToggleRef = useRef(null);
+  const [currentLocation, setCurrentLocation] = useState(null);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const menuToggleRef = useRef(null);
   const menuListRef = useRef(null);
+
+  // useEffect(() => {
+
+  //   if (localStorage.getItem("currentLocation" !== null)) {
+  //     console.log("initial check for local storage location return true");
+  //     setCurrentLocation(localStorage.getItem("currentLocation"));
+  //     navigate(localStorage.getItem("currentLocation"));
+  //   } else {
+  //     console.log("initial check for local storage location return false");
+  //     setCurrentLocation("/");
+  //     localStorage.setItem(
+  //       "currentLocation",
+  //       JSON.stringify(location.pathname)
+  //     );
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    localStorage.setItem("currentSessionState", JSON.stringify(sessionState));
+  }, [sessionState]);
 
   const handleMenu = () => {
     menuToggleRef.current.icon === menuOutline
@@ -21,8 +45,9 @@ const NavBar = () => {
         menuListRef.current.classList.add("hidden"));
   };
 
-  const goHome = () => {
-    console.log("goHome clicked");
+  const handleLogoClick = () => {
+    console.log("handleLogoClick clicked");
+    // setCurrentLocation("/");
     if (socket) {
       if (sessionState === "listen") {
         socket.emit("cancel_session", "cancel_session from navbar logo click");
@@ -39,9 +64,9 @@ const NavBar = () => {
         <NavLink
           to="/"
           className="flex  cursor-pointer items-center px-4 pt-4 text-4xl font-bold md:px-14 "
-          onClick={goHome}
+          onClick={handleLogoClick}
         >
-          Echo Reader<sup className="text-sm font-normal ml-2">beta</sup>
+          Echo Reader<sup className="ml-2 text-sm font-normal">beta</sup>
         </NavLink>
 
         {/* Hanburger Menu */}
@@ -68,12 +93,12 @@ const NavBar = () => {
               </NavLink>
             </li>
             <li className="mx-4 my-6 md:my-0 ">
-              <a
-                href="#"
+              <NavLink
+                to="about"
                 className="text-xl  duration-200 hover:text-green-700"
               >
                 About
-              </a>
+              </NavLink>
             </li>
             <li className=" mx-4 my-6 md:my-0">
               <NavLink
@@ -82,9 +107,6 @@ const NavBar = () => {
               >
                 Instructions
               </NavLink>
-              {/* <a href="#" className="text-xl duration-200 hover:text-green-700">
-                Instructions
-              </a> */}
             </li>
           </ul>
         </div>

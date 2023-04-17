@@ -1,5 +1,5 @@
 import React from 'react'
-import goScreenComputer from '../../assets/instructionsImg/go-screen-computer.png'
+import goScreenComputer from '../../assets/go-screen-computer.png'
 // import goScreenComputerNoFrame from '../../assets/instructionsImg/go-screen-no-frame.png'
 
 const Instructions = () => {

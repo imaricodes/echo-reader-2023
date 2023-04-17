@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
-import SiteWrapper from "./components/SiteWrapper";
+import SiteWrapper from "../archive/SiteWrapper";
 import { SessionContextProvider } from "./contexts/SessionContext";
 
 import {

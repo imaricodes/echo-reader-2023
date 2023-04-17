@@ -1,5 +1,5 @@
 import React from 'react'
-// import goScreenComputer from '../../assets/instructionsImg/go-screen-computer.png'
+import goScreenComputer from '../../assets/instructionsImg/go-screen-computer.png'
 // import goScreenComputerNoFrame from '../../assets/instructionsImg/go-screen-no-frame.png'
 
 const Instructions = () => {
@@ -10,7 +10,7 @@ const Instructions = () => {
                 <p className='instructions__p'>Before you can start reading, please allow microphone access.</p>
             </div>
             <div className='instructions-container__image-card'>
-                {/* <img src={goScreenComputer}/> */}
+                <img src={goScreenComputer}/>
             </div>
         </div>
 

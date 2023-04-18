@@ -17,22 +17,6 @@ const NavBar = () => {
   const menuToggleRef = useRef(null);
   const menuListRef = useRef(null);
 
-  // useEffect(() => {
-
-  //   if (localStorage.getItem("currentLocation" !== null)) {
-  //     console.log("initial check for local storage location return true");
-  //     setCurrentLocation(localStorage.getItem("currentLocation"));
-  //     navigate(localStorage.getItem("currentLocation"));
-  //   } else {
-  //     console.log("initial check for local storage location return false");
-  //     setCurrentLocation("/");
-  //     localStorage.setItem(
-  //       "currentLocation",
-  //       JSON.stringify(location.pathname)
-  //     );
-  //   }
-  // }, []);
-
   useEffect(() => {
     localStorage.setItem("currentSessionState", JSON.stringify(sessionState));
   }, [sessionState]);
@@ -40,13 +24,19 @@ const NavBar = () => {
   const handleMenu = () => {
     menuToggleRef.current.icon === menuOutline
       ? ((menuToggleRef.current.icon = closeOutline),
+        menuListRef.current.classList.add("nav-menu--slide-in"),
         menuListRef.current.classList.remove("hidden"))
       : ((menuToggleRef.current.icon = menuOutline),
-        menuListRef.current.classList.add("hidden"));
+        menuListRef.current.classList.add("hidden"),
+        menuListRef.current.classList.remove("nav-menu--slide-in"));
   };
 
-  const handleLogoClick = () => {
-    console.log("handleLogoClick clicked");
+  const handleNavLinkClick = (e) => {
+    console.log(
+      "console.log click target",
+      e.target.textContent || e.target.innerText
+    );
+    console.log("handleNavLinkClick clicked");
     // setCurrentLocation("/");
     if (socket) {
       if (sessionState === "listen") {
@@ -54,6 +44,11 @@ const NavBar = () => {
         setSessionState("go");
       } else setSessionState("go");
     } else setSessionState("go");
+
+    //close menu if open
+    handleMenu();
+
+    localStorage.getItem("cue") && localStorage.removeItem("cue");
   };
 
   return (
@@ -64,7 +59,7 @@ const NavBar = () => {
         <NavLink
           to="/"
           className="flex  cursor-pointer items-center px-4 pt-4 text-4xl font-bold md:px-14 "
-          onClick={handleLogoClick}
+          onClick={handleNavLinkClick}
         >
           Echo Reader<sup className="ml-2 text-sm font-normal">beta</sup>
         </NavLink>
@@ -79,15 +74,13 @@ const NavBar = () => {
         </div>
 
         {/* Links */}
-        <div
-          ref={menuListRef}
-          className=" absolute  top-0 hidden h-screen w-full bg-white  pt-4 md:relative md:flex   md:h-auto md:w-auto md:pr-0"
-        >
+        <div ref={menuListRef} className="nav-menu hidden md:flex ">
           <ul className=" flex flex-col text-center font-semibold md:flex md:flex-row md:items-center md:pr-14 ">
-            <li className="mx-4 my-6 md:my-0 ">
+            <li className="nav-link mx-4 my-6 md:my-0 ">
               <NavLink
                 to="/"
-                className="text-xl  duration-200 hover:text-green-700"
+                className="text-xl duration-200"
+                onClick={handleNavLinkClick}
               >
                 Home
               </NavLink>
@@ -95,7 +88,8 @@ const NavBar = () => {
             <li className="mx-4 my-6 md:my-0 ">
               <NavLink
                 to="about"
-                className="text-xl  duration-200 hover:text-green-700"
+                className="nav-link text-xl  duration-200"
+                onClick={handleNavLinkClick}
               >
                 About
               </NavLink>
@@ -103,7 +97,8 @@ const NavBar = () => {
             <li className=" mx-4 my-6 md:my-0">
               <NavLink
                 to="instructions"
-                className="text-xl duration-200 hover:text-green-700"
+                className="nav-link text-xl duration-200"
+                onClick={handleNavLinkClick}
               >
                 Instructions
               </NavLink>

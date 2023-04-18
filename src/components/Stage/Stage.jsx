@@ -16,6 +16,17 @@ const Stage = () => {
   const value = useContext(SessionContext);
   const mediaRecorderStart = useRef(0);
 
+  //if you navigate to another page, this stage component will unmount and if the socket is open and recorder running (listen state), 
+  //send cancel session to serve to close speech api and close recorder
+  useEffect(() => {
+    return () => {
+      if (sessionState === "listen") {
+        console.log(`unmounting stage component, sending cancel session to server`);
+        socket.emit("cancel_session");
+      }
+    }
+  }, [sessionState]);
+
   useEffect(() => {
     localStorage.setItem("currentSessionState", JSON.stringify(sessionState));
   }, [sessionState]);

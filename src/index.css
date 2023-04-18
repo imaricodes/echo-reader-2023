@@ -19,6 +19,7 @@ body {
   }
 }
 
+/* Dot Animation */
 @layer components {
   .dot-elastic-before-class {
     @apply absolute top-0 -left-4 inline-block h-3 w-3 rounded-md bg-red-200 text-red-200;
@@ -47,27 +48,33 @@ body {
     }  */
 }
 
-/* CSS for Instructions Componenet Elements */
+/* Page */
 @layer components {
-  .instructions-container {
-    @apply mx-6 items-center md:mx-28 lg:mx-14  lg:flex lg:flex-col lg:justify-center lg:gap-16;
+  .page {
+    @apply items-center px-8 md:px-14 lg:px-20;
   }
-
-  .instructions-container h1 {
+  .page-content-container {
+    @apply lg:flex lg:flex-col lg:justify-center lg:gap-16;
+  }
+  .page h1 {
     @apply text-center text-3xl font-bold text-gray-800 lg:text-5xl;
   }
+}
+
+/* CSS for Instructions Componenet Elements */
+@layer components {
   .instruction-container {
-    @apply lg:flex lg:justify-center lg:gap-16;
+    @apply mb-10  sm:mb-0 lg:flex lg:justify-center lg:gap-16;
   }
-  .instruction-card {
-    @apply flex flex-col items-center justify-center overflow-hidden rounded-lg px-4 py-8 text-3xl shadow-lg lg:w-[600px] lg:px-8 xl:w-[700px];
-  }
-
-  .instructions-container__image-card {
-    @apply card px-2 lg:w-[383px] lg:items-center  xl:w-[450px];
+  .instruction-container__instruction-card {
+    @apply mb-6 flex flex-col items-center justify-center overflow-hidden rounded-lg px-4 py-8 text-3xl shadow-lg sm:mb-0  lg:px-8;
   }
 
-  .instructions__p {
+  .instruction-container__image-card {
+    @apply card  w-full  px-2  lg:min-w-1/2 lg:max-w-1/2 lg:items-center;
+  }
+
+  .instruction-container__instruction-card__p {
     @apply text-lg 
     leading-7
     sm:text-2xl
@@ -78,6 +85,7 @@ body {
 }
 
 /* CSS for Main Container Component */
+
 .main-container {
   @apply mx-6 md:mx-28  lg:mx-14 lg:flex lg:justify-center lg:gap-16;
 }
@@ -98,7 +106,7 @@ body {
     @apply h-40;
   }
   .card__controls-container--text {
-    @apply text-lg leading-7;
+    @apply text-2xl leading-7;
   }
   .card__controls-container--flex-row {
     @apply justify-between;
@@ -111,7 +119,7 @@ body {
   }
 
   .card__controls-container--padding {
-    @apply py-5;
+   
   }
 
   .card__controls-container--margin {
@@ -170,11 +178,6 @@ body {
     @apply mx-2 text-center;
   }
 
-  /* Navbar */
-  .navbar {
-    @apply bg-white;
-  }
-
   /*Analysis Indicators*/
   .analysis-card__indicator {
     @apply flex items-center justify-center;
@@ -182,5 +185,32 @@ body {
 
   .mic-icon--pulse {
     @apply animate-pulse-fade;
+  }
+}
+
+/* Navvar, Nav Links, Nav Menu CSS{*/
+@layer components {
+  .navbar {
+    @apply bg-white;
+  }
+
+  .nav-link {
+    @apply hover:text-gray-400;
+  }
+
+  .nav-link.active {
+    @apply text-green-600;
+  }
+
+  .nav-menu {
+    @apply absolute  top-0 h-screen  w-full bg-white pt-4  md:relative  md:h-auto md:w-auto md:pr-0;
+  }
+
+  .nav-menu--slide-in {
+    @apply animate-menu-slide-in;
+  }
+
+  .nav-menu--slide-out {
+    @apply animate-menu-slide-out;
   }
 }

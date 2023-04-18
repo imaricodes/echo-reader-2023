@@ -6,10 +6,20 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    
     extend: {
       minHeight: (theme) => ({
       ...theme('spacing'),
-    }),
+      }),
+
+      minWidth: {
+        '1/2': '50%',
+      },
+
+      maxWidth: {
+        '1/2': '50%',
+      },
+      
 
     screens: {
       'xs': '475px',
@@ -80,6 +90,16 @@ module.exports = {
         '0%': {opacity: '0'},
         '100%': {opacity: '1'},
       },
+
+      //menu animation keyframes
+      'menu-slide-in': {
+        '0%': {transform: 'translateX(-100%)'},
+        '100%': {transform: 'translateX(0)'},
+      },
+      'menu-slide-out': {
+        '0%': {transform: 'translateX(0)'},
+        '100%': {transform: 'translateX(-100%)'},
+      },
     },
 
     animation: {
@@ -90,6 +110,8 @@ module.exports = {
       'dot-elastic-before': 'dot-elastic-before 1s infinite linear',
       'dot-elastic-after': 'dot-elastic-after 1s infinite linear',
       'dot-elastic-fade-in': 'dot-elastic-fade-in 2s ease',
+      'menu-slide-in': 'menu-slide-in 0.5s ease',
+      'menu-slide-out': 'menu-slide-out 0.5s ease',
     },
 
     colors: {

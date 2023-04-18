@@ -81,11 +81,11 @@ const CueSentenceCard = (props) => {
     }
   }, [sessionState]);
 
-useEffect(()=>{
-  if(localStorage.getItem('cue') !== null){
-    cueRef.current.innerText = localStorage.getItem('cue')
-  }
-})
+  useEffect(() => {
+    if (localStorage.getItem("cue") !== null) {
+      cueRef.current.innerText = localStorage.getItem("cue");
+    }
+  });
 
   // turn mic icon recording indicator on and off
   useEffect(() => {
@@ -101,7 +101,7 @@ useEffect(()=>{
   }, [sessionState]);
 
   return (
-    <div className="card card__stage card__display--flex-column  card__stage--text lg:width[500px] relative bg-green-200 ">
+    <div className="card card__stage card__display--flex-column  card__stage--text lg:width[500px] relative">
       <div className="absolute top-0 flex w-full px-10 pt-4">
         {/* TODO: what happens when the countdown is done? */}
         {/* countdown timer */}
@@ -125,9 +125,6 @@ useEffect(()=>{
             className="absolute hidden h-10 w-10 animate-pulse-fade-grow  rounded-full bg-red-600 "
           />
         </div>
-        {/* <span className='inline-block bg-purple-300'>
-          <p>waiting dots</p>
-        </span> */}
       </div>
       <div className=" w-full text-center " ref={cueRef}>
         {cueSentence}

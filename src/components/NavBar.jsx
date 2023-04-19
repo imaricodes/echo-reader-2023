@@ -9,6 +9,9 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 const NavBar = () => {
   const { sessionState, setSessionState, socket } = useContext(SessionContext);
 
+  const [menuActive, setMenuActive] = useState(false);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight)
+
   const [currentLocation, setCurrentLocation] = useState(null);
 
   const location = useLocation();
@@ -22,14 +25,44 @@ const NavBar = () => {
   }, [sessionState]);
 
   const handleMenu = () => {
-    menuToggleRef.current.icon === menuOutline
-      ? ((menuToggleRef.current.icon = closeOutline),
-        menuListRef.current.classList.add("nav-menu--slide-in"),
-        menuListRef.current.classList.remove("hidden"))
-      : ((menuToggleRef.current.icon = menuOutline),
-        menuListRef.current.classList.add("hidden"),
-        menuListRef.current.classList.remove("nav-menu--slide-in"));
+    // menuToggleRef.current.icon === menuOutline
+    //   ? ((menuToggleRef.current.icon = closeOutline),
+    //     menuListRef.current.classList.add("nav-menu--slide-in"),
+    //     menuListRef.current.classList.remove("hidden"))
+    //   : ((menuToggleRef.current.icon = menuOutline),
+    //     menuListRef.current.classList.add("hidden"),
+    //     menuListRef.current.classList.remove("nav-menu--slide-in"));
+    setMenuActive( prev => !prev);
+    setWindowHeight(window.innerHeight)
   };
+
+  useEffect(() => {
+    if (menuActive) {
+      menuToggleRef.current.icon = closeOutline;
+      menuListRef.current.classList.add("nav-menu--slide-in");
+      menuListRef.current.classList.remove("hidden");
+    }
+
+    if(!menuActive) {
+      menuToggleRef.current.icon = menuOutline;
+      menuListRef.current.classList.add("hidden");
+      menuListRef.current.classList.remove("nav-menu--slide-in");
+    }
+  }, [menuActive]);
+
+  // useEffect(() => {
+  //   window.addEventListener('resize', () => {
+  //     console.log('window resized')
+  //     if (window.innerWidth > windowHeight) {
+  //       menuActive ? setMenuActive(false) : null;
+  //     }
+  //   });
+  //   return () => {
+  //     window.removeEventListener('resize', null)
+  //   }
+  // }, [])
+
+
 
   const handleNavLinkClick = (e) => {
     console.log(
@@ -37,7 +70,7 @@ const NavBar = () => {
       e.target.textContent || e.target.innerText
     );
     console.log("handleNavLinkClick clicked");
-    // setCurrentLocation("/");
+ 
     if (socket) {
       if (sessionState === "listen") {
         socket.emit("cancel_session", "cancel_session from navbar logo click");
@@ -46,7 +79,10 @@ const NavBar = () => {
     } else setSessionState("go");
 
     //close menu if open
-    handleMenu();
+    if (menuActive) {
+      handleMenu();
+    }
+    
 
     localStorage.getItem("cue") && localStorage.removeItem("cue");
   };

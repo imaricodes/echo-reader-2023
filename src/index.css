@@ -207,10 +207,10 @@ body {
   }
 
   .nav-menu--slide-in {
-    @apply animate-menu-slide-in;
+    @apply md:animate-none animate-menu-slide-in;
   }
 
   .nav-menu--slide-out {
-    @apply animate-menu-slide-out;
+    @apply md:animate-none animate-menu-slide-out;
   }
 }

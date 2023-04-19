@@ -44,8 +44,6 @@ const SessionButton = (props) => {
   }, [sessionState]);
 
   useEffect(() => {
-    let currentButton = localStorage.getItem("sessionButtonText")
-    console.log(`should be setting button text, ${currentButton}`)
     if (localStorage.getItem("sessionButtonText" !== null)) {
       setButtonText(localStorage.getItem("sessionButtonText"));
     }

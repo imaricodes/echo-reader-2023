@@ -127,6 +127,8 @@ export function handleStream (socket, cueData, audio) {
   if (recognizeStream) {
     // console.log(audio)
     console.log('audio received attempting to write to recognizeStream: ')
+    
+
     recognizeStream.write(audio);
   } else console.log('no recognize stream: ')
 

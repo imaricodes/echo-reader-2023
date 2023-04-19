@@ -19,11 +19,12 @@ const Stage = () => {
   //if you navigate to another page, this stage component will unmount and if the socket is open and recorder running (listen state), 
   //send cancel session to serve to close speech api and close recorder
   useEffect(() => {
+    //TODO I removed this unmount callback because it may be sending a cancel session to the server when it should not be.
     return () => {
-      if (sessionState === "listen") {
-        console.log(`unmounting stage component, sending cancel session to server`);
-        socket.emit("cancel_session");
-      }
+      // if (sessionState === "listen") {
+      //   console.log(`unmounting stage component, sending cancel session to server`);
+      //   socket.emit("cancel_session");
+      // }
     }
   }, [sessionState]);
 

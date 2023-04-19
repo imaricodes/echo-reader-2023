@@ -190,7 +190,7 @@ const ResultsCard = (props) => {
   return (
     <div
       ref={cardRef}
-      className=" card card__stage card__display--flex-column  card__results-card result-card "
+      className=" card px-1 card__stage card__display--flex-column  card__results-card"
     >
       <div
         // className={`text-[${gridTextSize}px]`}

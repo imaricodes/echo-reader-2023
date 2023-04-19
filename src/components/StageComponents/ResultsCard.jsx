@@ -6,21 +6,44 @@ const ResultsCard = (props) => {
   const sessionResult = props.sessionResult;
   const [cardWidth, setCardWidth] = useState(0);
   const [gridWidth, setGridWidth] = useState(0);
-  const [gridTextSize, setGridTextSize] = useState(10);
+  const [gridTextSize, setGridTextSize] = useState(24);
   const [displayData, setDisplayData] = useState(sessionResult);
-
 
   const gridRef = useRef();
   const cardRef = useRef();
 
-  // resizeObserver.observe(document.querySelector(".container"));
+  const decreaseTextSize = (cardWidthCurrent, gridWidthCurrent) => {
+      console.log("bananas: ", cardWidthCurrent, gridWidthCurrent)
+      setGridTextSize((prev) => {
+        console.log("prev: ", prev);
+        console.log("prev - 1: ", prev - 1);
+        return prev - 1;
+      });
+  };
+
+  useEffect(() => {
+    let gridWidthCurrent = gridRef.current.clientWidth;
+    if (gridWidthCurrent > cardWidth) {
+      decreaseTextSize(cardWidth, gridWidthCurrent);
+    }
+    
+  }, [gridTextSize]);
 
   const onResize = (entries) => {
     const entry = entries[0];
     let gridWidthCurrent = gridRef.current.clientWidth;
     let cardWidthCurrent = entry.contentRect.width;
-    console.log("entry: ", cardWidthCurrent);
+    setCardWidth(cardWidthCurrent);
+    console.log("cardWidthCurrent: ", cardWidthCurrent);
     console.log("gridRef: ", gridWidthCurrent);
+
+    if (gridWidthCurrent > cardWidthCurrent) {
+      
+      console.log(
+        `grid is wider than card by ${gridWidthCurrent - cardWidthCurrent}`
+      );
+      decreaseTextSize(cardWidthCurrent, gridWidthCurrent);
+    }
   };
 
   useEffect(() => {

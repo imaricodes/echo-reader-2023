@@ -13,7 +13,8 @@ const ResultsCard = (props) => {
   const cardRef = useRef();
 
   const decreaseTextSize = (cardWidthCurrent, gridWidthCurrent) => {
-      console.log("bananas: ", cardWidthCurrent, gridWidthCurrent)
+    
+      console.log( `card width state: ${cardWidthCurrent}, grid: ${gridWidthCurrent}`)
       setGridTextSize((prev) => {
         console.log("prev: ", prev);
         console.log("prev - 1: ", prev - 1);
@@ -34,8 +35,8 @@ const ResultsCard = (props) => {
     let gridWidthCurrent = gridRef.current.clientWidth;
     let cardWidthCurrent = entry.contentRect.width;
     setCardWidth(cardWidthCurrent);
-    console.log("cardWidthCurrent: ", cardWidthCurrent);
-    console.log("gridRef: ", gridWidthCurrent);
+    console.log("card with: ", cardWidthCurrent);
+    console.log("grid width: ", gridWidthCurrent);
 
     if (gridWidthCurrent > cardWidthCurrent) {
       
@@ -50,6 +51,11 @@ const ResultsCard = (props) => {
     const resizeObserver = new ResizeObserver(onResize);
     console.log("cardRef: ", cardRef.current);
     resizeObserver.observe(cardRef.current);
+
+    return () => {
+      resizeObserver.disconnect();
+
+    }
   }, []);
 
   const resultDisplayRef = useRef();

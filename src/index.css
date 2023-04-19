@@ -87,7 +87,7 @@ body {
 /* CSS for Main Container Component */
 
 .main-container {
-  @apply mx-6 md:mx-28  lg:mx-14 lg:flex lg:justify-center lg:gap-16;
+  @apply mx-6 sm:mx-20 md:mx-28  lg:mx-14 lg:flex lg:justify-center lg:gap-16;
 }
 
 @layer components {

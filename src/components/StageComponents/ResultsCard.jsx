@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef, useLayoutEffect } from "react";
 import { displayResponses, testDisplayAppend } from "../../js/displayUtilities";
 import styles from "./ResultsCard.module.css";
 
@@ -10,7 +10,28 @@ const ResultsCard = (props) => {
   const [displayData, setDisplayData] = useState(sessionResult);
 
   const gridRef = useRef();
-  const cardRef = useRef();
+
+
+  function useHookWithRefCallback() {
+    const ref = useRef(null)
+    const setRef = useCallback(node => {
+      if (ref.current) {
+        // Make sure to cleanup any events/references added to the last instance
+      }
+      
+      if (node) {
+        // Check if a node is actually passed. Otherwise node would be null.
+        // You can now do what you need to, addEventListeners, measure, etc.
+      }
+      
+      // Save a reference to the node
+      ref.current = node
+    }, [])
+    
+    return [setRef]
+  }
+
+    const [cardRef] = useHookWithRefCallback();
 
   const decreaseTextSize = (cardWidthCurrent, gridWidthCurrent) => {
       console.log( `card width state: ${cardWidthCurrent}, grid: ${gridWidthCurrent}`)
@@ -21,13 +42,13 @@ const ResultsCard = (props) => {
       });
   };
 
-  useEffect(() => {
-    let gridWidthCurrent = gridRef.current.clientWidth;
-    if (gridWidthCurrent > cardWidth) {
-      decreaseTextSize(cardWidth, gridWidthCurrent);
-    }
+  // useEffect(() => {
+  //   let gridWidthCurrent = gridRef.current.clientWidth;
+  //   if (gridWidthCurrent > cardWidth) {
+  //     decreaseTextSize(cardWidth, gridWidthCurrent);
+  //   }
     
-  }, [gridTextSize]);
+  // }, [gridTextSize]);
 
   const onResize = (entries) => {
     const entry = entries[0];
@@ -46,92 +67,43 @@ const ResultsCard = (props) => {
     }
   };
 
+//NEW RESIZE OBSERVER
   useEffect(() => {
-    const resizeObserver = new ResizeObserver(onResize);
-    console.log("cardRef: ", cardRef.current);
-    resizeObserver.observe(cardRef.current);
+    const resizeObserver = new ResizeObserver(entries => {
+      const card = entries[0];
+      const grid = entries[1];
+      console.log('grid ref: ', gridRef.current)
+      console.log('card ref: ', cardRef.current)
+      console.log("new card width: ", card.contentRect.width)
+      console.log("new grid width: ", grid)
+   
+    });
+
+    resizeObserver.observe(cardRef);
+    resizeObserver.observe(gridRef.current);
 
     return () => {
-      resizeObserver.disconnect();
+      // resizeObserver.disconnect();
 
     }
   }, []);
 
-  const resultDisplayRef = useRef();
+  //ORIGINAL RESIZE OBSERVER
 
   // useEffect(() => {
   //   const resizeObserver = new ResizeObserver(onResize);
+  //   console.log("cardRef: ", cardRef.current);
   //   resizeObserver.observe(cardRef.current);
-  // }, []);
-
-  // useLayoutEffect(() => {
-  //   const { height } = cardRef.current.getBoundingClientRect();
-
-  //   console.log("running useLayoutEffect: ", cardRef.current.clientWidth);
-  //   console.log("running useLayoutEffect: ", gridRef.current.clientWidth);
-
-  //   if (gridRef.current.clientWidth > cardRef.current.clientWidth) {
-  //     console.log("grid is wider than card");
-  //     setGridTextSize("text-[10px]");
-  //   }
-
-  // });
-
-  // CREATE OBSERVERS //
-
-  // HANDLE RESIZE OF GRID //
-  // useEffect(() => {
-  //   console.log("running observer use effect");
-  //   const cardObserver = new ResizeObserver((entries) => {
-  //     // console.log('initial entrie object: ', entries[0])
-  //     // console.log('initial entrie object width: ')
-  //     // console.log('initial entrie object apple: ')
-  //     for (let entry of entries) {
-  //       const cr = entry.contentRect;
-  //       // doTheSizeThing(cr.width);
-  //       console.log("Element:", entry.target);
-  //       console.log(`Card size: ${cr.width}px x ${cr.height}px`);
-  //       console.log(`Card padding: ${cr.top}px ; ${cr.left}px`);
-  //       setCardWidth(cr.width);
-  //       // testRef.current.innerHTML = cr.width;
-  //     }
-  //   });
-
-  //   cardObserver.observe(cardRef.current);
-
-  //   const gridObserver = new ResizeObserver((entries) => {
-  //     for (let entry of entries) {
-  //       const cr = entry.contentRect;
-  //       console.log("Element:", entry.target);
-  //       console.log(`Grid size: ${cr.width}px x ${cr.height}px`);
-  //       console.log(`Grid padding: ${cr.top}px ; ${cr.left}px`);
-  //       setGridWidth(cr.width);
-  //     }
-  //   });
-
-  //   gridObserver.observe(gridRef.current);
 
   //   return () => {
-  //     // cardObserver.unobserve(cardRef.current);
-  //     // gridObserver.unobserve(gridRef.current);
-  //   };
+  //     resizeObserver.disconnect();
+
+  //   }
   // }, []);
 
-  //TODO: this is where display grid items will reruun if grid too wide
-  // useEffect(() => {
-  //   console.log('cardWidth State state', cardWidth)
-  //   console.log('gridWidth State state', gridWidth)
+  const resultDisplayRef = useRef();
 
-  //   if (gridWidth > cardWidth -20) {
-  //     console.log('grid is wider than card')
-  //     console.log(gridRef.current)
-  //     setGridTextSize("text-xs")
-  //     // gridRef.current.classList.add("text-xm")
-  //     // displayGridItems(displayData);
-  //   } else {
-  //     setGridTextSize("text-3xl")
-  //   }
-  // },[cardWidth]);
+  
 
   // DISPLAY UTILITIES FUNCTTION //
   //this should run initially on mount, then whenever certain conditions are met

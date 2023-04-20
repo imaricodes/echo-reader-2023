@@ -13,7 +13,6 @@ const ResultsCard = (props) => {
   const cardRef = useRef();
 
   const decreaseTextSize = (cardWidthCurrent, gridWidthCurrent) => {
-    
       console.log( `card width state: ${cardWidthCurrent}, grid: ${gridWidthCurrent}`)
       setGridTextSize((prev) => {
         console.log("prev: ", prev);

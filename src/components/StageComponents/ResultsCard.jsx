@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 
 const ResultsCard = (props) => {
   //TODO: Get session result from session context instead of props
   const sessionResult = props.sessionResult;
   const [gridTextSize, setGridTextSize] = useState(24);
+  const [currentGridWidth, setCurrentGridWidth] = useState(0);
   const [displayData, setDisplayData] = useState(sessionResult);
 
   const resultDisplayRef = useRef();
@@ -12,12 +13,22 @@ const ResultsCard = (props) => {
   const gridRefWidth = useRef();
   const cardRefWidth = useRef();
 
-  const decreaseTextSize = (cardWidthCurrent, gridWidthCurrent) => {
-    console.log(
-      `card width state: ${cardWidthCurrent}, grid: ${gridWidthCurrent}`
-    );
+  const decreaseTextSize = () => {
 
+    // if (gridTextSize <= 4) {
+    //   return;
+    // }
+    console.log('decrease text function current font size: ', gridTextSize)
     setGridTextSize((prev) => prev - 1);
+  };
+
+  const increaseTextSize = () => {
+    
+    //  if (gridTextSize >= 36) {
+    //   return;
+    // }
+   
+    setGridTextSize((prev) => prev + 1)
   };
 
   const adjustGridSize = () => {
@@ -26,18 +37,48 @@ const ResultsCard = (props) => {
       gridRefWidth.current = entries[0].contentRect.width;
       console.log("gridRefWidth in getWidthfunction: ", gridRefWidth.current);
       console.log("cardRefWidth in getWidthfunction: ", cardRefWidth.current);
+      // if (gridRefWidth.current = cardRefWidth.current -1) {
+      //   return
+      // }
+
       if (gridRefWidth.current > cardRefWidth.current) {
         console.log(
           `grid is wider than card by ${
             gridRefWidth.current - cardRefWidth.current
           } pixels`
         );
-        decreaseTextSize(cardRefWidth.current, gridRefWidth.current);
+        decreaseTextSize();
       }
+      // else if (gridRefWidth.current < cardRefWidth.current -30) {
+      //   console.log(`grid is narrower than card by ${cardRefWidth.current - gridRefWidth.current} pixels`);
+      //   setGridTextSize(36);
+      //   increaseTextSize(cardRefWidth.current, gridRefWidth.current);
+      // }
     });
 
     resizeGridObserver.observe(gridRef.current);
   };
+
+  const fitText = () => {
+    console.log("fit text cardRefWidth.current", cardRefWidth.current);
+    console.log("fit text gridRefWidth.current", gridRefWidth.current);
+    // console.log('fit text clicked')
+    if (gridRefWidth.current < cardRefWidth.current - 5) {
+      console.log(
+        "difference in width: ",
+        cardRefWidth.current - gridRefWidth.current
+      );
+      setGridTextSize(prev => prev + 1);
+    }
+  };
+
+  useLayoutEffect(() => {
+    const { width } = gridRef.current.getBoundingClientRect();
+    gridRefWidth.current = width;
+    console.log("set current grid width state", width);
+    setCurrentGridWidth(width);
+    // setTooltipHeight(height); // Re-render now that you know the real height
+  }, []);
 
   //ADD OBSERVER TO CARD REF
   useEffect(() => {
@@ -54,7 +95,7 @@ const ResultsCard = (props) => {
   }, []);
 
   // DISPLAY UTILITIES FUNCTTION //
-//TODO: move out of this component ...custom hook?
+  //TODO: move out of this component ...custom hook?
 
   const length = displayData[0].length;
   let displayGridItems = (displayData) => {
@@ -117,6 +158,10 @@ const ResultsCard = (props) => {
       ref={cardRef}
       className=" card card__stage card__display--flex-column card__results-card  px-1"
     >
+      <div>
+        <button className="bg-green-400 text-white mr-20" onClick={decreaseTextSize}>Decrease text</button>
+        <button className="bg-red-400 text-white" onClick={increaseTextSize}>Increase text</button>
+      </div>
       <div
         ref={gridRef}
         style={{

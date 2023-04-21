@@ -10,7 +10,7 @@ lerna-debug.log*
 #related to build process
 node_modules
 #dist
-dist
+#dist
 dist-ssr
 *.local
 

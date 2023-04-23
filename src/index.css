@@ -77,10 +77,15 @@ body {
   .instruction-container__instruction-card__p {
     @apply text-lg 
     leading-7
+    
     sm:text-2xl
     lg:text-3xl 
     lg:leading-10 
     xl:leading-relaxed;
+  }
+  .instruction-container__instruction-card__p p {
+    @apply 
+    mb-3
   }
 }
 

@@ -4,7 +4,6 @@ import { browserName, isMobile, isIOS, isAndroid} from 'react-device-detect';
 
 
 const BrowserWarningModal = () => {
-    console.log('browser name: ', browserName)
     const checkForBrowserSupport = () => {
         if (!isMobile && (browserName === 'Chrome' || browserName === 'Firefox')) {
             return true

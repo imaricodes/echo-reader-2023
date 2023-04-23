@@ -68,7 +68,7 @@ const Stage = () => {
 
     ///////////////////////////// STATE: LISTEN /////////////////////////////
     if (sessionState==='listen') {
-      console.log('current session state is listen, run media recorder')
+      // console.log('current session state is listen, run media recorder')
       // console.log('global socket: ',socket)
       if (socket) {
 
@@ -95,10 +95,10 @@ const Stage = () => {
             reader.onload = () => {
               base64data = reader.result.split("base64,")[1];
               // console.log(`base64 ${base64data}`)
-              console.log('sending data to server')
+              // console.log('sending data to server')
               socket.emit("incoming_stream", base64data);
             }; 
-          } else {console.log('media recorder is inactive, not sending data to server')}
+          } 
         }
 
         async function startRecorder() {
@@ -124,18 +124,18 @@ const Stage = () => {
 
                     mediaRecorder.start(250)
                   } else if (mediaRecorder.state === "inactive") {
-                    console.log(`media recorder state changed: ${mediaRecorder.state}`);
+                    // console.log(`media recorder state changed: ${mediaRecorder.state}`);
                     // mediaRecorder.start(250)
                   }
 
                 mediaRecorder.ondataavailable = sendRecorderDataWhenAvailable;
 
                 socket.on("close_media_recorder", (data) => {
-                  console.log(`close media recorder message received ${data}`);
+                  // console.log(`close media recorder message received ${data}`);
 
                   if (mediaRecorder.state !== "inactive") {
                   mediaRecorder.stop();
-                  console.log(`media recorder state changed: ${mediaRecorder.state}`);
+                  // console.log(`media recorder state changed: ${mediaRecorder.state}`);
                   }
                 });
 
@@ -149,6 +149,7 @@ const Stage = () => {
         socket.on("results_processed", (data) => {
           console.log("speech results received from server: ", data);
           //here, update sessionState
+          console.log('transcript received')
           setSessionResult(data);
           setSessionState("results");
           });

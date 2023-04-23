@@ -4,7 +4,7 @@ const ResultsCard = (props) => {
   console.log('render results card')
   //TODO: Get session result from session context instead of props
   const sessionResult = props.sessionResult;
-  const [gridTextSize, setGridTextSize] = useState(24);
+  const [gridTextSize, setGridTextSize] = useState(36);
   const [currentGridWidth, setCurrentGridWidth] = useState(0);
   const [displayData, setDisplayData] = useState(sessionResult);
 
@@ -89,6 +89,7 @@ const ResultsCard = (props) => {
 
   const length = displayData[0].length;
   let displayGridItems = (displayData) => {
+    
     let elements = [];
 
     //append cue result card ref
@@ -146,12 +147,9 @@ const ResultsCard = (props) => {
   return (
     <div
       ref={cardRef}
-      className=" card card__stage card__display--flex-column card__results-card  px-1"
+      className=" card card__stage card__display--flex-column card__results-card  px-2 relative"
     >
-      <div>
-        <button className="bg-green-400 text-white mr-20" onClick={decreaseTextSize}>Decrease text</button>
-        <button className="bg-red-400 text-white" onClick={increaseTextSize}>Increase text</button>
-      </div>
+    
       <div
         ref={gridRef}
         style={{
@@ -162,6 +160,17 @@ const ResultsCard = (props) => {
       >
         {displayGridItems(displayData).map((item) => item)}
       </div>
+  
+      <div className="flex font-semibold absolute bottom-6">
+        <button onClick={decreaseTextSize} className=" flex items-center justify-center text-xl text-white bg-red-400 h-6 w-6 rounded-md ">-</button>
+        <span className=" inline-block ml-4 mr-4">
+        Text Size
+          </span>
+          <button onClick={increaseTextSize} className="flex items-center justify-center text-xl text-white bg-green-400 h-6 w-6 rounded-md">+</button>
+
+      </div>
+   
+
     </div>
   );
 };

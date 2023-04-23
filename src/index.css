@@ -106,7 +106,7 @@ body {
     @apply h-40;
   }
   .card__controls-container--text {
-    @apply text-2xl leading-7;
+    @apply text-2xl leading-7 font-medium;
   }
   .card__controls-container--flex-row {
     @apply justify-between;

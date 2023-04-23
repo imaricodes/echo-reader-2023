@@ -13,18 +13,13 @@ const ResultsCard = (props) => {
   const cardRef = useRef();
   const gridRefWidth = useRef();
   const cardRefWidth = useRef();
-  const countRef = useRef(1);
 
   const decreaseTextSize = () => {
     if (gridTextSize <=4) {
      return
     };
-
     setGridTextSize((prev) => prev - 1);
-
   }
-
-
 
   const increaseTextSize = () => {
     
@@ -36,21 +31,21 @@ const ResultsCard = (props) => {
 
   //ADD OBSERVER TO CARD REF
   useEffect(() => {
-    console.log('useEffect create resize observer')
+    // console.log('useEffect create resize observer')
     const resizeObserver = new ResizeObserver((entries) => {
-      console.log('resize observer called')
+      // console.log('resize observer called')
 
       cardRefWidth.current = entries[0].contentRect.width;
-      console.log('cardRefWidth.current in observer callback', cardRefWidth.current)
+      // console.log('cardRefWidth.current in observer callback', cardRefWidth.current)
 
       const { width:gridWidth } = gridRef.current.getBoundingClientRect();
 
       if (cardRefWidth.current < gridWidth) {
-        console.log('cardRefWidth.current > gridmwidth in resize observer callback')
+        // console.log('cardRefWidth.current > gridmwidth in resize observer callback')
         decreaseTextSize();
       }
       setCurrentGridWidth(gridWidth);
-      console.log('Current grid Width state state set here causing re-render. width: ', gridWidth)
+      // console.log('Current grid Width state state set here causing re-render. width: ', gridWidth)
 
     });
 
@@ -63,59 +58,32 @@ const ResultsCard = (props) => {
   }, []);
 
   useLayoutEffect(() => {
-    countRef.current = countRef.current + 1;
-    console.log(`use layout effect with dep  array called ${countRef.current} times`)
-    console.log(`current Text Size: ${gridTextSize}`)
-    console.log('gridRefWidth.current in layout effect #1', gridRefWidth.current)
+    // console.log(`use layout effect with dep  array called ${countRef.current} times`)
+    // console.log(`current Text Size: ${gridTextSize}`)
+    // console.log('gridRefWidth.current in layout effect #1', gridRefWidth.current)
     if (cardRefWidth.current < gridRefWidth.current) {
-      console.log('currentGridWidth > cardRefWidth.current')
+      // console.log('currentGridWidth > cardRefWidth.current')
       decreaseTextSize();
     }
 
   }, [currentGridWidth]);
 
   useLayoutEffect(() => {
-    console.log(`use layout effect number two called`)
+    // console.log(`use layout effect number two called`)
 
     const { width: gridWidth } = gridRef.current.getBoundingClientRect();
     gridRefWidth.current = gridWidth;
-    console.log('gridRefWidth.current in layout effect #2', gridRefWidth.current)
+    // console.log('gridRefWidth.current in layout effect #2', gridRefWidth.current)
 
     const { width: cardWidth } = cardRef.current.getBoundingClientRect();
     cardRefWidth.current = cardWidth;
-    console.log('gridRefWidth.current in layout effect #2', cardRefWidth.current)
+    // console.log('gridRefWidth.current in layout effect #2', cardRefWidth.current)
 
-   
     setCurrentGridWidth(gridWidth);
 
   }, [gridTextSize]);
 
 
-  // useEffect(() => {
-  //   console.log('useEffect triggered by text size state effect called')
-  //   const { width } = gridRef.current.getBoundingClientRect();
-  //     console.log('width', width)
-  //     setCurrentGridWidth(width);
-  // }, [gridTextSize]);
-
-
-// useLayoutEffect(() => {
-
-//   console.log('useLayout effect decrease text called triggerred by current grid width state change')
-//   console.log('currentGridWidth', currentGridWidth)
-//   console.log('cardRefWidth.current', cardRefWidth.current)
-//   // console.log('gridRefWidth.current', gridRefWidth.current)
-//   if (cardRefWidth.current < currentGridWidth) {
-//     console.log('grid is wider than card')
-//     decreaseTextSize();
-//   }
-// }, [currentGridWidth]);
-
-
-
-
-
-  
   // DISPLAY UTILITIES FUNCTTION //
   //TODO: move out of this component ...custom hook?
 

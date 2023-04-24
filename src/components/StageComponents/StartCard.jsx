@@ -1,10 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { SessionContext } from "../../contexts/SessionContext";
 
 const StartCard = () => {
+  const { sessionState, setSessionState } = useContext(SessionContext);
   useEffect(() => {
-    if (localStorage.getItem("cue") !== null) {
-      localStorage.removeItem("cue");
-    }
+    // if (localStorage.getItem("cue") !== null) {
+    //   localStorage.removeItem("cue");
+    // }
+ 
+
   });
 
   return (

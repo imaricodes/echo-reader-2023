@@ -20,40 +20,40 @@ app.use(cors());
 const io = new Server(server);
 
 //session result for testing
-const sessionResult = [
-  ["Everybody", "everybody", "everybody", "everybody", "everybody."],
-  ["John", "has", "a", "toy", "car."],
-  {
-    cueWord: "john",
-    responseWord: "everybody",
-    match: "false",
-    responseDisplayWord: "Everybody",
-  },
-  {
-    cueWord: "has",
-    responseWord: "everybody",
-    match: "false",
-    responseDisplayWord: "everybody",
-  },
-  {
-    cueWord: "a",
-    responseWord: "everybody",
-    match: "false",
-    responseDisplayWord: "everybody",
-  },
-  {
-    cueWord: "toy",
-    responseWord: "everybody",
-    match: "false",
-    responseDisplayWord: "everybody",
-  },
-  {
-    cueWord: "car",
-    responseWord: "everybody",
-    match: "false",
-    responseDisplayWord: "everybody.",
-  },
-];
+// const sessionResult = [
+//   ["Everybody", "everybody", "everybody", "everybody", "everybody."],
+//   ["John", "has", "a", "toy", "car."],
+//   {
+//     cueWord: "john",
+//     responseWord: "everybody",
+//     match: "false",
+//     responseDisplayWord: "Everybody",
+//   },
+//   {
+//     cueWord: "has",
+//     responseWord: "everybody",
+//     match: "false",
+//     responseDisplayWord: "everybody",
+//   },
+//   {
+//     cueWord: "a",
+//     responseWord: "everybody",
+//     match: "false",
+//     responseDisplayWord: "everybody",
+//   },
+//   {
+//     cueWord: "toy",
+//     responseWord: "everybody",
+//     match: "false",
+//     responseDisplayWord: "everybody",
+//   },
+//   {
+//     cueWord: "car",
+//     responseWord: "everybody",
+//     match: "false",
+//     responseDisplayWord: "everybody.",
+//   },
+// ];
 
 io.on("connection", (socket) => {
   console.log("server side socket id: ", socket.id);
@@ -64,21 +64,22 @@ io.on("connection", (socket) => {
   socket.on("test", () => console.log("test received"));
 
   socket.on("send_cueData", (data) => {
+    console.log(`receiving cue data on serer ${data}`)
     cueData = { ...data };
   });
 
-  // socket.on("incoming_stream", (audio) => {
-  //   console.log("incoming stream received")
-  //   // console.log(audio)
-  //   handleStream(socket, cueData, audio);
-  // })
+  socket.on("incoming_stream", (audio) => {
+    console.log("incoming stream received")
+    // console.log(audio)
+    handleStream(socket, cueData, audio);
+  })
 
   //THIS FUNCTION IS FOR TESTING ONLY
-  socket.on("incoming_stream", (audio) => {
-    console.log("incoming stream received");
-    socket.emit("results_processed", sessionResult);
-    socket.emit("close_media_recorder", "closing media recorder");
-  });
+  // socket.on("incoming_stream", (audio) => {
+  //   console.log("incoming stream received");
+  //   socket.emit("results_processed", sessionResult);
+  //   socket.emit("close_media_recorder", "closing media recorder");
+  // });
 });
 
 app.use(express.static("./dist"));

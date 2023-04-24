@@ -1,4 +1,3 @@
-
 import React, { useContext, useState, useEffect, useRef } from "react";
 
 import { io } from "socket.io-client";
@@ -10,13 +9,18 @@ import ResultsCard from "../StageComponents/ResultsCard";
 import TimeUpCard from "../StageComponents/TimeUpCard";
 
 const Stage = () => {
-
   const [sessionResult, setSessionResult] = useState(null);
-  const {sessionState, setSessionState, socket, setSocket, socketIsConnected} = useContext(SessionContext);
+  const {
+    sessionState,
+    setSessionState,
+    socket,
+    setSocket,
+    socketIsConnected,
+  } = useContext(SessionContext);
   const value = useContext(SessionContext);
   const mediaRecorderStart = useRef(0);
 
-  //if you navigate to another page, this stage component will unmount and if the socket is open and recorder running (listen state), 
+  //if you navigate to another page, this stage component will unmount and if the socket is open and recorder running (listen state),
   //send cancel session to serve to close speech api and close recorder
   useEffect(() => {
     //TODO I removed this unmount callback because it may be sending a cancel session to the server when it should not be.
@@ -25,7 +29,7 @@ const Stage = () => {
       //   console.log(`unmounting stage component, sending cancel session to server`);
       //   socket.emit("cancel_session");
       // }
-    }
+    };
   }, [sessionState]);
 
   useEffect(() => {
@@ -33,23 +37,25 @@ const Stage = () => {
   }, [sessionState]);
 
   useEffect(() => {
-
     if (sessionState === "go") {
       if (!socket) {
         try {
-          console.log(`current session state is start, creating socket connection`)
+          console.log(
+            `current session state is start, creating socket connection`
+          );
           let sockets = io();
-          sockets.on('connection', (data) => { console.log(`connection established`)})
+          sockets.on("connection", (data) => {
+            console.log(`connection established`);
+          });
           setSocket(sockets);
         } catch (error) {
-          console.log(`error creating socket connection: ${error}`)
+          console.log(`error creating socket connection: ${error}`);
         }
       }
     }
 
     ///////////////////////////// STATE: START /////////////////////////////
     if (sessionState === "start") {
-
       const getMicAccess = async () => {
         //TODO: only request mic access if user has not already granted it
         try {
@@ -58,20 +64,18 @@ const Stage = () => {
         } catch (error) {
           console.log(`mic access denied`);
         }
-      }
+      };
 
       getMicAccess();
     }
 
-
     //TODO: If in any state other than listen and if media recorder is !null, stop it. There is an issue where the audio stream is not being stopped when the session results have been received from the server. This is causing an error to be thrown by th google speech api because it is tryting to write to a stream that has already been closed/destroyed.
 
     ///////////////////////////// STATE: LISTEN /////////////////////////////
-    if (sessionState==='listen') {
+    if (sessionState === "listen") {
       // console.log('current session state is listen, run media recorder')
       // console.log('global socket: ',socket)
       if (socket) {
-
         ///////////////////////////// RECORDER VARIABLES /////////////////////////////
 
         const getUserMediaConstraints = {
@@ -90,25 +94,25 @@ const Stage = () => {
 
         ///////////////////////////// RECORDER FUNCTIONS /////////////////////////////
         function sendRecorderDataWhenAvailable(e) {
-          if(mediaRecorder.state !=='inactive'){
+          if (mediaRecorder.state !== "inactive") {
             reader.readAsDataURL(e.data);
             reader.onload = () => {
               base64data = reader.result.split("base64,")[1];
               // console.log(`base64 ${base64data}`)
               // console.log('sending data to server')
               socket.emit("incoming_stream", base64data);
-            }; 
-          } 
+            };
+          }
         }
 
         async function startRecorder() {
-          console.log('media recorder start = ', mediaRecorderStart.current ++)
+          console.log("media recorder start = ", mediaRecorderStart.current++);
           let mediaRecorderOptions = {};
 
-          if (MediaRecorder.isTypeSupported('audio/webm; codecs=opus')) {
-            mediaRecorderOptions = {mimeType: 'audio/webm; codecs=opus'};
-            } else if (MediaRecorder.isTypeSupported('video/mp4')) {
-              mediaRecorderOptions = {mimeType: 'video/mp4'};
+          if (MediaRecorder.isTypeSupported("audio/webm; codecs=opus")) {
+            mediaRecorderOptions = { mimeType: "audio/webm; codecs=opus" };
+          } else if (MediaRecorder.isTypeSupported("video/mp4")) {
+            mediaRecorderOptions = { mimeType: "video/mp4" };
           }
 
           try {
@@ -120,13 +124,13 @@ const Stage = () => {
                   mediaRecorder = new MediaRecorder(
                     stream,
                     mediaRecorderOptions
-                    );
+                  );
 
-                    mediaRecorder.start(250)
-                  } else if (mediaRecorder.state === "inactive") {
-                    // console.log(`media recorder state changed: ${mediaRecorder.state}`);
-                    // mediaRecorder.start(250)
-                  }
+                  mediaRecorder.start(250);
+                } else if (mediaRecorder.state === "inactive") {
+                  // console.log(`media recorder state changed: ${mediaRecorder.state}`);
+                  // mediaRecorder.start(250)
+                }
 
                 mediaRecorder.ondataavailable = sendRecorderDataWhenAvailable;
 
@@ -134,11 +138,10 @@ const Stage = () => {
                   // console.log(`close media recorder message received ${data}`);
 
                   if (mediaRecorder.state !== "inactive") {
-                  mediaRecorder.stop();
-                  // console.log(`media recorder state changed: ${mediaRecorder.state}`);
+                    mediaRecorder.stop();
+                    // console.log(`media recorder state changed: ${mediaRecorder.state}`);
                   }
                 });
-
               });
           } catch (error) {
             console.log("navigator error:", error.message);
@@ -149,36 +152,33 @@ const Stage = () => {
         socket.on("results_processed", (data) => {
           console.log("speech results received from server: ", data);
           //here, update sessionState
-          console.log('transcript received')
+          console.log("transcript received");
           setSessionResult(data);
           setSessionState("results");
-          });
+        });
         //start recorder
-        //ISSUE: Is this causing the server to fun endSession repeatedly? This is being called twice (?) once when the session state changes to listen and again when the socket connection is established. This is causing the media recorder to be started twice, which is causing the audio stream to be sent twice to the server. 
+        //ISSUE: Is this causing the server to fun endSession repeatedly? This is being called twice (?) once when the session state changes to listen and again when the socket connection is established. This is causing the media recorder to be started twice, which is causing the audio stream to be sent twice to the server.
         startRecorder();
       }
     }
-
   }, [sessionState]);
-
-
 
   const COMPONENT_STATES = {
     go: <StartCard />,
-    start: <CueSentenceCard/>,
-    listen: <CueSentenceCard/>,
+    start: <CueSentenceCard />,
+    listen: <CueSentenceCard />,
     results: <ResultsCard sessionResult={sessionResult} />,
     cancel: <StartCard />,
-    timeUp: <TimeUpCard />
+    timeUp: <TimeUpCard />,
   };
 
-  console.log(`session state: ${sessionState}`)
+  console.log(`session state: ${sessionState}`);
 
   return (
     <div className="stage stage--height lg:mb-0 lg:h-[300px] ">
       {COMPONENT_STATES[sessionState]}
     </div>
-    );
+  );
 };
 
 export default Stage;

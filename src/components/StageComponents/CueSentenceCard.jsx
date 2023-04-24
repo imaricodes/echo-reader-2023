@@ -4,8 +4,6 @@ import { SessionContext } from "../../contexts/SessionContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
 import { faRotate } from "@fortawesome/free-solid-svg-icons";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import CountdownTimer from "../CountdownTimer";
 import DotAnimation from "../../DotAnimation";
 
 const CueSentenceCard = (props) => {
@@ -13,21 +11,36 @@ const CueSentenceCard = (props) => {
 
   // console.log('use countdown: ', useCountdown)
   const CUE_PHRASES = [
-    "The cat sat on me.",
-    "I love to play at parks.",
-    "The sun is very hot.",
+    "The cat sat on a sofa.",
+    "Fantastic stories are amazing.",
+    "The stove is burning hot.",
     "Dogs like to chase squirrels.",
     "She ran very fast today.",
     "He always picks pizza.",
-    "I saw a bird fly.",
+    "A bird soars through clouds.",
     "The flowers are so pretty.",
-    "My cat sleeps hard.",
-    "We are best friends.",
+    "My cat sleeps over there.",
+    "We are not best friends.",
     "I feel happy and excited.",
     "The sky is beautiful.",
-    "I want to go swimming.",
+    "I love to swim.",
     "John has a toy car.",
     "The beach is very sandy.",
+    "The dog barks loudly.",
+    "She runs fast.",
+    "He goes to play at the park.",
+    "The sun shines so bright.",
+    "I want to play cards.",
+    "She dances on stage.",
+    "The cat sleeps all day.",
+    "He jumps over hurdles.",
+    "The flower smells sweet.",
+    "She sings soprano today.",
+    "He climbs up the mountain.",
+    "The bird flies gracefully.",
+    "Fish swim in the pond.",
+    "She reads books quietly.",
+    "He paints colorful pictures.",
   ];
 
   const { sessionState, setSessionState, socket } = useContext(SessionContext);
@@ -35,62 +48,97 @@ const CueSentenceCard = (props) => {
   const cueRef = useRef(null);
   const micIconRef = useRef(null);
   const micIconPulseRef = useRef(null);
-  const refreshIconRef = useRef(null)
+  const refreshIconRef = useRef(null);
+  const cueHistoryRef = useRef([]);
 
   const [cueSentence, setCueSentence] = useState(null);
 
   const selectRandomCue = () => {
-    console.log("running selectRandomCue()");
+    console.log("running select random cue function");
 
-    if (localStorage.getItem("cue") === null) {
-      let selectedCue =
-        CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
-      console.log("selectedCueBall: ", selectedCue);
-      cueRef.current.innerText = selectedCue;
-      //set cue in local storage
-      localStorage.setItem("cue", selectedCue);
-
-      //send cue data to server
-      console.log("sending cue data to server");
-      let processedCue = processCue(selectedCue);
-      console.log("processedCue: ", processedCue);
-      socket.emit("send_cueData", processedCue);
-      return selectedCue;
+    const fetchCueSentence = () => {
+      let result = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
+      return result
     }
 
-    if (
-      localStorage.getItem("cue") === cueSentence ||
-      localStorage.getItem("cue") === null
-    ) {
-      let selectedCue =
-        CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
-      console.log("selectedCueBall: ", selectedCue);
-      cueRef.current.innerText = selectedCue;
-      //set cue in local storage
-      localStorage.setItem("cue", selectedCue);
+    const selectCue = () => {
 
-      //send cue data to server
-      console.log("sending cue data to server");
-      let processedCue = processCue(selectedCue);
-      console.log("processedCue: ", processedCue);
-      socket.emit("send_cueData", processedCue);
-      return selectedCue;
-    }
+      if(cueHistoryRef.current.length) {console.log(`${JSON.stringify(cueHistoryRef.current)}`)}
+
+      if (!cueHistoryRef.current.length || cueHistoryRef.current.length === 0 ) {
+        console.log(`cue ref history is empty, pushing cue to stack`)
+        let cue = fetchCueSentence()
+        cueHistoryRef.current.push(cue)
+        localStorage.setItem('cue', cue)
+        // let processedCue = processCue(cue);
+        // console.log("processedCue: ", processedCue);
+        // socket.emit("send_cueData", processedCue);
+        setCueSentence(cue)
+        return cue
+      }
+
+      if (cueHistoryRef.current.length > 0) {
+        console.log(`cue ref history is not empty, pushing cue to stack after inclusion check`)
+        let cue = fetchCueSentence()
+
+        //check if cue is already in stack
+        if (cueHistoryRef.current.includes(cue)) {
+          console.log(`${cue} is already used, running recursive`)
+          console.log(`CUE PHRASES LENGTH: `,CUE_PHRASES.length)
+          console.log(`cueHistoryRef length:`, cueHistoryRef.current.length)
+
+          //check if all cues used
+          if (cueHistoryRef.current.length === CUE_PHRASES.length) {
+            console.log('cueHistoryRef.current.length === CUE_PHRASES.length')
+            //clear the cue history
+            cueHistoryRef.current = []
+            // selectCue()
+          } else selectCue()
+        }
+
+        if (!cueHistoryRef.current.includes(cue)) {
+          console.log(`${cue} is not already used, adding to history`)
+          cueHistoryRef.current.push(cue)
+          localStorage.setItem('cue', cue)
+          // let processedCue = processCue(cue);
+          // console.log("processedCue: ", processedCue);
+          // socket.emit("send_cueData", processedCue);
+          setCueSentence(cue)
+          return cue
+        }
+      }
+
+    };
+
+    let selectedCue = selectCue();
+
+    // cueRef.current.innerText = localStorage.getItem('cue');
+    let processedCue = processCue(selectedCue);
+    console.log("processedCue: ", processedCue);
+    socket.emit("send_cueData", processedCue);
+
+    return selectedCue;
   };
 
   useEffect(() => {
+    console.log('use effect run')
     if (sessionState === "start") {
-      setCueSentence(selectRandomCue());
+
+      if (localStorage.getItem("cue") !==null) {
+        let cue = localStorage.getItem("cue");
+         let processedCue = processCue(cue);
+          console.log("processedCue: ", processedCue);
+          socket.emit("send_cueData", processedCue);
+        setCueSentence(cue)
+      } else  selectRandomCue()
     }
   }, [sessionState]);
 
-  useEffect(() => {
-   
-  });
-
   // turn mic icon recording indicator on and off
   useEffect(() => {
-    sessionState === "listen" ? refreshIconRef.current.classList.add('hidden') : refreshIconRef.current.classList.remove('hidden')
+    sessionState === "listen"
+      ? refreshIconRef.current.classList.add("hidden")
+      : refreshIconRef.current.classList.remove("hidden");
 
     if (sessionState === "listen") {
       micIconRef.current.classList.remove("bg-gray-200");
@@ -103,20 +151,13 @@ const CueSentenceCard = (props) => {
     }
   }, [sessionState]);
 
-  const handleCueRefresh = ()=> {
-    if (localStorage.getItem("cue") !== null) {
-      localStorage.removeItem("cue")
-      setCueSentence(selectRandomCue());
-    }
-  }
+  const handleCueRefresh = () => {
+    selectRandomCue();
+  };
 
   return (
     <div className="card card__stage card__display--flex-column  card__stage--text lg:width[500px] relative">
       <div className="absolute top-0 flex w-full px-10 pt-4">
-        {/* TODO: what happens when the countdown is done? */}
-        {/* countdown timer */}
-        {/* <CountdownTimer /> */}
-
         <DotAnimation />
 
         {/* microphone*/}
@@ -138,17 +179,10 @@ const CueSentenceCard = (props) => {
 
         {/* refresh icon */}
         <span ref={refreshIconRef} className="">
-          <button className="cursor-pointer" onClick={handleCueRefresh} >
-          <FontAwesomeIcon
-              icon={faRotate}
-              className="h-6 text-orange-400"
-            />
+          <button className="cursor-pointer" onClick={handleCueRefresh}>
+            <FontAwesomeIcon icon={faRotate} className="h-6 text-orange-400" />
           </button>
-   
-
         </span>
-       
-
       </div>
       <div className=" w-full text-center " ref={cueRef}>
         {cueSentence}

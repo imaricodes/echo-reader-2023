@@ -63,7 +63,7 @@ body {
 /* CSS for About Page */
 
 .about-page__card {
-  @apply bg-slate-100 mb-12 md:pt-14;
+  @apply mb-12 md:pt-14;
 }
 
 .about-page__card p {
@@ -89,7 +89,7 @@ body {
     @apply mb-10  sm:mb-0 lg:flex lg:justify-center lg:gap-16;
   }
   .instruction-container__instruction-card {
-    @apply bg-slate-100 mb-6 flex flex-col items-center justify-center overflow-hidden rounded-lg px-4 py-8 text-3xl shadow-lg sm:mb-0  lg:px-8;
+    @apply mb-6 flex flex-col items-center justify-center overflow-hidden rounded-lg px-4 py-8 text-3xl shadow-lg sm:mb-0  lg:px-8;
   }
 
   .instruction-container__image-card {

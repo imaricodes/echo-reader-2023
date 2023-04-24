@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useEffect, useState } from "react";
+import React, { useRef, useContext, useEffect, useState, useLayoutEffect } from "react";
 import { IonIcon } from "@ionic/react";
 //TODO: UPDATE to use react-icons instead of ionicons
 import { menuOutline } from "ionicons/icons";
@@ -19,6 +19,32 @@ const NavBar = () => {
 
   const menuToggleRef = useRef(null);
   const menuListRef = useRef(null);
+
+
+  // const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+
+    function closeMobileMenu() {
+      if (window.innerWidth > 768) {
+        // console.log('closing mobile menu')
+        if (menuActive === true) {
+          console.log('menu active state in layout effect: ', menuActive)
+          menuToggleRef.current.icon = menuOutline;
+          menuListRef.current.classList.add("hidden");
+          menuListRef.current.classList.remove("nav-menu--slide-in");
+          setMenuActive(prev => !prev)
+        }
+      }
+      
+      // setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener('resize', closeMobileMenu);
+
+    closeMobileMenu()
+    return () => window.removeEventListener('resize', closeMobileMenu);
+  }, [menuActive]);
+
+
 
   useEffect(() => {
     localStorage.setItem("currentSessionState", JSON.stringify(sessionState));

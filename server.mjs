@@ -19,60 +19,18 @@ app.use(cors());
 
 const io = new Server(server);
 
-//session result for testing
-// const sessionResult = [
-//   ["Everybody", "everybody", "everybody", "everybody", "everybody."],
-//   ["John", "has", "a", "toy", "car."],
-//   {
-//     cueWord: "john",
-//     responseWord: "everybody",
-//     match: "false",
-//     responseDisplayWord: "Everybody",
-//   },
-//   {
-//     cueWord: "has",
-//     responseWord: "everybody",
-//     match: "false",
-//     responseDisplayWord: "everybody",
-//   },
-//   {
-//     cueWord: "a",
-//     responseWord: "everybody",
-//     match: "false",
-//     responseDisplayWord: "everybody",
-//   },
-//   {
-//     cueWord: "toy",
-//     responseWord: "everybody",
-//     match: "false",
-//     responseDisplayWord: "everybody",
-//   },
-//   {
-//     cueWord: "car",
-//     responseWord: "everybody",
-//     match: "false",
-//     responseDisplayWord: "everybody.",
-//   },
-// ];
-
 io.on("connection", (socket) => {
-  console.log("server side socket id: ", socket.id);
   socket.emit("connection", "connection established");
 
   let cueData = {};
 
-  socket.on("test", () => console.log("test received"));
-
   socket.on("send_cueData", (data) => {
-    console.log(`receiving cue data on serer ${data}`)
     cueData = { ...data };
   });
 
   socket.on("incoming_stream", (audio) => {
-    console.log("incoming stream received")
-    // console.log(audio)
     handleStream(socket, cueData, audio);
-  })
+  });
 
   //THIS FUNCTION IS FOR TESTING ONLY
   // socket.on("incoming_stream", (audio) => {

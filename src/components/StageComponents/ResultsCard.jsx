@@ -14,83 +14,61 @@ const ResultsCard = (props) => {
   const cardRefWidth = useRef();
 
   const decreaseTextSize = () => {
-    if (gridTextSize <=4) {
-     return
-    };
+    if (gridTextSize <= 4) {
+      return;
+    }
     setGridTextSize((prev) => prev - 1);
-  }
+  };
 
   const increaseTextSize = () => {
-    
-     if (gridTextSize >= 36) {
+    if (gridTextSize >= 36) {
       return;
     }
     setGridTextSize((prev) => prev + 2);
-  }
+  };
 
   //ADD OBSERVER TO CARD REF
   useEffect(() => {
-    // console.log('useEffect create resize observer')
     const resizeObserver = new ResizeObserver((entries) => {
-      // console.log('resize observer called')
-
       cardRefWidth.current = entries[0].contentRect.width;
-      // console.log('cardRefWidth.current in observer callback', cardRefWidth.current)
 
-      const { width:gridWidth } = gridRef.current.getBoundingClientRect();
+      const { width: gridWidth } = gridRef.current.getBoundingClientRect();
 
       if (cardRefWidth.current < gridWidth) {
-        // console.log('cardRefWidth.current > gridmwidth in resize observer callback')
         decreaseTextSize();
       }
       setCurrentGridWidth(gridWidth);
-      // console.log('Current grid Width state state set here causing re-render. width: ', gridWidth)
-
     });
 
     resizeObserver.observe(cardRef.current);
 
-
     return () => {
       // TODO: disconnect resize observer
-      resizeObserver.disconnect()
-
+      resizeObserver.disconnect();
     };
   }, []);
 
   useLayoutEffect(() => {
-    // console.log(`use layout effect with dep  array called ${countRef.current} times`)
-    // console.log(`current Text Size: ${gridTextSize}`)
-    // console.log('gridRefWidth.current in layout effect #1', gridRefWidth.current)
     if (cardRefWidth.current < gridRefWidth.current) {
-      // console.log('currentGridWidth > cardRefWidth.current')
       decreaseTextSize();
     }
-
   }, [currentGridWidth]);
 
   useLayoutEffect(() => {
-    // console.log(`use layout effect number two called`)
-
     const { width: gridWidth } = gridRef.current.getBoundingClientRect();
     gridRefWidth.current = gridWidth;
-    // console.log('gridRefWidth.current in layout effect #2', gridRefWidth.current)
 
     const { width: cardWidth } = cardRef.current.getBoundingClientRect();
     cardRefWidth.current = cardWidth;
-    // console.log('gridRefWidth.current in layout effect #2', cardRefWidth.current)
 
     setCurrentGridWidth(gridWidth);
-
   }, [gridTextSize]);
-
 
   // DISPLAY UTILITIES FUNCTTION //
   //TODO: move out of this component ...custom hook?
 
   const length = displayData[0].length;
   let displayGridItems = (displayData) => {
-    
     let elements = [];
 
     //append cue result card ref
@@ -148,9 +126,8 @@ const ResultsCard = (props) => {
   return (
     <div
       ref={cardRef}
-      className=" card card__stage card__display--flex-column card__results-card  px-2 relative"
+      className=" card card__stage card__display--flex-column card__results-card  relative px-2"
     >
-    
       <div
         ref={gridRef}
         style={{
@@ -161,17 +138,18 @@ const ResultsCard = (props) => {
       >
         {displayGridItems(displayData).map((item) => item)}
       </div>
-  
-      <div className="flex font-semibold absolute bottom-6">
-        <button onClick={decreaseTextSize} className=" flex items-center justify-center text-xl text-white bg-red-400 h-6 w-6 rounded-md ">-</button>
-        <span className=" inline-block ml-4 mr-4">
-        Text Size
-          </span>
-          <button onClick={increaseTextSize} className="flex items-center justify-center text-xl text-white bg-green-400 h-6 w-6 rounded-md">+</button>
 
+      <div className="absolute bottom-3 flex  items-center justify-center xl:bottom-5">
+        <button onClick={decreaseTextSize} className="  bg-red-400 ">
+          -
+        </button>
+        <span className="ml-4 mr-4 inline-block text-sm font-semibold">
+          Text Size
+        </span>
+        <button onClick={increaseTextSize} className=" bg-green-400">
+          +
+        </button>
       </div>
-   
-
     </div>
   );
 };

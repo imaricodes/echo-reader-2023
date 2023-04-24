@@ -59,7 +59,7 @@ body {
     @apply text-center text-3xl font-bold text-gray-800 lg:text-5xl;
   }
   .page h2 {
-    @apply text-2xl  mb-10 font-bold text-gray-800 lg:text-3xl;
+    @apply mb-10  text-2xl font-bold text-gray-800 lg:text-3xl;
   }
 }
 
@@ -69,7 +69,7 @@ body {
   @apply mb-12 md:pt-14;
 }
 .about-page__card h2 {
-  @apply mb-4
+  @apply mb-4;
 }
 
 .about-page__card p {
@@ -207,6 +207,10 @@ body {
   }
   .card__results-card__grid-item {
     @apply mx-2 text-center;
+  }
+
+  .card__results-card button {
+    @apply flex h-5 w-5 items-center justify-center rounded-md text-base font-medium text-white  md:h-5 md:w-5 ;
   }
 
   /*Analysis Indicators*/

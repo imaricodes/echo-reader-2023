@@ -7,7 +7,6 @@ import { faRotate } from "@fortawesome/free-solid-svg-icons";
 import DotAnimation from "../../DotAnimation";
 
 const CueSentenceCard = (props) => {
-  console.log("rendering CueSentenceCard now");
 
   // console.log('use countdown: ', useCountdown)
   const CUE_PHRASES = [
@@ -54,7 +53,6 @@ const CueSentenceCard = (props) => {
   const [cueSentence, setCueSentence] = useState(null);
 
   const selectRandomCue = () => {
-    console.log("running select random cue function");
 
     const fetchCueSentence = () => {
       let result = CUE_PHRASES[Math.floor(Math.random() * CUE_PHRASES.length)];
@@ -63,10 +61,8 @@ const CueSentenceCard = (props) => {
 
     const selectCue = () => {
 
-      if(cueHistoryRef.current.length) {console.log(`${JSON.stringify(cueHistoryRef.current)}`)}
 
       if (!cueHistoryRef.current.length || cueHistoryRef.current.length === 0 ) {
-        console.log(`cue ref history is empty, pushing cue to stack`)
         let cue = fetchCueSentence()
         cueHistoryRef.current.push(cue)
         localStorage.setItem('cue', cue)
@@ -78,26 +74,19 @@ const CueSentenceCard = (props) => {
       }
 
       if (cueHistoryRef.current.length > 0) {
-        console.log(`cue ref history is not empty, pushing cue to stack after inclusion check`)
         let cue = fetchCueSentence()
 
         //check if cue is already in stack
         if (cueHistoryRef.current.includes(cue)) {
-          console.log(`${cue} is already used, running recursive`)
-          console.log(`CUE PHRASES LENGTH: `,CUE_PHRASES.length)
-          console.log(`cueHistoryRef length:`, cueHistoryRef.current.length)
 
           //check if all cues used
           if (cueHistoryRef.current.length === CUE_PHRASES.length) {
-            console.log('cueHistoryRef.current.length === CUE_PHRASES.length')
             //clear the cue history
             cueHistoryRef.current = []
-            // selectCue()
           } else selectCue()
         }
 
         if (!cueHistoryRef.current.includes(cue)) {
-          console.log(`${cue} is not already used, adding to history`)
           cueHistoryRef.current.push(cue)
           localStorage.setItem('cue', cue)
           // let processedCue = processCue(cue);
@@ -114,20 +103,17 @@ const CueSentenceCard = (props) => {
 
     // cueRef.current.innerText = localStorage.getItem('cue');
     let processedCue = processCue(selectedCue);
-    console.log("processedCue: ", processedCue);
     socket.emit("send_cueData", processedCue);
 
     return selectedCue;
   };
 
   useEffect(() => {
-    console.log('use effect run')
     if (sessionState === "start") {
 
       if (localStorage.getItem("cue") !==null) {
         let cue = localStorage.getItem("cue");
          let processedCue = processCue(cue);
-          console.log("processedCue: ", processedCue);
           socket.emit("send_cueData", processedCue);
         setCueSentence(cue)
       } else  selectRandomCue()

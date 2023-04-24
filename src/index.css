@@ -58,12 +58,18 @@ body {
   .page h1 {
     @apply text-center text-3xl font-bold text-gray-800 lg:text-5xl;
   }
+  .page h2 {
+    @apply text-2xl  mb-10 font-bold text-gray-800 lg:text-3xl;
+  }
 }
 
 /* CSS for About Page */
 
 .about-page__card {
   @apply mb-12 md:pt-14;
+}
+.about-page__card h2 {
+  @apply mb-4
 }
 
 .about-page__card p {

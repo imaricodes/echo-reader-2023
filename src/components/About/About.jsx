@@ -5,8 +5,9 @@ const About = () => {
   return (
     <div className="page mb-10 ">
       <div className="page-content-container page-content-container__about-page">
+        <h1>About Echo Reader</h1>
         <div className="card  about-page__card flex-col">
-          <h1>WHAT ECHO READER DOES</h1>
+        <h2>What Echo Reader Does</h2>
           <p>
             Reading fluency is the the ability to read with speed, accuracy, and
             proper expression. Echo Reader was designed to evaluate a student's
@@ -15,7 +16,6 @@ const About = () => {
             using context clues. Accurate decoding means the student reads
             exactly what is on the page.
           </p>
-
           <p>
             Helping a student practice decoding traditionally requires one on
             one intervention from a teacher. How else would the student know
@@ -33,28 +33,30 @@ const About = () => {
         </div>
 
         <div className="card  about-page__card flex-col">
-          <h1>WHY ECHO READER WAS CREATED </h1>
+          <h2>Why Echo Reader Was Created</h2>
           <p>
             As a former teacher, I've seen first hand how poor reading
             negatively impacts a student's ability to have success across all
             subjects. No matter what the domain, reading is the gateway to
             understanding.
           </p>
+
           <p>
             Written language is one of the earliest human technologies that
             allowed human civilations to make leaps in its development. Before
             the internet, written language allowed information to be stored over
-            time and shared with the masses. <p></p>Tools exist now to read
+            time and shared with the masses. </p><p>Tools exist now to read
             things for us, but even with this, reading remains in many cases, a
             far more efficient way to consume information compared to listening
             alone.
-          </p>{" "}
+          </p>
+
           <p>
             Students develop crucial learning skills like the ability to sustain
             focus and attention while reading.
           </p>
           <p>
-            {" "}
+            
             Reading alone, is not the only skill that affects a learners ability
             to access material, but is a crucial leg of the the table that
             supports overall learning.
@@ -62,7 +64,7 @@ const About = () => {
         </div>
 
         <div className="card  about-page__card flex-col">
-          <h1>FUTURE DEVELOPMENT PLANS</h1>
+          <h2>Future Developoment Plans</h2>
           <p>
             Echo Reader is currently a proof-of-concept and has quite a way to
             go in terms of making the interface more appealing to young readers
@@ -78,7 +80,7 @@ const About = () => {
           </p>
         </div>
         <div className="card  about-page__card flex-col">
-          <h1>LIMITATIONS</h1>
+          <h2>Limitations</h2>
           <p>
             Because of the nature of the tech used in mobile devices and certain
             browsers beyond our control, Echo Reader perfrom best on desktop or
@@ -86,6 +88,7 @@ const About = () => {
             Reading on mobile devices and tablets is no recommended.
           </p>
         </div>
+
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 
 const ResultsCard = (props) => {
-  console.log('render results card')
   //TODO: Get session result from session context instead of props
   const sessionResult = props.sessionResult;
   const [gridTextSize, setGridTextSize] = useState(36);
@@ -53,7 +52,9 @@ const ResultsCard = (props) => {
 
 
     return () => {
-      //TODO: disconnect resize observer
+      // TODO: disconnect resize observer
+      resizeObserver.disconnect()
+
     };
   }, []);
 

@@ -5,12 +5,11 @@
 .root,
 #root,
 #docs-root {
-  --primary-coolor: #e90e0e;
-  --secondary-coolor: #000;
 }
 
 body {
-  /* @apply bg-orange-600; */
+  /* @apply text-[#131516]; */
+  @apply text-[#373d3f];
 }
 
 @layer components {
@@ -61,13 +60,36 @@ body {
   }
 }
 
+/* CSS for About Page */
+
+.about-page__card {
+  @apply bg-slate-100 mb-12 md:pt-14;
+}
+
+.about-page__card p {
+  @apply mb-6 
+    text-lg
+    leading-8
+    sm:text-2xl
+    lg:text-3xl 
+    lg:leading-10 
+    xl:leading-relaxed;
+}
+.about-page__card h1 {
+  @apply mb-4 md:mb-8;
+}
+
+.page-content-container__about-page {
+  @apply md:mx-10 lg:mx-16 xl:mx-44 2xl:mx-52;
+}
+
 /* CSS for Instructions Componenet Elements */
 @layer components {
   .instruction-container {
     @apply mb-10  sm:mb-0 lg:flex lg:justify-center lg:gap-16;
   }
   .instruction-container__instruction-card {
-    @apply mb-6 flex flex-col items-center justify-center overflow-hidden rounded-lg px-4 py-8 text-3xl shadow-lg sm:mb-0  lg:px-8;
+    @apply bg-slate-100 mb-6 flex flex-col items-center justify-center overflow-hidden rounded-lg px-4 py-8 text-3xl shadow-lg sm:mb-0  lg:px-8;
   }
 
   .instruction-container__image-card {
@@ -84,8 +106,7 @@ body {
     xl:leading-relaxed;
   }
   .instruction-container__instruction-card__p p {
-    @apply 
-    mb-3
+    @apply mb-3;
   }
 }
 
@@ -111,7 +132,7 @@ body {
     @apply h-40;
   }
   .card__controls-container--text {
-    @apply text-2xl leading-7 font-medium;
+    @apply text-2xl font-medium leading-7;
   }
   .card__controls-container--flex-row {
     @apply justify-between;
@@ -124,7 +145,6 @@ body {
   }
 
   .card__controls-container--padding {
-   
   }
 
   .card__controls-container--margin {
@@ -212,10 +232,10 @@ body {
   }
 
   .nav-menu--slide-in {
-    @apply md:animate-none animate-menu-slide-in;
+    @apply animate-menu-slide-in md:animate-none;
   }
 
   .nav-menu--slide-out {
-    @apply md:animate-none animate-menu-slide-out;
+    @apply animate-menu-slide-out md:animate-none;
   }
 }

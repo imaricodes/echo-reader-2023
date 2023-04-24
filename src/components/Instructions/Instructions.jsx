@@ -20,21 +20,14 @@ const Instructions = () => {
   ];
 
   const instructionsText = {
-    10: (
-      <span>
-        Before you can reading aloud to{" "}
-        <bold style={{ color: "red", fontWeight: "bold" }}>Echo Reader</bold>,
-        please allow microphone access.
-      </span>
-    ),
     0: (
       <span>
-        <p>Directions for each step will appear in the control bar. The Session
-        Button allows you to start or cancel a session.</p> <p>Sentences to read and
-        your reading results will appear on the Stage.</p>
+        <p>Directions for each step will appear in the <span className="font-bold text-orange-400">Control Bar</span>. The <span className="font-bold text-orange-400">Session
+        Button</span> allows you to control your session. The text on the button will change depending on what step you are on.</p> <p>Sentences to read and
+        your reading results will appear on the <span className="font-bold text-orange-400">Stage</span>.</p>
       </span>
     ),
-    1: <span>Click Go to get your first reading sentence. </span>,
+    1: <span>Click <span className="font-bold text-green-500">Go</span> to get your first reading sentence. </span>,
     2: (
       <span>
         If you are not using Chrome or Firefox on a laptop or desktop computer,
@@ -43,31 +36,34 @@ const Instructions = () => {
     ),
     3: (
       <span>
-        Before you can start reading aloud to Echo Reader, please allow
-        microphone access if you have not already.
+        Before you can start reading aloud to Echo Reader, please <span className="font-bold">allow
+        microphone access</span> if you have not already.
       </span>
     ),
     4: (
       <span>
-        <p>After clicking go, you will see a new sentence. Take a moment to
+        <p>After clicking <span className="font-bold text-green-500">Go</span>, you will see a new sentence. Take a moment to
         practice reading the sentence silently or aloud.</p> <p>Echo Reader will start
-        listening when you click Start.</p> In this beta version, it is possible
-        that the same sentence is presented back to back. To get a new sentence,
-        click Again.
+        listening when you click <span className="font-bold text-green-500">Start</span> on the <span className="font-bold text-orange-400">Session
+        Button</span>.</p> In this beta version, it is possible
+        that the same sentence is presented back to back. To load a new sentence,
+        click the <span className="font-bold text-orange-400">Refresh</span> button.
       </span>
     ),
     5: (
       <span>
-        <p>The Session Button changes to Cancel while Echo Reader is listening.</p> <p>The
+        <p>The <span className="font-bold text-orange-400">Session
+        Button</span> changes to <span className="font-bold text-red-500">Cancel</span> while Echo Reader is listening. Click it to stop the session and load a new sentence.</p> <p>The
         dots on the left will bounce when Echo Reader starts analyzing your
         speech.</p>
       </span>
     ),
     6: (
       <span>
-        <p>Your results will look like this. What Echo Reader heard you say is
+        <p>Your results will look like this.</p><p> What Echo Reader heard you say is
         under the orginal sentence.</p> <p>All green words means you read every word
-        correctly. Click Again to load a new sentence.</p>
+        correctly. Click <span className="font-bold text-green-500">Again</span> on the <span className="font-bold text-orange-400">Session
+        Button</span> to load a new sentence.</p>
       </span>
     ),
     7: (
@@ -79,13 +75,13 @@ const Instructions = () => {
     ),
     8: (
       <span>
-        <p>Ask Chat GPT to give you more detailed freedback about your reading.</p> <p>If ChatGPT is busy, try again on the next round.</p> 
+        <p>Ask ChatGPT to give you more detailed freedback about your reading.</p> <p>If ChatGPT is busy, try again on the next round.</p> 
       </span>
     ),
   };
 
   return (
-    <div className="page ">
+    <div className="page mb-10 ">
       <div className="page-content-container">
         <h1 className="mb-6">How to Use Echo Reader</h1>
         <div>

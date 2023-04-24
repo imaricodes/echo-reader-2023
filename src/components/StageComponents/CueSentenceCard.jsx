@@ -3,6 +3,7 @@ import { processCue } from "../../js/processCue";
 import { SessionContext } from "../../contexts/SessionContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
+import { faRotate } from "@fortawesome/free-solid-svg-icons";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import CountdownTimer from "../CountdownTimer";
 import DotAnimation from "../../DotAnimation";
@@ -34,6 +35,8 @@ const CueSentenceCard = (props) => {
   const cueRef = useRef(null);
   const micIconRef = useRef(null);
   const micIconPulseRef = useRef(null);
+  const refreshIconRef = useRef(null)
+
   const [cueSentence, setCueSentence] = useState(null);
 
   const selectRandomCue = () => {
@@ -82,13 +85,13 @@ const CueSentenceCard = (props) => {
   }, [sessionState]);
 
   useEffect(() => {
-    if (localStorage.getItem("cue") !== null) {
-      cueRef.current.innerText = localStorage.getItem("cue");
-    }
+   
   });
 
   // turn mic icon recording indicator on and off
   useEffect(() => {
+    sessionState === "listen" ? refreshIconRef.current.classList.add('hidden') : refreshIconRef.current.classList.remove('hidden')
+
     if (sessionState === "listen") {
       micIconRef.current.classList.remove("bg-gray-200");
       micIconRef.current.classList.add("bg-red-600");
@@ -99,6 +102,13 @@ const CueSentenceCard = (props) => {
       micIconPulseRef.current.classList.add("hidden");
     }
   }, [sessionState]);
+
+  const handleCueRefresh = ()=> {
+    if (localStorage.getItem("cue") !== null) {
+      localStorage.removeItem("cue")
+      setCueSentence(selectRandomCue());
+    }
+  }
 
   return (
     <div className="card card__stage card__display--flex-column  card__stage--text lg:width[500px] relative">
@@ -125,6 +135,20 @@ const CueSentenceCard = (props) => {
             className="absolute hidden h-10 w-10 animate-pulse-fade-grow  rounded-full bg-red-600 "
           />
         </div>
+
+        {/* refresh icon */}
+        <span ref={refreshIconRef} className="">
+          <button className="cursor-pointer" onClick={handleCueRefresh} >
+          <FontAwesomeIcon
+              icon={faRotate}
+              className="h-6 text-orange-400"
+            />
+          </button>
+   
+
+        </span>
+       
+
       </div>
       <div className=" w-full text-center " ref={cueRef}>
         {cueSentence}

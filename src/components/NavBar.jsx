@@ -127,7 +127,7 @@ const NavBar = () => {
         </NavLink>
 
         {/* Hanburger Menu */}
-        <div className="absolute right-3 top-5 z-10 block cursor-pointer text-3xl md:hidden">
+        <div className="absolute right-3 top-5 z-[200] block cursor-pointer text-3xl md:hidden">
           <IonIcon
             icon={menuOutline}
             onClick={handleMenu}

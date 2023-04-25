@@ -238,7 +238,7 @@ body {
   }
 
   .nav-menu {
-    @apply absolute  top-0 h-screen  w-full bg-white pt-4  md:relative  md:h-auto md:w-auto md:pr-0;
+    @apply absolute  top-0 h-screen  w-full bg-white pt-4 z-[5] md:relative  md:h-auto md:w-auto md:pr-0;
   }
 
   .nav-menu--slide-in {

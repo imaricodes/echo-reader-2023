@@ -5,6 +5,7 @@ const name =
   "projects/final-solution-379503/secrets/echo-reader-chatgpt/versions/latest";
 const secretmanagerClient = new SecretManagerServiceClient();
 
+
 const getSecret = async () => {
   //access the secret
   const [version] = await secretmanagerClient.accessSecretVersion({

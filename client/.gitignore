@@ -7,12 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-#related to build process
 node_modules
-#dist
-#dist
+dist
 dist-ssr
-dist/
 *.local
 
 # Editor directories and files
@@ -25,9 +22,3 @@ dist/
 *.njsproj
 *.sln
 *.sw?
-
-# misc
-archive
-
-
-

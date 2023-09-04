@@ -1,13 +1,13 @@
 export const checkForMaxWords = (arr, maxWords) => {
   if (arr.length > maxWords) {
-    console.log("MAX WORDS REACHED");
-    console.log(`current array length: ${arr.length}`);
+    // console.log("MAX WORDS REACHED");
+    // console.log(`current array length: ${arr.length}`);
 
     // terminateAssemblySession();
     // closeSocket();
     return true;
   } else {
-    console.log("MAX WORDS NOT REACHED");
+    // console.log("MAX WORDS NOT REACHED");
     return false;
   }
 };
@@ -67,25 +67,20 @@ export const evaluateSession = async (cueObj, responseObj) => {
       responseDisplayWord: responseDisplay[index],
     });
   }
-  console.log(`final sesion result array on server!: ${JSON.stringify(arr)}`);
+  // console.log(`final sesion result array on server!: ${JSON.stringify(arr)}`);
   return arr;
 };
-
-
 
 export const calculateTimeOut = (startSessionTime, maxSessionTime) => {
   let endTime = Date.now();
   let elapsedSessionTime = (endTime - startSessionTime) / 1000;
   let result = false;
-  console.log("elapsed session time", elapsedSessionTime);
+  // console.log("elapsed session time", elapsedSessionTime);
 
   if (elapsedSessionTime >= maxSessionTime) {
     result = true;
-    // console.log('TIMED OUT!, close session and socket', result)
-    // terminateAssemblySession();
-    // closeSocket();
-    return result;
+    return {timeout:true, elapsedTime: elapsedSessionTime};
   } else {
-    return result;
+    return {timeout:false, elapsedTime: elapsedSessionTime};
   }
 };

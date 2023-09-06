@@ -65,7 +65,7 @@ app.use(cors());
 
 
 //********  DISABLE THIS FOR PRODUCTION ******* */
-app.get("/", (req, res) => {
+app.get("/message", (req, res) => {
   res.send({ message: "this is the root route" });
 });
 

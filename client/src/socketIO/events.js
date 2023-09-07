@@ -3,14 +3,14 @@
 import { socket } from "./socket-service";
 
 let count=1;
-let sum;
+
 
 
 
 export const socketEvents = ({ setValue }) => {
   socket.on("connection", (data) => {
    
-   
+    console.log("sever respond connected before set state: ", data);
     setValue((state) => {
       return { ...state, socket_connected: `${data}` };
     });
@@ -39,10 +39,14 @@ export const socketEvents = ({ setValue }) => {
       return { ...state, processing_results: `${data}` };
     });
   });
+
+
   socket.on("results_processed", (data) => {
     console.log('prev count: ', count)
     count  += 1
     console.log('current count ', count)
+    console.log('final data from server: ', data.response)
+    
     
     // console.log('result as object')
     // console.log(data.response)

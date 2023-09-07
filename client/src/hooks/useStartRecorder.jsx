@@ -9,14 +9,11 @@ const getUserMediaConstraints = {
   video: false,
 };
 
-/* 
-
-*/
-
 
 
 const useStartRecorder = () => {
   const [micActive, setMicActive] = useState(false);
+  const [isRecording, setIsRecording] = useState(false)
   console.log('use recorder hook fired')
 
   const reader = new FileReader();
@@ -61,14 +58,19 @@ const useStartRecorder = () => {
 
           mediaRecorder.start(250);
 
+          //TODO; Maybe instead here, rely on isRecording state?
+
           socket.on("stop_media_recorder", () => {
+            setIsRecording(false);
+            socket.emit("media_recorder_state", "stopped")
+            //TODO: this fires 2 extra times. Why? Receiving "stop_media_recorder" 3 times
             console.log('media recorder stop received from server')
             if (mediaRecorder.state !== "inactive") {
+
               mediaRecorder.pause();
-              socket.emit("media_recorder_state", "stopped");
-              if (micActive) {
-                setMicActive(false);
-              }
+              // if (micActive) {
+              //   setMicActive(false);
+              // }
             }
           });
           
@@ -78,7 +80,9 @@ const useStartRecorder = () => {
     }
   };
 
-  return { startRecorder, micActive, setMicActive };
+  // isRecording ? startRecorder() : null
+
+  return { isRecording, setIsRecording, startRecorder };
 };
 
 export default useStartRecorder;

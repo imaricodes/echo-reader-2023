@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import io from "socket.io-client";
 import { socketEvents } from "./events";
 
@@ -13,5 +14,10 @@ export const initSockets = ({ setValue }) => {
   //this strategy prevents the component from re-rendering on every socket event when the state is updated
   socketEvents({ setValue });
 };
+// export const initSockets = ({ setValue }) => {
+//   //anytime an event is received on client from the server socket, the state of the socket provider will be updated
+//   //this strategy prevents the component from re-rendering on every socket event when the state is updated
+//   socketEvents({ setValue });
+// };
 
 

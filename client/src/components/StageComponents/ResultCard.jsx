@@ -1,15 +1,17 @@
-import {useContext} from 'react'
-import SocketContext from '../../socketIO/socketContext'
+import { useState, useEffect } from "react";
 
-const ResultCard = () => {
+const ResultCard = ({ setStageState }) => {
+  const [results, setResults] = useState(() => {
+    let initialState = JSON.parse(localStorage.getItem("session_results"));
+    console.log("initial state", initialState);
+    return initialState;
+  });
 
-  const {session_results} = useContext(SocketContext)
-  return (
-    <div>ResultCard
+  useEffect(() => {
+    console.log("stored session results ", results[0]);
+  });
 
-      {session_results}
-    </div>
-  )
-}
+  return <div>ResultCard</div>;
+};
 
-export default ResultCard
+export default ResultCard;

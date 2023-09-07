@@ -1,9 +1,6 @@
-import {useContext} from 'react';
-import { ReadingSessionContext } from '../../contexts/ReadingSessionContext';
 
 
-const SessionInstructions = () => {
-    const {stageState, setStageState} = useContext(ReadingSessionContext)
+const SessionInstructions = ({setStageState}) => {
 
     const handleClick = () => {
         // console.log("handle set stage state")

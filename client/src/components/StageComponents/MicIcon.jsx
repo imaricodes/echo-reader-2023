@@ -7,7 +7,7 @@ import useStartRecorder from "../../hooks/useStartRecorder";
 const MicIcon = () => {
   const micIconRef = useRef(null);
   const micIconPulseRef = useRef(null);
-  const {startRecorder, micActive, setMicActive} = useStartRecorder();
+  const {isRecording, setIsRecording, startRecorder} = useStartRecorder();
 
   const renderCount = useRef(0);
 
@@ -19,7 +19,7 @@ const MicIcon = () => {
 
 
   useEffect(() => {
-    if (micActive === true) {
+    if (isRecording === true) {
       micIconRef.current.classList.remove("bg-gray-200");
       micIconRef.current.classList.add("bg-red-600");
       micIconPulseRef.current.classList.remove("hidden");
@@ -28,11 +28,11 @@ const MicIcon = () => {
       micIconRef.current.classList.add("bg-gray-200");
       micIconPulseRef.current.classList.add("hidden");
     }
-  }, [micActive]);
+  }, [isRecording]);
 
   const handleMicClick =  () => {
-    if (!micActive) {
-      setMicActive(true);
+    if (!isRecording) {
+      setIsRecording(true);
       startRecorder();
     }
   };
@@ -42,7 +42,7 @@ const MicIcon = () => {
       <div>{renderCount.current}</div>
       <button
         onClick={handleMicClick}
-       disabled = {micActive}
+       disabled = {isRecording}
         ref={micIconRef}
         className="z-50 flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 "
       >

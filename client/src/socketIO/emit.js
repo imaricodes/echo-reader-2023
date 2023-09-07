@@ -3,11 +3,11 @@
 
 import { socket } from "./socket-service";
 
-export const cue_data = (data) => {
+export const send_cue_data = (data) => {
   console.log("cue_data emitted");
   socket.emit("cue_data", data);
 };
 
-export const handleStream = () => {
+export const start_handleStream = () => {
   socket.emit("handle_stream")
 }

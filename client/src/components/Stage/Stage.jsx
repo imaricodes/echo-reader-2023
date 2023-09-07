@@ -18,17 +18,16 @@ import useSocketConnect from "../../hooks/useSocketConnect";
 
 const Stage = () => {
 
-
+const [stageState, setStageState] = useState('instruction')
 
   
   const {
     readingSessionIsActive,
     setReadingSessionIsActive,
-    stageState,
-    setStageState,
+
   } = useContext(ReadingSessionContext);
 
-  // const { socket_connected, cue_data, session_results, close_recorder, error } = useContext(SocketContext);
+  const { session_results } = useContext(SocketContext);
 
 const {connectSocket, disconnectSocket} = useSocketConnect();
 
@@ -41,20 +40,22 @@ useEffect(()=> {
 
 }, [connectSocket, disconnectSocket])
 
-//  socket.on("results_processed", () => {
-//   setStageState('result')
-//  })
+useEffect( () => {
+  session_results.length > 0 && setStageState('result')
+}, [session_results])
 
 
   return (
+
     
       <div className="stage stage--height lg:mb-0 lg:h-[300px] ">
        
        <p>This is the stage</p>
-       {stageState === 'instruction' ? <SessionInstructions /> : null}
-       {stageState === 'cue' ? <CueCard /> : null}
-       {stageState === 'result' ? <ResultsCard /> : null}
+       {stageState === 'instruction' ? <SessionInstructions setStageState={setStageState} /> : null}
+       {stageState === 'cue' ? <CueCard setStageState={setStageState} /> : null}
+       {stageState === 'result' ? <ResultCard setStageState={setStageState} /> : null}
       </div>
+
   
   );
 };

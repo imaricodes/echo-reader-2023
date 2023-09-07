@@ -12,7 +12,7 @@ const config = {
 
 const request = {
   config,
-  interimResults: true,
+  interimResults: false,
   single_utterance: false,
   enable_spoken_punctuation: false,
   microphone_distance: "NEARFIELD",
@@ -73,14 +73,17 @@ export function handleStream(socket, cueData) {
       if (stream.results[0].isFinal === true) {
         console.log('HANBURBER')
         socket.emit("stop_media_recorder");
-        socket.emit("processing_results", "true");
+        // socket.emit("processing_results", "true");
+        let processedResponse = processResponse(words, cueData.cueLength);
+        let sessionResult = await evaluateSession(cueData, processedResponse);
+
+        socket.emit("results_processed", {response: sessionResult});
+       
       }
 
-      let processedResponse = processResponse(words, cueData.cueLength);
 
       // console.log("processedResponse: ", processedResponse);
 
-      let sessionResult = await evaluateSession(cueData, processedResponse);
 
       // console.log(`server sessionResult: ${sessionResult}`);
 
@@ -96,7 +99,6 @@ export function handleStream(socket, cueData) {
 
       // console.log(sessionResult)
 
-      socket.emit("results_processed", {response: sessionResult});
 
   };
 

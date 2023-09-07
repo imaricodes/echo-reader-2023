@@ -53,7 +53,7 @@ useEffect( () => {
        <p>This is the stage</p>
        {stageState === 'instruction' ? <SessionInstructions setStageState={setStageState} /> : null}
        {stageState === 'cue' ? <CueCard setStageState={setStageState} /> : null}
-       {stageState === 'result' ? <ResultCard setStageState={setStageState} /> : null}
+       {stageState === 'result' ? <ResultsCard setStageState={setStageState} /> : null}
       </div>
 
   

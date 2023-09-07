@@ -11,7 +11,10 @@ const ResultCard = ({ setStageState }) => {
     console.log("stored session results ", results[0]);
   });
 
-  return <div>ResultCard</div>;
+  return <div>ResultCard
+
+    {results[0]}
+  </div>;
 };
 
 export default ResultCard;

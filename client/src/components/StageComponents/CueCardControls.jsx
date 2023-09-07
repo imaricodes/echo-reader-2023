@@ -5,26 +5,20 @@ import { faRotate } from "@fortawesome/free-solid-svg-icons";
 import MicIcon from "./MicIcon";
 import { useEffect } from "react";
 
-
 const CueCardControls = () => {
-
-
   //check for mic permission
   const { getMicPermission, micAllowed } = useMicPermission();
 
-useEffect ( () => {
-  if(!micAllowed) {
-    getMicPermission().then((data) => console.log('get mic permission data: ',data));
-  }
-  
-}, [getMicPermission, micAllowed])
-
-  
-
-
+  useEffect(() => {
+    if (!micAllowed) {
+      getMicPermission().then((data) =>
+        console.log("get mic permission data: ", data),
+      );
+    }
+  }, [getMicPermission, micAllowed]);
 
   return (
-    <div className="absolute top-0 flex w-full px-10 pt-4 bg-green-200">
+    <div className="absolute top-0 flex w-full px-10 pt-4 ">
       {/* <DotAnimation /> */}
 
       {/* microphone*/}

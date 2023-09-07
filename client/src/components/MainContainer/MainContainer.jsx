@@ -1,6 +1,5 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { ReadingSessionContext } from "../../contexts/ReadingSessionContext";
-// import ControlsContainer from "../Controls/ControlsContainer";
 import Stage from "../Stage/Stage";
 import Home from "../Home";
 import ResponseAnalysisCard from "../ResponseAnalysis/ResponseAnalysisCard";
@@ -20,7 +19,7 @@ const MainContainer = () => {
         </div>
         {/* <ResponseAnalysisCard/> */}
       </div>
-     </SocketProvider>
+    </SocketProvider>
   );
 };
 

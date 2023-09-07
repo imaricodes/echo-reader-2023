@@ -1,29 +1,20 @@
-import React, { useState, useEffect, useRef, useLayoutEffect, useContext } from "react";
-import SocketContext from "../../socketIO/socketContext";
-
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+// import {displayResults} from '../../js/displayResults'
 
 const ResultsCard = () => {
-  //TODO: Get session result from session context instead of props
-  const {session_results} = useContext(SocketContext);
-  const sessionResult =  session_results;
-  // console.log('session results from server', JSON.stringify(sessionResult))
-  // console.dir(sessionResult);
-
-  const [count, setCount] = useState(0)
-
   const [gridTextSize, setGridTextSize] = useState(36);
   const [currentGridWidth, setCurrentGridWidth] = useState(0);
-  const [displayData, setDisplayData] = useState(sessionResult);
+  const [displayData, setDisplayData] = useState(() => {
+    if (localStorage.getItem("session_results") !== null) {
+      let value = localStorage.getItem("session_results");
+      return JSON.parse(value);
+    }
+  });
 
-  const resultDisplayRef = useRef();
   const gridRef = useRef();
   const cardRef = useRef();
   const gridRefWidth = useRef();
   const cardRefWidth = useRef();
-
-  setCount(prev => prev +1)
-
-  console.log('result card render count: ',count)
 
   const decreaseTextSize = () => {
     if (gridTextSize <= 4) {
@@ -77,11 +68,14 @@ const ResultsCard = () => {
   }, [gridTextSize]);
 
   // DISPLAY UTILITIES FUNCTTION //
-  //TODO: move out of this component ...custom hook?
+  //TODO: move out of this component ...custom hook?, tried below but not displaying correctly
+  // let displayGridItems = displayResults(displayData) 
 
+  
   const length = displayData[0].length;
 
   let displayGridItems = (displayData) => {
+    // const length = displayData[0].length;
     let elements = [];
 
     //append cue result card ref
@@ -94,8 +88,8 @@ const ResultsCard = () => {
             className: `card__results-card__grid-item`,
             key: i,
           },
-          word
-        )
+          word,
+        ),
       );
     }
 
@@ -121,20 +115,13 @@ const ResultsCard = () => {
             className: `card__results-card__grid-item ${matchStatus}`,
             key: i + length,
           },
-          word
-        )
+          word,
+        ),
       );
     }
 
     return elements;
   };
-
-  //CLEAR CUE LOCAL STORAGE
-  // useEffect(() => {
-  //   if (localStorage.getItem("cue") !== null) {
-  //     localStorage.removeItem("cue");
-  //   }
-  // }, []);
 
   return (
     <div
@@ -150,6 +137,7 @@ const ResultsCard = () => {
         }}
       >
         {displayGridItems(displayData).map((item) => item)}
+        
       </div>
 
       <div className="absolute bottom-3 flex  items-center justify-center xl:bottom-5">

@@ -1,22 +1,12 @@
-import { useRef, useEffect} from "react";
+import { useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
 import useStartRecorder from "../../hooks/useStartRecorder";
 
-
 const MicIcon = () => {
   const micIconRef = useRef(null);
   const micIconPulseRef = useRef(null);
-  const {isRecording, setIsRecording, startRecorder} = useStartRecorder();
-
-  const renderCount = useRef(0);
-
-  useEffect(() => {
-    renderCount.current++;
-  });
-
-  
-
+  const { isRecording, setIsRecording, startRecorder } = useStartRecorder();
 
   useEffect(() => {
     if (isRecording === true) {
@@ -30,7 +20,7 @@ const MicIcon = () => {
     }
   }, [isRecording]);
 
-  const handleMicClick =  () => {
+  const handleMicClick = () => {
     if (!isRecording) {
       setIsRecording(true);
       startRecorder();
@@ -39,14 +29,16 @@ const MicIcon = () => {
 
   return (
     <div className="mx-auto flex">
-      <div>{renderCount.current}</div>
       <button
         onClick={handleMicClick}
-       disabled = {isRecording}
+        disabled={isRecording}
         ref={micIconRef}
         className="z-50 flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 "
       >
-        <FontAwesomeIcon icon={faMicrophone} className="h-[45%]  text-white hover:cursor-pointer" />
+        <FontAwesomeIcon
+          icon={faMicrophone}
+          className="h-[45%]  text-white hover:cursor-pointer"
+        />
       </button>
       <span
         ref={micIconPulseRef}

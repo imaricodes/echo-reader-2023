@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 
 const RootLayout = () => {
   return (
-    <div className="root-layout">
+    <div>
       <NavBar />
       <main>
         <Outlet />

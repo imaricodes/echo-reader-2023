@@ -30,8 +30,7 @@ export async function chatGPTData(sessionResult) {
     let sentences = {};
 
     let cueSentenceArray = sessionResult.map((item, index) => {
-      // console.log(index)
-      // console.log(item)
+      
       if (index === 0) {
         responseSentence = item.join(" ");
         sentences.responseSentence = responseSentence;
@@ -48,7 +47,7 @@ export async function chatGPTData(sessionResult) {
 
   const cueAndResponseStrings = getCueAndResponseStrings(sessionResult);
 
-  console.log("cueAndResponseStrings=", cueAndResponseStrings);
+  console.log("cueAndResponseStrings in ChatGPT.mjs=", cueAndResponseStrings);
 
   const configuration = new Configuration({
     apiKey: process.env.CHAT_GPTB || CHATGPT_KEY,

@@ -1,22 +1,25 @@
+import Button from "../UI/Button";
 
-
-const SessionInstructions = ({setStageState}) => {
-
-    const handleClick = () => {
-        // console.log("handle set stage state")
-        setStageState('cue')
-
-    }
+const SessionInstructions = ({ setStageState }) => {
+  const handleReadyClick = () => {
+    setStageState("cue");
+  };
 
   return (
-    <div>
-        <p>On the next screen, click MIC to reocrd your voice</p>
-        <p>Echo Reader will not hear you until you click the MIC</p>
-        <p>After reading the sentence, wait for results.</p>
-        <button onClick={handleClick}>I am Ready!</button>
-        
-    </div>
-  )
-}
+    <>
+      <p style={{ marginBottom: "5px" }}>
+        On the next screen, click MIC to reocrd your voice
+      </p>
+      <p style={{ marginBottom: "5px" }}>
+        Echo Reader will not hear you until you click the MIC
+      </p>
+      <p style={{ marginBottom: "5px" }}>
+        After reading the sentence, wait for results.
+      </p>
+      <Button onClick={handleReadyClick} bgColor={'green'}> I am Ready</Button>
+     
+    </>
+  );
+};
 
-export default SessionInstructions
+export default SessionInstructions;

@@ -10,6 +10,11 @@
 body {
   /* @apply text-[#131516]; */
   @apply text-[#373d3f];
+  
+}
+
+p {
+  margin-bottom: 1.75rem;
 }
 
 @layer components {
@@ -99,7 +104,7 @@ body {
   }
 
   .instruction-container__image-card {
-    @apply card  w-full  px-2  lg:min-w-1/2 lg:max-w-1/2 lg:items-center;
+    @apply flex items-center justify-center overflow-hidden rounded-lg px-8 py-8 shadow-lg  w-full  lg:min-w-1/2 lg:max-w-1/2 lg:items-center;
   }
 
   .instruction-container__instruction-card__p {
@@ -116,22 +121,22 @@ body {
   }
 }
 
-/* CSS for Main Container Component */
-
-.main-container {
-  @apply mx-6 sm:mx-20 md:mx-28  lg:mx-14 lg:flex lg:justify-center lg:gap-16;
-}
+/* Containers */
 
 @layer components {
-  /* Button */
-  .btn {
-    @apply rounded-md py-2 px-4 text-base font-bold text-white;
+
+  .stage--two-col {
+    @apply grid grid-cols-1 mx-10 xl:grid-cols-3
+
   }
 
+}
+
+
+@layer components {
+
   /* Card */
-  .card {
-    @apply flex items-center overflow-hidden rounded-lg px-8 py-8 shadow-lg;
-  }
+
 
   /* Controls Container */
   .card__controls-container--height {
@@ -157,31 +162,6 @@ body {
     @apply mb-7;
   }
 
-  /* Stage */
-  .stage {
-    @apply mb-10;
-  }
-  .stage--height {
-    @apply h-52;
-  }
-
-  /* Stage Card */
-
-  .card__stage--text {
-    @apply text-3xl;
-  }
-  .card__stage--text-screen-2xl {
-    @apply text-2xl;
-  }
-
-  .card__stage {
-    @apply h-full bg-white;
-  }
-
-  /* Start Card */
-  .card__start-card--text {
-    @apply text-lg leading-7;
-  }
 
   /* Cue Sentence Card */
 

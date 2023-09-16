@@ -4,6 +4,7 @@ import Stage from "../Stage/Stage";
 import Home from "../Home";
 import ResponseAnalysisCard from "../ResponseAnalysis/ResponseAnalysisCard";
 import SocketProvider from "../../socketIO/socketProvider";
+import studentIMG from "../../assets/student-reading.svg";
 
 const MainContainer = () => {
   const { readingSessionIsActive, setReadingSessionIsActive } = useContext(
@@ -12,12 +13,19 @@ const MainContainer = () => {
 
   return (
     <SocketProvider>
-      <div className="main-container">
-        <div className="lg:w-[600px] xl:w-[700px]">
+      <div>
+        <div className="mx-3 ">
           {/* <ControlsContainer/> */}
           {readingSessionIsActive ? <Stage /> : <Home />}
         </div>
-        {/* <ResponseAnalysisCard/> */}
+        {/* <ResponseAnalysisCard readingSessionIsActive = {readingSessionIsActive}/> */}
+        {/* <span className={` main-container-right ${readingSessionIsActive ? "hidden" : "block"}`}>
+          <div
+            className={`bg-white card flex flex-col items-center  lg:flex lg:flex-col lg:justify-center lg:items-center  lg:w-[383px]   xl:w-[450px]  `}
+          >
+            <img src={studentIMG} alt="Student reading book" />
+          </div>
+        </span> */}
       </div>
     </SocketProvider>
   );

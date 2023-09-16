@@ -18,23 +18,23 @@ const CueCardControls = () => {
   }, [getMicPermission, micAllowed]);
 
   return (
-    <div className="absolute top-0 flex w-full px-10 pt-4 ">
+    <div className=" flex w-full absolute">
       {/* <DotAnimation /> */}
 
       {/* microphone*/}
       <div className="mx-auto flex">
-        <span className="z-50 flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 ">
+        <span className="z-50 flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 ">
           <MicIcon />
         </span>
-        <span className="absolute hidden h-10 w-10 animate-pulse-fade-grow  rounded-full bg-red-600 " />
+        <span className="absolute hidden h-8 w-8 animate-pulse-fade-grow  rounded-full bg-red-600 " />
       </div>
 
       {/* refresh icon */}
-      <span className="">
+      <div className="z-50 absolute right-20 top-1 ">
         <button className="cursor-pointer">
-          <FontAwesomeIcon icon={faRotate} className="h-6 text-orange-400" />
+          <FontAwesomeIcon icon={faRotate} className="h-8 text-orange-400" />
         </button>
-      </span>
+      </div>
     </div>
   );
 };

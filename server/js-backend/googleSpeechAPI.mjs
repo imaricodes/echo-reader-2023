@@ -76,15 +76,15 @@ export function handleStream(socket, cueData) {
         // socket.emit("processing_results", "true");
         let processedResponse = processResponse(words, cueData.cueLength);
         let sessionResult = await evaluateSession(cueData, processedResponse);
-        
-        try {
-          let chatGPTAnalysis = await chatGPTData(sessionResult);
-          console.log(`chatGPTAnalysis: ${chatGPTAnalysis.content}`);
-          socket.emit("chatGPT_response", { chatGPTAnalysis });
-        } catch (error) {
-          socket.emit("chatGPT_error", "ChatGPT is busy right now");
-          console.log(`chatGPT error: ${error}`);
-        }
+
+        // try {
+        //   let chatGPTAnalysis = await chatGPTData(sessionResult);
+        //   console.log(`chatGPTAnalysis: ${chatGPTAnalysis.content}`);
+        //   socket.emit("chatGPT_response", { chatGPTAnalysis });
+        // } catch (error) {
+        //   socket.emit("chatGPT_error", "ChatGPT is busy right now");
+        //   console.log(`chatGPT error: ${error}`);
+        // }
 
         socket.emit("results_processed", {response: sessionResult});
        

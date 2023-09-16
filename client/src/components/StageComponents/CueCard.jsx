@@ -5,6 +5,7 @@ import { socket } from "../../socketIO/socket-service";
 import * as emitSocket from "../../socketIO/emit";
 import { useLocalStorage } from "../../hooks/useStorage";
 import CueCardControls from "./CueCardControls";
+import Card from "../UI/Card";
 
 const CueCard = ({ setStageState }) => {
   const renderCount = useRef(0);
@@ -34,12 +35,12 @@ const CueCard = ({ setStageState }) => {
   });
 
   return (
-    <div className="card card__stage card__display--flex-column  card__stage--text lg:width[500px] relative">
+    <>
       <CueCardControls />
-      <div className="h-40 w-full relative flex justify-center items-center">
-        {cue}
+      <div className="h-full flex justify-center items-center  top-0 w-full">
+        <p>{cue}</p>
       </div>
-    </div>
+    </>
   );
 };
 

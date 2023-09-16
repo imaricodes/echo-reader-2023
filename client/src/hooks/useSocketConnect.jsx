@@ -4,7 +4,6 @@ import { socket } from "../socketIO/socket-service";
 const useSocketConnect = () => {
 
     const connectSocket = useCallback(() => {
-        console.log('connect socket usehook called')
         if (!socket.connected) {
             socket.connect();
         }

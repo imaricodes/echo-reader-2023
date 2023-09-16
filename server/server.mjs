@@ -2,6 +2,7 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { handleStream } from "./js-backend/googleSpeechAPI.mjs";
+import { fetchGPT } from "./js-backend/fetchGPT.mjs";
 import cors from "cors";
 
 import { fileURLToPath } from "url";
@@ -29,61 +30,67 @@ io.on("connection", (socket) => {
   });
 
   socket.on("cue_data", (data) => {
-    console.log(data)
+    console.log(data);
     cueData = { ...data };
   });
 
-
-  socket.on("handle_stream", 
-  data => {
-    console.log("handle_stream received...");
+  socket.on("handle_stream", (data) => {
+    // console.log("handle_stream received...");
     handleStream(socket, cueData);
   });
 
- 
+  socket.on("fetch_gpt", (data) => {
+    // socket.emit("gpt_result", "this would be gpt response");
+
+    console.log("received gpt request::: ", data);
+    console.log("gpt request type is array? ::: ",Array.isArray(data));
+    //run gpt code here, data is session result from local storage
+    const getChatGPTResponse = async (data) => {
+      try {
+        let result = await fetchGPT(data);
+        socket.emit("chatGPT_result", result);
+      } catch (error) {
+        console.log(error)
+        socket.emit('chatGPT_error', 'sorry chat GPT busy now')
+      }
+    };
+
+    getChatGPTResponse(data);
+  });
 
   //THIS SECTION IS FOR TESTING ONLY
 
-//   socket.on("handle_stream", 
-//   data => {
-//     console.log("handle_stream received");
-//   });
+  //   socket.on("handle_stream",
+  //   data => {
+  //     console.log("handle_stream received");
+  //   });
 
-//   socket.on("go", () => {
-//     socket.emit("stop_media_recorder")
-//     socket.emit("processing_results", true);
-  
-//   });
+  //   socket.on("go", () => {
+  //     socket.emit("stop_media_recorder")
+  //     socket.emit("processing_results", true);
 
+  //   });
 });
-
 
 app.use(cors());
 
-
-
-
-
 //********  DISABLE THIS FOR PRODUCTION ******* */
-app.get("/message", (req, res) => {
-  res.send({ message: "this is the root route" });
-});
-
-
-
+// app.get("/message", (req, res) => {
+//   res.send({ message: "this is the root route" });
+// });
 
 //********  ENABLE THIS FOR PRODUCTION ******* */
 //static files served via express
 
-// app.use(express.static("./dist"));
+app.use(express.static("./dist"));
 
-// //send index.html via express server
-// app.get("/about", (req, res) => {
-//   res.sendFile(__dirname + "/dist/index.html");
-// });
-// app.get("/instructions", (req, res) => {
-//   res.sendFile(__dirname + "/dist/index.html");
-// });
+//send index.html via express server
+app.get("/about", (req, res) => {
+  res.sendFile(__dirname + "/dist/index.html");
+});
+app.get("/instructions", (req, res) => {
+  res.sendFile(__dirname + "/dist/index.html");
+});
 
 // //this needs a subroute that handles the socket connection
 

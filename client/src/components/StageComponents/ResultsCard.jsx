@@ -1,9 +1,26 @@
+//React
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+//Contexts, Providers
+//Components
+//Web Sockets
+//Hooks
+//Data
 // import {displayResults} from '../../js/displayResults'
 
 const ResultsCard = () => {
+  //Data
+
+  //Refs
+  const gridRef = useRef();
+  const cardRef = useRef();
+  const gridRefWidth = useRef();
+  const cardRefWidth = useRef();
+
+  //States, Context, Hooks
   const [gridTextSize, setGridTextSize] = useState(36);
+
   const [currentGridWidth, setCurrentGridWidth] = useState(0);
+  
   const [displayData, setDisplayData] = useState(() => {
     if (localStorage.getItem("session_results") !== null) {
       let value = localStorage.getItem("session_results");
@@ -11,11 +28,7 @@ const ResultsCard = () => {
     }
   });
 
-  const gridRef = useRef();
-  const cardRef = useRef();
-  const gridRefWidth = useRef();
-  const cardRefWidth = useRef();
-
+  //Functions, Handlers
   const decreaseTextSize = () => {
     if (gridTextSize <= 4) {
       return;
@@ -30,48 +43,6 @@ const ResultsCard = () => {
     setGridTextSize((prev) => prev + 2);
   };
 
-  //ADD OBSERVER TO CARD REF
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      cardRefWidth.current = entries[0].contentRect.width;
-
-      const { width: gridWidth } = gridRef.current.getBoundingClientRect();
-
-      if (cardRefWidth.current < gridWidth) {
-        decreaseTextSize();
-      }
-      setCurrentGridWidth(gridWidth);
-    });
-
-    resizeObserver.observe(cardRef.current);
-
-    return () => {
-      // TODO: disconnect resize observer
-      resizeObserver.disconnect();
-    };
-  }, []);
-
-  useLayoutEffect(() => {
-    if (cardRefWidth.current < gridRefWidth.current) {
-      decreaseTextSize();
-    }
-  }, [currentGridWidth]);
-
-  useLayoutEffect(() => {
-    const { width: gridWidth } = gridRef.current.getBoundingClientRect();
-    gridRefWidth.current = gridWidth;
-
-    const { width: cardWidth } = cardRef.current.getBoundingClientRect();
-    cardRefWidth.current = cardWidth;
-
-    setCurrentGridWidth(gridWidth);
-  }, [gridTextSize]);
-
-  // DISPLAY UTILITIES FUNCTTION //
-  //TODO: move out of this component ...custom hook?, tried below but not displaying correctly
-  // let displayGridItems = displayResults(displayData) 
-
-  
   const length = displayData[0].length;
 
   let displayGridItems = (displayData) => {
@@ -123,6 +94,49 @@ const ResultsCard = () => {
     return elements;
   };
 
+  //Effects
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      cardRefWidth.current = entries[0].contentRect.width;
+
+      const { width: gridWidth } = gridRef.current.getBoundingClientRect();
+
+      if (cardRefWidth.current < gridWidth) {
+        decreaseTextSize();
+      }
+      setCurrentGridWidth(gridWidth);
+    });
+
+    resizeObserver.observe(cardRef.current);
+
+    return () => {
+      // TODO: disconnect resize observer
+      resizeObserver.disconnect();
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (cardRefWidth.current < gridRefWidth.current) {
+      decreaseTextSize();
+    }
+  }, [currentGridWidth]);
+
+  useLayoutEffect(() => {
+    const { width: gridWidth } = gridRef.current.getBoundingClientRect();
+    gridRefWidth.current = gridWidth;
+
+    const { width: cardWidth } = cardRef.current.getBoundingClientRect();
+    cardRefWidth.current = cardWidth;
+
+    setCurrentGridWidth(gridWidth);
+  }, [gridTextSize]);
+
+  //ADD OBSERVER TO CARD REF
+
+  // DISPLAY UTILITIES FUNCTTION //
+  //TODO: move out of this component ...custom hook?, tried below but not displaying correctly
+  // let displayGridItems = displayResults(displayData)
+
   return (
     <div
       ref={cardRef}
@@ -137,7 +151,6 @@ const ResultsCard = () => {
         }}
       >
         {displayGridItems(displayData).map((item) => item)}
-        
       </div>
 
       <div className="absolute bottom-3 flex  items-center justify-center xl:bottom-5">

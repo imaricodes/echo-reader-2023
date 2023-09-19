@@ -3,7 +3,6 @@ import React from "react";
 export function displayResults (displayData) {
     const length = displayData[0].length;
 
-    console.log('display results called')
     // const length = displayData[0].length;
     let elements = [];
 

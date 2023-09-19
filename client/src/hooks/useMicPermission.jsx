@@ -6,7 +6,6 @@ const [micAllowed, setMicAllowed] = useState(false);
   const getMicPermission = useCallback(async () => {
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
-      console.log("from mic permission: mic access allowed");
       setMicAllowed(true);
       return true;
     } catch (error) {
@@ -21,13 +20,3 @@ const [micAllowed, setMicAllowed] = useState(false);
 
 export default useMicPermission;
 
-// const getMicPermission = async () => {
-//   try {
-//     await navigator.mediaDevices.getUserMedia({ audio: true });
-//     console.log("from mic permission: mic access allowed");
-//     return true;
-//   } catch (error) {
-//     console.log("mic access denied", error);
-//     return false;
-//   }
-// };

@@ -1,34 +1,43 @@
-//React
+//*** REACT ***//
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
-//Contexts, Providers
-//Components
-//Web Sockets
-//Hooks
-//Data
-// import {displayResults} from '../../js/displayResults'
 
-const ResultsCard = () => {
-  //Data
+//*** UTILITIES ***//
+import PropTypes from "prop-types";
 
-  //Refs
+//*** COMPONENTS ***//
+import CueCardControls from "./CueCardControls";
+
+//*** HOOKS ***//
+import { useLocalStorage } from "../../hooks/useStorage";
+
+//*** DATA, ASSETS ***//
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquarePlus, faSquareMinus } from "@fortawesome/free-solid-svg-icons";
+
+const ResultsCard = ({ setStageState, stageState }) => {
+  //*** REFS ***//
   const gridRef = useRef();
   const cardRef = useRef();
   const gridRefWidth = useRef();
   const cardRefWidth = useRef();
 
-  //States, Context, Hooks
+  //*** STATES, CONTEXTS, HOOKS ***//
   const [gridTextSize, setGridTextSize] = useState(36);
 
   const [currentGridWidth, setCurrentGridWidth] = useState(0);
-  
-  const [displayData, setDisplayData] = useState(() => {
-    if (localStorage.getItem("session_results") !== null) {
+
+  const [sessionResults, ,] = useLocalStorage("session_results", null);
+
+  //TODO: handle no displaydata error
+  const [displayData] = useState(() => {
+    if (localStorage.getItem("session_results") != null) {
       let value = localStorage.getItem("session_results");
       return JSON.parse(value);
     }
   });
 
-  //Functions, Handlers
+  //*** FUNCTIONS, HANDLERS ***//
+
   const decreaseTextSize = () => {
     if (gridTextSize <= 4) {
       return;
@@ -43,13 +52,10 @@ const ResultsCard = () => {
     setGridTextSize((prev) => prev + 2);
   };
 
-  const length = displayData[0].length;
-
   let displayGridItems = (displayData) => {
-    // const length = displayData[0].length;
+    const length = sessionResults[0].length;
     let elements = [];
 
-    //append cue result card ref
     for (let i = 0; i < length; i++) {
       const word = displayData[0 + 1][i];
       elements.push(
@@ -64,7 +70,6 @@ const ResultsCard = () => {
       );
     }
 
-    //append res to result card ref
     for (let i = 0; i < length; i++) {
       let word = "";
       let matchStatus = "";
@@ -94,7 +99,7 @@ const ResultsCard = () => {
     return elements;
   };
 
-  //Effects
+  //*** EFFECTS ***//
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
       cardRefWidth.current = entries[0].contentRect.width;
@@ -131,41 +136,53 @@ const ResultsCard = () => {
     setCurrentGridWidth(gridWidth);
   }, [gridTextSize]);
 
-  //ADD OBSERVER TO CARD REF
-
   // DISPLAY UTILITIES FUNCTTION //
   //TODO: move out of this component ...custom hook?, tried below but not displaying correctly
   // let displayGridItems = displayResults(displayData)
 
   return (
-    <div
-      ref={cardRef}
-      className=" card card__stage card__display--flex-column card__results-card  relative px-2"
-    >
+    <>
+      <CueCardControls stageState={stageState} setStageState={setStageState} />
       <div
-        ref={gridRef}
-        style={{
-          fontSize: `${gridTextSize}px`,
-          display: "grid",
-          gridTemplateColumns: `repeat(${length}, auto)`,
-        }}
+        ref={cardRef}
+        className="h-full flex justify-center items-center  top-0 w-full"
       >
-        {displayGridItems(displayData).map((item) => item)}
-      </div>
+        <div
+          ref={gridRef}
+          style={{
+            fontSize: `${gridTextSize}px`,
+            display: "grid",
+            gridTemplateColumns: `repeat(${sessionResults[0].length}, auto)`,
+          }}
+        >
+          {displayGridItems(displayData).map((item) => item)}
+        </div>
 
-      <div className="absolute bottom-3 flex  items-center justify-center xl:bottom-5">
-        <button onClick={decreaseTextSize} className="  bg-red-400 ">
-          -
-        </button>
-        <span className="ml-4 mr-4 inline-block text-sm font-semibold">
-          Text Size
-        </span>
-        <button onClick={increaseTextSize} className=" bg-green-400">
-          +
-        </button>
+        <div className="absolute bottom-3 flex  items-center justify-center xl:bottom-5">
+          <a onClick={decreaseTextSize} className="cursor-pointer ">
+            <FontAwesomeIcon
+              icon={faSquareMinus}
+              className="h-7 text-red-600"
+            />
+          </a>
+          <span className="ml-4 mr-4 inline-block text-sm font-semibold">
+            Text Size
+          </span>
+          <a onClick={increaseTextSize} className=" cursor-pointer ">
+            <FontAwesomeIcon
+              icon={faSquarePlus}
+              className="h-7 text-green-600"
+            />
+          </a>
+        </div>
       </div>
-    </div>
+    </>
   );
+};
+
+ResultsCard.propTypes = {
+  stageState: PropTypes.string.isRequired,
+  setStageState: PropTypes.func.isRequired,
 };
 
 export default ResultsCard;

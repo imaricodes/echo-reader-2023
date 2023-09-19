@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useContext, useEffect, useRef } from "react";
 
 //Contexts
@@ -14,7 +15,7 @@ import * as emitSocket from "../../socketIO/emit";
 import { useLocalStorage } from "../../hooks/useStorage";
 import { processCue } from "../../js/processCue";
 
-const CueCard = ({ setStageState }) => {
+const CueCard = ({ stageState, setStageState }) => {
   //Data
   const CUE_PHRASES = [
     "The cat sat on a sofa.",
@@ -55,10 +56,12 @@ const CueCard = ({ setStageState }) => {
   //States, Context, Hooks
   const [sessionResults, setSessionResults, removeSessionResults] =
     useLocalStorage("session_results", null);
-  const [cueSentence, setCueSentence] = useLocalStorage("cue_sentence", null);
+
+  const [cueSentence, setCueSentence, ] = useLocalStorage("cue_sentence", null);
+
   const { socket_connected } = useContext(SocketContext);
 
-  //Functions, Handlers
+  //*** FUNCTIONS, HANDLERS ***//
   const getRandomCueSentence = async () => {
     return new Promise((resolve, reject) => {
       const randomIndex = Math.floor(Math.random() * CUE_PHRASES.length);
@@ -69,6 +72,7 @@ const CueCard = ({ setStageState }) => {
 
   const handleResultsProcessed = (data) => {
     setSessionResults(data.response);
+    setTimeout(() => { setStageState("result"); }, 0);
   };
 
   //Effects
@@ -78,11 +82,10 @@ const CueCard = ({ setStageState }) => {
       removeSessionResults();
     }
     if (socket_connected) {
-      console.log("socket connected!!!!!");
 
       if (!socketEventListenerAdded.current) {
         socket.on("results_processed", handleResultsProcessed);
-        socketEventListenerAdded.current - true;
+        socketEventListenerAdded.current = true;
       }
     }
     return () => {
@@ -111,12 +114,17 @@ const CueCard = ({ setStageState }) => {
 
   return (
     <>
-      <CueCardControls />
+      <CueCardControls stageState={stageState} setStageState={setStageState} />
       <div className="h-full flex justify-center items-center  top-0 w-full">
         <p>{cueSentence ? cueSentence : "Loading sentence..."}</p>
       </div>
     </>
   );
+};
+
+CueCard.propTypes = {
+  stageState: PropTypes.string.isRequired,
+  setStageState: PropTypes.func.isRequired,
 };
 
 export default CueCard;

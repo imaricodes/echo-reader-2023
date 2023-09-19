@@ -1,41 +1,36 @@
-import { useRef, useContext, useEffect, useState } from "react";
+//*** REACT ***//
+import { useRef, useState } from "react";
+
+//*** COMPONENTS ***//
 import Card from "../UI/Card";
-// import { SessionContext } from "../../contexts/SessionContext";
+
+//*** WEB SOCKETS ***//
 import { socket } from "../../socketIO/socket-service";
+
+//*** HOOKS ***//
 // import { useStorage } from "../../hooks/useStorage";
+//TODO: Make custom hook for GPTResponse
 import GPTResponse from "./GPTResponse";
 
 const ResponseAnalysis = () => {
-  // const {sessionState, socket, setSocket} = useContext(SessionContext);
-  const [analysis, setAnalysis] = useState(null);
-  const [sessionResults, setSessionResults] = useState(() => {
-    if (localStorage.getItem("session_results") !== null) {
+  //*** REFS ***//
+  const analysisRef = useRef();
+  const analysisButttonRef = useRef();
 
+  //*** STATES, CONTEXTS, HOOKS ***//
+  const [analysis, setAnalysis] = useState(null);
+
+  const [sessionResults] = useState(() => {
+    if (localStorage.getItem("session_results") != null) {
       const value = localStorage.getItem("session_results");
 
       const jsonArray = JSON.parse(value);
 
       const finalObject = {
         cueSentence: jsonArray[0],
-        responnseSentence: jsonArray[1]
-      }
+        responnseSentence: jsonArray[1],
+      };
 
-      // let [firstArray, secondArray] = jsonArray;
-
-      // let firstObject = Object.assign({}, firstArray);
-      // let secondObject = Object.assign({}, secondArray);
-
-   
-
-      // console.log(finalObject)
-
-      // console.log("get from storage: ", jsonArray);
-      // console.log("get from storage typeof: ", Array.isArray(jsonArray));
-
-      // let parsed = JSON.parse(value)
-
-      // console.log('parsed: ', value)
-      // console.log('parsed typeof: ',typeof value)
       return jsonArray;
     } else {
       console.log("no results");
@@ -43,20 +38,14 @@ const ResponseAnalysis = () => {
     }
   });
 
-  const [isRequestingGPTAnalysis, setIsRequestingGPTAnalysis] =useState(false)
-  const analysisRef = useRef();
-  const analysisButttonRef = useRef();
+  const [isRequestingGPTAnalysis, setIsRequestingGPTAnalysis] = useState(false);
 
-  //onload use effect
-  //check for local storage
-  //if local storage, get it and fetch gpt response
-  //on response set analysis or on error, set inner  html
-
-
-
+  //*** FUNCTIONS, HANDLERS ***//
   const getGPTAnalysis = () => {
     socket.emit("fetch_gpt", sessionResults);
   };
+
+  //*** EFFECTS ***//
 
   // useEffect(() => {
   //     //TODO: handle if chatgpt throws error
@@ -97,44 +86,41 @@ const ResponseAnalysis = () => {
   return (
     <Card>
       <div className="flex flex-col items-center">
-      <h1 className="mb-6 text-center font-bold text-lg">
-        How to Read Results
-      </h1>
-      <div className="grid grid-cols-analysis-grid grid-rows-analysis-grid gap-x-3 gap-y-1 mb-10 text-lg">
-        <div>
-          <span className="inline-block bg-green-600 w-10 h-5 rounded-lg shadow" />
+        <h1 className="mb-6 text-center font-bold text-lg">
+          How to Read Results
+        </h1>
+        <div className="grid grid-cols-analysis-grid grid-rows-analysis-grid gap-x-3 gap-y-1 mb-10 text-lg">
+          <div>
+            <span className="inline-block bg-green-600 w-10 h-5 rounded-lg shadow" />
+          </div>
+          <div>
+            <p>Right word, right place</p>
+          </div>
+          <div>
+            <span className="inline-block bg-yellow-400 w-10 h-5 rounded-lg shadow" />
+          </div>
+          <div>
+            <p>Right word, wrong place</p>
+          </div>
+          <div>
+            <span className="inline-block bg-red-600 w-10 h-5 rounded-lg shadow" />
+          </div>
+          <div>
+            <p>Word not in sentence</p>
+          </div>
         </div>
-        <div>
-          <p>Right word, right place</p>
-        </div>
-        <div>
-          <span className="inline-block bg-yellow-400 w-10 h-5 rounded-lg shadow" />
-        </div>
-        <div>
-          <p>Right word, wrong place</p>
-        </div>
-        <div>
-          <span className="inline-block bg-red-600 w-10 h-5 rounded-lg shadow" />
-        </div>
-        <div>
-          <p>Word not in sentence</p>
-        </div>
+        <button
+          ref={analysisButttonRef}
+          disabled={isRequestingGPTAnalysis}
+          className="btn bg-green-500"
+          onClick={() => setIsRequestingGPTAnalysis(true)}
+        >
+          Ask ChatGPT for Feedback
+        </button>
+        <div ref={analysisRef} className="text-lg"></div>
+        {isRequestingGPTAnalysis ? <GPTResponse /> : null}
       </div>
-      <button
-        ref={analysisButttonRef}
-        disabled ={isRequestingGPTAnalysis}
-        className="btn bg-green-500"
-        onClick={()=> setIsRequestingGPTAnalysis(true)}
-      >
-        Ask ChatGPT for Feedback
-      </button>
-      <div ref={analysisRef} className="text-lg"></div>
-      {isRequestingGPTAnalysis ? <GPTResponse />: null}
-    </div>
-
     </Card>
-    
-
   );
 };
 

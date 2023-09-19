@@ -1,13 +1,19 @@
 import { useRef, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
+
+//*** HOOKS ***//
 import useStartRecorder from "../../hooks/useStartRecorder";
 
+//*** DATA, ASSETS ***//
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
+
 const MicIcon = () => {
+  //*** STATES, CONTEXTS, HOOKS ***//
   const micIconRef = useRef(null);
   const micIconPulseRef = useRef(null);
   const { isRecording, setIsRecording, startRecorder } = useStartRecorder();
 
+  //*** EFFECTS ***//
   useEffect(() => {
     if (isRecording === true) {
       micIconRef.current.classList.remove("bg-gray-200");
@@ -20,6 +26,7 @@ const MicIcon = () => {
     }
   }, [isRecording]);
 
+  //*** FUNCTIONS, HANDLERS ***//
   const handleMicClick = () => {
     if (!isRecording) {
       setIsRecording(true);

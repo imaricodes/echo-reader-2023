@@ -1,32 +1,25 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-//Data, Assets
+//*** DATA, ASSETS ***//
 import studentIMG from "../../assets/student-reading.svg";
 
-//Contexts
-import SocketContext from "../../socketIO/socketContext";
-
-//Components
-import TimeUpCard from "../StageComponents/TimeUpCard";
+//*** COMPONENTS ***//
+// import TimeUpCard from "../StageComponents/TimeUpCard";
 import SessionInstructions from "./SessionInstructions";
 import CardStage from "../UI/CardStage";
 import CueCard from "../StageComponents/CueCard";
 import ResultsCard from "../StageComponents/ResultsCard";
 
-//Web Sockets
-
-//Hooks
+//*** HOOKS ***//
 import useSocketConnect from "../../hooks/useSocketConnect";
 import ResponseAnalysis from "../ResponseAnalysis/ResponseAnalysis";
 
 const Stage = () => {
-
-  //States, Context, Hooks
+  //*** STATES, CONTEXTS, HOOKS ***//
   const [stageState, setStageState] = useState("instruction");
-  const { session_results } = useContext(SocketContext);
   const { connectSocket, disconnectSocket } = useSocketConnect();
 
-  //Effects
+  //*** EFFECTS ***//
   useEffect(() => {
     connectSocket();
     return () => {
@@ -34,25 +27,25 @@ const Stage = () => {
     };
   }, [connectSocket, disconnectSocket]);
 
-  useEffect(() => {
-    session_results.length > 0 && setStageState("result");
-  }, [session_results]);
-
   return (
     <div className="stage--two-col sm:w-3/4 mx-auto gap-10">
       <div className="col-span-2 flex justify-center ">
-        <div className=" w-full ">
+        <div className="w-full">
           <CardStage>
+
             {stageState === "instruction" ? (
-              <SessionInstructions setStageState={setStageState} />
+              <SessionInstructions setStageState={setStageState} stageState={stageState} />
             ) : null}
 
             {stageState === "cue" ? (
-              <CueCard setStageState={setStageState} />
+              <CueCard setStageState={setStageState} stageState={stageState} />
             ) : null}
 
             {stageState === "result" ? (
-              <ResultsCard setStageState={setStageState} />
+              <ResultsCard
+                setStageState={setStageState}
+                stageState={stageState}
+              />
             ) : null}
           </CardStage>
         </div>

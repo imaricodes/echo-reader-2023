@@ -1,10 +1,12 @@
 import { createContext, useState } from "react";
 
+import PropTypes from "prop-types";
+
 export const ReadingSessionContext = createContext();
 
-export const ReadingSessionContextProvider = (props) => {
+export const ReadingSessionContextProvider = ({children}) => {
   const [readingSessionIsActive, setReadingSessionIsActive] = useState(false);
-  const [stageState, setStageState] = useState("instruction");
+  const [stageState, setStageState] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [micPermission, setMicPermission] = useState(false)
   const [processingResults, setProcessingResults] = useState(false)
@@ -25,7 +27,11 @@ export const ReadingSessionContextProvider = (props) => {
 
       }}
     >
-      {props.children}
+      {children}
     </ReadingSessionContext.Provider>
   );
+};
+
+ReadingSessionContextProvider.propTypes = {
+  children: PropTypes.node.isRequired
 };

@@ -25,17 +25,14 @@ io.on("connection", (socket) => {
   console.log("connected: ", socket.id);
   socket.emit("connection", "true");
   socket.on("disconnect", () => {
-    console.log("A client disconnected");
     // Perform any necessary cleanup actions or notify other clients
   });
 
   socket.on("cue_data", (data) => {
-    console.log(data);
     cueData = { ...data };
   });
 
   socket.on("handle_stream", (data) => {
-    // console.log("handle_stream received...");
     handleStream(socket, cueData);
   });
 
@@ -43,7 +40,7 @@ io.on("connection", (socket) => {
     // socket.emit("gpt_result", "this would be gpt response");
 
     console.log("received gpt request::: ", data);
-    console.log("gpt request type is array? ::: ",Array.isArray(data));
+
     //run gpt code here, data is session result from local storage
     const getChatGPTResponse = async (data) => {
       try {
@@ -58,18 +55,6 @@ io.on("connection", (socket) => {
     getChatGPTResponse(data);
   });
 
-  //THIS SECTION IS FOR TESTING ONLY
-
-  //   socket.on("handle_stream",
-  //   data => {
-  //     console.log("handle_stream received");
-  //   });
-
-  //   socket.on("go", () => {
-  //     socket.emit("stop_media_recorder")
-  //     socket.emit("processing_results", true);
-
-  //   });
 });
 
 app.use(cors());
@@ -92,7 +77,6 @@ app.get("/instructions", (req, res) => {
   res.sendFile(__dirname + "/dist/index.html");
 });
 
-// //this needs a subroute that handles the socket connection
 
 // app.get("/api/endpoint", (req, res) => {
 //   res.send({ message: "this is api endpoint" });

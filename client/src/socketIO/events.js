@@ -25,6 +25,8 @@ export const socketEvents = ({ setValue }) => {
     });
   });
 
+
+  //TODO: this data should be sent to client another way, maybe via fetched route
   socket.on("results_processed", (data) => {
     setValue((state) => {
       return { ...state, session_results: `${data.response}` };

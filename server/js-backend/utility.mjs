@@ -1,29 +1,19 @@
 export const checkForMaxWords = (arr, maxWords) => {
   if (arr.length > maxWords) {
-    // console.log("MAX WORDS REACHED");
-    // console.log(`current array length: ${arr.length}`);
-
-    // terminateAssemblySession();
-    // closeSocket();
     return true;
   } else {
-    // console.log("MAX WORDS NOT REACHED");
     return false;
   }
 };
 
-//this function returns an array of objects
 export const evaluateSession = async (cueObj, responseObj) => {
-  //compare strings index and return t/f for match
   const compareStrings = (a, b) => {
     let result;
 
     result = a === b;
 
     if (result === true) {
-      // console.log(`compared true`);
     } else {
-      // console.log(`compared false`);
     }
     return result;
   };
@@ -35,15 +25,11 @@ export const evaluateSession = async (cueObj, responseObj) => {
   let responseDisplay = responseObj.display.map((item) => item);
 
   let arr = [];
-  // arr.push("This will be chat gpt")
 
   arr.push(responseDisplay);
   arr.push(cueDisplay);
 
   for (const [index, name] of cueEvaluate.entries()) {
-    // console.log(
-    //   `cue evaulate array index:  ${cueEvaluate[index]} , ${responseEvaluate[index]}`
-    // );
     let cue = cueEvaluate[index];
     let response = responseEvaluate[index];
     let match = "";
@@ -57,9 +43,6 @@ export const evaluateSession = async (cueObj, responseObj) => {
       }
     }
 
-    //here, check whether reposnse is contained in cueEvaluate
-  
-
     arr.push({
       cueWord: cue,
       responseWord: response,
@@ -67,7 +50,6 @@ export const evaluateSession = async (cueObj, responseObj) => {
       responseDisplayWord: responseDisplay[index],
     });
   }
-  // console.log(`final sesion result array on server!: ${JSON.stringify(arr)}`);
   return arr;
 };
 
@@ -75,8 +57,6 @@ export const calculateTimeOut = (startSessionTime, maxSessionTime) => {
   let endTime = Date.now();
   let elapsedSessionTime = (endTime - startSessionTime) / 1000;
   let result = false;
-  // console.log("elapsed session time", elapsedSessionTime);
-
   if (elapsedSessionTime >= maxSessionTime) {
     result = true;
     return {timeout:true, elapsedTime: elapsedSessionTime};

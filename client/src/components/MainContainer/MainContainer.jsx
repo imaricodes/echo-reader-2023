@@ -7,6 +7,7 @@ import { ReadingSessionContext } from "../../contexts/ReadingSessionContext";
 import Home from "../Home";
 import Stage from "../Stage/Stage";
 
+
 const MainContainer = () => {
   //States, Context, Hooks
   const { readingSessionIsActive } = useContext(ReadingSessionContext);
@@ -14,7 +15,10 @@ const MainContainer = () => {
   return (
     <SocketProvider>
       <div>
+       
+
         <div className="mx-3 ">
+      
           {readingSessionIsActive ? <Stage /> : <Home />}
         </div>
       </div>

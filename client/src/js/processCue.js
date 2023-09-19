@@ -11,7 +11,6 @@ export function processCue(cue) {
     let sentenceToEvaluateArray = sentenceNoPunctuation.split(" ");
     let cueLength = sentenceToEvaluateArray.length;
   
-    //  console.log(`evalutate array ${sentenceToEvaluateArray}`)
     return {
       display: sentenceToDisplay, //array
       evaluate: sentenceToEvaluateArray,

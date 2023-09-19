@@ -31,5 +31,3 @@ function useStorage(key, defaultValue, storageObject) {
 
   return [value, setValue, remove]
 }
-
-

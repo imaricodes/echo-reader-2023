@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Button from "../UI/Button";
 
 const SessionInstructions = ({ setStageState }) => {
@@ -20,6 +21,10 @@ const SessionInstructions = ({ setStageState }) => {
      
     </>
   );
+};
+
+SessionInstructions.propTypes = {
+  setStageState: PropTypes.func.isRequired,
 };
 
 export default SessionInstructions;
